@@ -1,11 +1,15 @@
 
-  import { defineConfig } from 'vite';
-  import react from '@vitejs/plugin-react-swc';
-  import path from 'path';
+  import { defineConfig } from 'vite'
+  import react from '@vitejs/plugin-react-swc'
+  import path from 'path'
 
+  // Easy toggle: change this to false for production, true for development
+  const isDev = true
+
+  // https://vitejs.dev/config/
   export default defineConfig({
     plugins: [react()],
-    base: process.env.NODE_ENV === 'production' ? '/LP07/' : '/',
+    base: isDev ? '/' : '/LP07/',
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
@@ -20,4 +24,4 @@
       port: 3000,
       open: true,
     },
-  });
+  })
