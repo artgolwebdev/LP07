@@ -1,12 +1,4 @@
 // Studio Configuration - Centralized constants and data
-
-// Helper function to get correct asset paths for both dev and production
-const getAssetPath = (path: string) => {
-  // Check if we're in development mode (base path is '/')
-  const isDev = window.location.pathname === '/' || window.location.pathname.includes('localhost');
-  return isDev ? `/src/${path}` : path;
-};
-
 export const STUDIO_CONFIG = {
   name: "SAGE",
   tagline: "Tattoo Shop & Gallery",
@@ -33,28 +25,28 @@ export const STUDIO_CONFIG = {
   
   // Images - Using local assets organized by artists and sections
   images: {
-    studio: getAssetPath("assets/sections/studio/studio-1.jpg"),
+    studio: "/src/assets/sections/studio/studio-1.jpg",
     hero: [
-      getAssetPath("assets/heros-section.jpg"),
-      getAssetPath("assets/hero-section-2.jpg")
+      "/src/assets/heros-section.jpg",
+      "/src/assets/hero-section-2.jpg"
     ],
     // Artist-specific images
     groc: {
-      main: getAssetPath("assets/artists/groc/LAFLARE.mp4"),
+      main: "/src/assets/artists/groc/LAFLARE.mp4",
       portfolio: [
-        getAssetPath("assets/artists/groc/groc-tattoo-1.jpg"),
-        getAssetPath("assets/artists/groc/groc-tattoo-2.jpg"),
-        getAssetPath("assets/artists/groc/groc-tattoo-3.jpg"),
-        getAssetPath("assets/artists/groc/groc-tattoo-4.jpg")
+        "/src/assets/artists/groc/groc-tattoo-1.jpg",
+        "/src/assets/artists/groc/groc-tattoo-2.jpg",
+        "/src/assets/artists/groc/groc-tattoo-3.jpg",
+        "/src/assets/artists/groc/groc-tattoo-4.jpg"
       ]
     },
     sunches: {
-      main: getAssetPath("assets/artists/sunches/sunches-tattoo-1.jpg"),
+      main: "/src/assets/artists/sunches/sunches-tattoo-1.jpg",
       portfolio: [
-        getAssetPath("assets/artists/sunches/sunches-tattoo-monstera-plant.jpg"),
-        getAssetPath("assets/artists/sunches/sunches-tattoo-2.jpg"),
-        getAssetPath("assets/artists/sunches/sunches-tattoo-3.jpg"),
-        getAssetPath("assets/artists/sunches/sunches-tattoo-4.jpg")
+        "/src/assets/artists/sunches/sunches-tattoo-monstera-plant.jpg",
+        "/src/assets/artists/sunches/sunches-tattoo-2.jpg",
+        "/src/assets/artists/sunches/sunches-tattoo-3.jpg",
+        "/src/assets/artists/sunches/sunches-tattoo-4.jpg"
       ]
     }
   },
@@ -64,22 +56,22 @@ export const STUDIO_CONFIG = {
     {
       id: "groc",
       name: "GROC",
-      image: getAssetPath("assets/artists/groc/LAFLARE.mp4"),
+      image: "/src/assets/artists/groc/LAFLARE.mp4",
       specialties: ["Traditional", "Neo-Traditional", "Japanese"],
       portfolio: [
-        getAssetPath("assets/artists/groc/groc-tattoo-1.jpg"),
-        getAssetPath("assets/artists/groc/groc-tattoo-2.jpg"),
-        getAssetPath("assets/artists/groc/groc-tattoo-3.jpg"),
-        getAssetPath("assets/artists/groc/groc-tattoo-4.jpg")
+        "/src/assets/artists/groc/groc-tattoo-1.jpg",
+        "/src/assets/artists/groc/groc-tattoo-2.jpg",
+        "/src/assets/artists/groc/groc-tattoo-3.jpg",
+        "/src/assets/artists/groc/groc-tattoo-4.jpg"
       ]
     },
     {
       id: "2", 
       name: "SUNCHES",
       specialties: ["Fine Line", "Minimalist", "Botanical"],
-      image: getAssetPath("assets/artists/sunches/sunches.jpg"),
+      image: "/src/assets/artists/sunches/sunches.jpg",
       portfolio: [
-        getAssetPath("assets/artists/sunches/sunches-tattoo-monstera-plant.jpg")
+        "/src/assets/artists/sunches/sunches-tattoo-monstera-plant.jpg"
       ]
     }
   ],
