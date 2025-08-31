@@ -25,28 +25,28 @@ export const STUDIO_CONFIG = {
   
   // Images - Using local assets organized by artists and sections
   images: {
-    studio: "/src/assets/sections/studio/studio-1.jpg",
+    studio: "assets/sections/studio/studio-1.jpg",
     hero: [
-      "/src/assets/heros-section.jpg",
-      "/src/assets/hero-section-2.jpg"
+      "assets/heros-section.jpg",
+      "assets/hero-section-2.jpg"
     ],
     // Artist-specific images
     groc: {
-      main: "/src/assets/artists/groc/LAFLARE.mp4",
+      main: "assets/artists/groc/LAFLARE.mp4",
       portfolio: [
-        "/src/assets/artists/groc/groc-tattoo-1.jpg",
-        "/src/assets/artists/groc/groc-tattoo-2.jpg",
-        "/src/assets/artists/groc/groc-tattoo-3.jpg",
-        "/src/assets/artists/groc/groc-tattoo-4.jpg"
+        "assets/artists/groc/groc-tattoo-1.jpg",
+        "assets/artists/groc/groc-tattoo-2.jpg",
+        "assets/artists/groc/groc-tattoo-3.jpg",
+        "assets/artists/groc/groc-tattoo-4.jpg"
       ]
     },
     sunches: {
-      main: "/src/assets/artists/sunches/sunches-tattoo-1.jpg",
+      main: "assets/artists/sunches/sunches-tattoo-1.jpg",
       portfolio: [
-        "/src/assets/artists/sunches/sunches-tattoo-monstera-plant.jpg",
-        "/src/assets/artists/sunches/sunches-tattoo-2.jpg",
-        "/src/assets/artists/sunches/sunches-tattoo-3.jpg",
-        "/src/assets/artists/sunches/sunches-tattoo-4.jpg"
+        "assets/artists/sunches/sunches-tattoo-monstera-plant.jpg",
+        "assets/artists/sunches/sunches-tattoo-2.jpg",
+        "assets/artists/sunches/sunches-tattoo-3.jpg",
+        "assets/artists/sunches/sunches-tattoo-4.jpg"
       ]
     }
   },
@@ -56,22 +56,22 @@ export const STUDIO_CONFIG = {
     {
       id: "groc",
       name: "GROC",
-      image: "/src/assets/artists/groc/LAFLARE.mp4",
+      image: "assets/artists/groc/LAFLARE.mp4",
       specialties: ["Traditional", "Neo-Traditional", "Japanese"],
       portfolio: [
-        "/src/assets/artists/groc/groc-tattoo-1.jpg",
-        "/src/assets/artists/groc/groc-tattoo-2.jpg",
-        "/src/assets/artists/groc/groc-tattoo-3.jpg",
-        "/src/assets/artists/groc/groc-tattoo-4.jpg"
+        "assets/artists/groc/groc-tattoo-1.jpg",
+        "assets/artists/groc/groc-tattoo-2.jpg",
+        "assets/artists/groc/groc-tattoo-3.jpg",
+        "assets/artists/groc/groc-tattoo-4.jpg"
       ]
     },
     {
       id: "2", 
       name: "SUNCHES",
       specialties: ["Fine Line", "Minimalist", "Botanical"],
-      image: "/src/assets/artists/sunches/sunches.jpg",
+      image: "assets/artists/sunches/sunches.jpg",
       portfolio: [
-        "/src/assets/artists/sunches/sunches-tattoo-monstera-plant.jpg"
+        "assets/artists/sunches/sunches-tattoo-monstera-plant.jpg"
       ]
     }
   ],

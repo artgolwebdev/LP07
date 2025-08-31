@@ -4,7 +4,7 @@
   import path from 'path'
 
   // Easy toggle: change this to false for production, true for development
-  const isDev = false;
+  const isDev = true;
 
   // https://vitejs.dev/config/
   export default defineConfig({
