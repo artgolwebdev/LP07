@@ -4,8 +4,8 @@
   import path from 'path';
 
   export default defineConfig({
-    //base: '/LP07/',
     plugins: [react()],
+    base: process.env.NODE_ENV === 'production' ? '/LP07/' : '/',
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
