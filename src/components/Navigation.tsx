@@ -45,14 +45,14 @@ export function Navigation({ onBookingClick }: NavigationProps) {
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex items-center justify-between">
           {/* Logo */}
           <motion.div
             className="cursor-pointer"
             whileHover={{ scale: 1.05 }}
             onClick={() => scrollToSection('hero')}
           >
-            <h1 className="text-2xl md:text-3xl font-black text-white tracking-wider glow-text">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-wider glow-text">
               {STUDIO_CONFIG.name}
             </h1>
           </motion.div>
@@ -91,7 +91,7 @@ export function Navigation({ onBookingClick }: NavigationProps) {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="lg:hidden text-white p-2"
+            className="lg:hidden text-white p-1.5 sm:p-2"
             onClick={() => setIsOpen(!isOpen)}
             whileTap={{ scale: 0.95 }}
           >
@@ -104,7 +104,7 @@ export function Navigation({ onBookingClick }: NavigationProps) {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5 sm:h-6 sm:w-6" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -134,40 +134,40 @@ export function Navigation({ onBookingClick }: NavigationProps) {
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/20">
-                <h1 className="text-3xl font-black text-white tracking-wider glow-text">
-                  INK
+              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/20">
+                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-wider glow-text">
+                  SAGE
                 </h1>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-white p-2"
+                  className="text-white p-1.5 sm:p-2"
                 >
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5 sm:h-6 sm:w-6" />
                 </button>
               </div>
 
               {/* Menu Items */}
-              <div className="flex-1 flex flex-col justify-center px-6">
-                <nav className="space-y-8">
+              <div className="flex-1 flex flex-col justify-center px-4 sm:px-6">
+                <nav className="space-y-6 sm:space-y-8">
                   {menuItems.map((item, index) => (
                     <motion.button
                       key={item.name}
                       onClick={item.action}
-                      className="flex items-center gap-4 text-white hover:text-white/70 transition-colors text-2xl font-bold tracking-wider w-full text-left"
+                      className="flex items-center gap-3 sm:gap-4 text-white hover:text-white/70 transition-colors text-xl sm:text-2xl font-bold tracking-wider w-full text-left"
                       initial={{ opacity: 0, x: -50 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       whileHover={{ x: 10 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <item.icon className="h-8 w-8" />
+                      <item.icon className="h-6 w-6 sm:h-8 sm:w-8" />
                       {item.name}
                     </motion.button>
                   ))}
                 </nav>
 
                 <motion.div
-                  className="mt-12"
+                  className="mt-8 sm:mt-12"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
@@ -178,17 +178,17 @@ export function Navigation({ onBookingClick }: NavigationProps) {
                       setIsOpen(false);
                     }}
                     size="lg"
-                    className="w-full bg-white text-black hover:bg-white/90 font-black tracking-wider uppercase text-xl py-6"
+                    className="w-full bg-white text-black hover:bg-white/90 font-black tracking-wider uppercase text-lg sm:text-xl py-4 sm:py-6"
                   >
-                    <Calendar className="h-6 w-6 mr-3" />
+                    <Calendar className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
                     Book Your Session
                   </Button>
                 </motion.div>
               </div>
 
               {/* Contact Info */}
-              <div className="p-6 border-t border-white/20">
-                <div className="text-center text-white/60 space-y-2">
+              <div className="p-4 sm:p-6 border-t border-white/20">
+                <div className="text-center text-white/60 space-y-1 sm:space-y-2 text-sm sm:text-base">
                   <p>Eilat Street 22, Tel Aviv-Yaffo</p>
                   <p>+972 50-123-4567</p>
                 </div>

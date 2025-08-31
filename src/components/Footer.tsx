@@ -131,10 +131,10 @@ export function Footer({ onBookingClick }: FooterProps) {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
-              INK STUDIO
+              {STUDIO_CONFIG.name}
             </motion.h3>
             <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-md">
-              Where art meets skin. Professional tattoo artists creating timeless pieces 
+              {STUDIO_CONFIG.subtitle}. Professional tattoo artists creating timeless pieces 
               with precision, passion, and uncompromising quality since 2018.
             </p>
             
@@ -329,7 +329,7 @@ export function Footer({ onBookingClick }: FooterProps) {
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2 text-white/60">
-              <span>&copy; {currentYear} INK Studio. All rights reserved.</span>
+              <span>&copy; {currentYear} SAGE Studio. All rights reserved.</span>
             </div>
             
             <motion.div
@@ -349,7 +349,7 @@ export function Footer({ onBookingClick }: FooterProps) {
               >
                 <Heart className="h-4 w-4 text-red-500 fill-red-500" />
               </motion.div>
-              <span>for ink enthusiasts</span>
+              <span>for SAGE enthusiasts</span>
             </motion.div>
 
             <div className="flex gap-6 text-sm text-white/60">

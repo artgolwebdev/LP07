@@ -1,69 +1,53 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export function LoadingAnimation() {
   return (
     <motion.div
-      className="fixed inset-0 bg-black flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black flex items-center justify-center z-50 overflow-hidden"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      <div className="relative">
-        {/* Main logo/text */}
+      {/* Main Content Container */}
+      <div className="relative z-10 text-center">
+        {/* Minimalistic Loading Indicator */}
         <motion.div
           className="relative"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
         >
-          <h1 className="text-6xl md:text-8xl font-black text-white glow-text tracking-wider">
-            INK
-          </h1>
-          <motion.div
-            className="absolute -bottom-2 left-0 right-0 h-1 bg-white"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-          />
-        </motion.div>
-
-        {/* Animated dots */}
-        <div className="flex justify-center mt-8 space-x-2">
-          {[0, 1, 2].map((i) => (
+          {/* Progress Bar */}
+          <div className="w-64 h-1 bg-white/20 rounded-full mx-auto overflow-hidden">
             <motion.div
-              key={i}
-              className="w-3 h-3 bg-white rounded-full"
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.3, 1, 0.3],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                delay: i * 0.2,
+              className="h-full bg-white rounded-full"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ 
+                duration: 3, 
+                delay: 0.3, 
+                ease: "easeInOut" 
               }}
             />
-          ))}
-        </div>
-
-        {/* Address text */}
-        <motion.p
-          className="text-white/70 text-center mt-6 tracking-[0.3em] uppercase"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1 }}
-        >
-          Tel Aviv-Yaffo • Eilat St 22
-        </motion.p>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Ink drip effect */}
+      {/* Subtle Glow Effect */}
       <motion.div
-        className="absolute top-0 left-0 right-0 h-32 ink-drip"
-        initial={{ scaleY: 0 }}
-        animate={{ scaleY: 1 }}
-        transition={{ duration: 1.2, delay: 0.3 }}
-      />
+        className="absolute inset-0 pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, delay: 0.5 }}
+      >
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 70%)',
+            filter: 'blur(80px)'
+          }}
+        />
+      </motion.div>
     </motion.div>
   );
 }
