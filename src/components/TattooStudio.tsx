@@ -191,7 +191,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="assets/sections/studio/groc-paint.mp4" type="video/mp4" />
+                    <source src={window.location.pathname === '/' || window.location.pathname.includes('localhost') ? "/src/assets/sections/studio/groc-paint.mp4" : "assets/sections/studio/groc-paint.mp4"} type="video/mp4" />
                     GROC Paint
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -226,7 +226,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="assets/sections/studio/party-video.mp4" type="video/mp4" />
+                    <source src={window.location.pathname === '/' || window.location.pathname.includes('localhost') ? "/src/assets/sections/studio/party-video.mp4" : "assets/sections/studio/party-video.mp4"} type="video/mp4" />
                     Party Video
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -261,7 +261,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="assets/sections/studio/party-video-2.mp4" type="video/mp4" />
+                    <source src={window.location.pathname === '/' || window.location.pathname.includes('localhost') ? "/src/assets/sections/studio/party-video-2.mp4" : "assets/sections/studio/party-video-2.mp4"} type="video/mp4" />
                     Party Video 2
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -296,7 +296,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
+                    <source src={window.location.pathname === '/' || window.location.pathname.includes('localhost') ? "/src/assets/sections/studio/lady-mostera.mp4" : "assets/sections/studio/lady-mostera.mp4"} type="video/mp4" />
                     Lady Mostera
                   </video>
                   {/* Enhanced Glow Effect */}
