@@ -145,16 +145,16 @@ export function TattooStudio() {
             viewport={{ once: true }}
           >
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-6 sm:mb-8 glow-text">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 sm:mb-8 glow-text">
                 WHERE ART<br />MEETS SKIN
               </h2>
               <div className="w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-white mb-6 sm:mb-8" />
-              <p className="text-base sm:text-lg md:text-xl text-white/80 leading-relaxed mb-6 sm:mb-8">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed mb-6 sm:mb-8">
                 Located in the heart of Tel Aviv-Yaffo, {STUDIO_CONFIG.name} combines traditional 
                 tattoo artistry with modern techniques. Each piece is a collaboration 
                 between artist and client, creating timeless works that tell your unique story.
               </p>
-              <div className="space-y-3 sm:space-y-4 text-white/60 text-sm sm:text-base">
+              <div className="space-y-3 sm:space-y-4 text-white/60 text-base sm:text-lg md:text-xl">
                 <div className="flex items-center gap-2 sm:gap-3">
                   <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full flex-shrink-0" />
                   <span>Custom Designs & Consultations</span>
@@ -191,7 +191,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="/src/assets/sections/studio/groc-paint.mp4" type="video/mp4" />
+                    <source src="src/assets/sections/studio/groc-paint.mp4" type="video/mp4" />
                     GROC Paint
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -226,7 +226,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="/src/assets/sections/studio/party-video.mp4" type="video/mp4" />
+                    <source src="src/assets/sections/studio/party-video.mp4" type="video/mp4" />
                     Party Video
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -261,7 +261,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="/src/assets/sections/studio/party-video-2.mp4" type="video/mp4" />
+                    <source src="src/assets/sections/studio/party-video-2.mp4" type="video/mp4" />
                     Party Video 2
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -296,7 +296,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="/src/assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
+                    <source src="src/assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
                     Lady Mostera
                   </video>
                   {/* Enhanced Glow Effect */}
