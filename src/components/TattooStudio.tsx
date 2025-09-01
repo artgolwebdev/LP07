@@ -451,60 +451,82 @@ export function TattooStudio() {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 viewport={{ once: true }}
               >
-                <Card className="bg-black border-white/20 overflow-hidden group hover:border-white/40 transition-all duration-300">
-                  <div className="relative">
-                    {artist.image.endsWith('.mp4') ? (
-                      <video
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
-                      >
-                        <source src={artist.image} type="video/mp4" />
-                        {artist.name}
-                      </video>
-                    ) : (
-                      <ImageWithFallback 
-                        src={artist.image} 
-                        alt={artist.name}
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-2xl font-black text-white mb-2">{artist.name}</h3>
-                      <p className="text-white/60">{artist.specialties.join(' • ')}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="grid grid-cols-2 gap-2 mb-4">
-                      {artist.portfolio.map((img, i) => (
-                        <motion.div
-                          key={i}
-                          whileHover={{ scale: 1.05 }}
-                          transition={{ duration: 0.2 }}
+                <motion.div
+                  className="relative group"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <Card className="relative bg-black border-white/20 overflow-hidden group-hover:border-white/50 transition-all duration-300 shadow-lg group-hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]">
+                    <div className="relative">
+                      {artist.image.endsWith('.mp4') ? (
+                        <video
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         >
-                          <ImageWithFallback
-                            src={img}
-                            alt={`${artist.name} work ${i + 1}`}
-                            className="w-full h-32 object-cover"
-                          />
-                        </motion.div>
-                      ))}
+                          <source src={artist.image} type="video/mp4" />
+                          {artist.name}
+                        </video>
+                      ) : (
+                        <ImageWithFallback 
+                          src={artist.image} 
+                          alt={artist.name}
+                          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                        />
+                      )}
+                      
+                      {/* Clean Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 group-hover:via-black/50 transition-all duration-300 group-hover:scale-105" style={{ transformOrigin: 'center' }} />
+                      
+                      {/* Simple Corner Accent */}
+                      <div className="absolute top-3 left-3 w-2 h-2 border-l-2 border-t-2 border-white/70 rounded-tl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="text-2xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
+                          {artist.name}
+                        </h3>
+                        <p className="text-white/70 group-hover:text-white/90 transition-colors duration-300">
+                          {artist.specialties.join(' • ')}
+                        </p>
+                      </div>
                     </div>
-                    <Button
-                      onClick={() => {
-                        setSelectedArtist(artist.id);
-                        setIsBookingOpen(true);
-                      }}
-                      className="w-full bg-white text-black hover:bg-white/90 transition-colors"
-                    >
-                      Book with {artist.name.split(' ')[0]}
-                    </Button>
-                  </div>
-                </Card>
+                    
+                    <div className="p-6">
+                      <div className="grid grid-cols-2 gap-2 mb-4">
+                        {artist.portfolio.map((img, i) => (
+                          <motion.div
+                            key={i}
+                            className="relative group/portfolio overflow-hidden rounded-lg"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                          >
+                            <ImageWithFallback
+                              src={img}
+                              alt={`${artist.name} work ${i + 1}`}
+                              className="w-full h-32 object-cover group-hover/portfolio:scale-110 transition-transform duration-400"
+                            />
+                            
+                            {/* Subtle Hover Overlay */}
+                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/portfolio:opacity-100 transition-opacity duration-300" />
+                          </motion.div>
+                        ))}
+                      </div>
+                      
+                      {/* Clean Button */}
+                      <Button
+                        onClick={() => {
+                          setSelectedArtist(artist.id);
+                          setIsBookingOpen(true);
+                        }}
+                        className="w-full bg-white text-black hover:bg-white/90 transition-colors duration-300 font-bold tracking-wider"
+                      >
+                        Book with {artist.name.split(' ')[0]}
+                      </Button>
+                    </div>
+                  </Card>
+                </motion.div>
               </motion.div>
             ))}
           </div>
