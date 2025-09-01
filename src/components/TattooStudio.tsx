@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { BookingForm } from "./BookingForm";
 import { Navigation } from "./Navigation";
-import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import { Footer } from "./Footer";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { STUDIO_CONFIG, type Artist } from "../config/studio-config";
@@ -169,13 +168,13 @@ export function TattooStudio() {
                 </div>
               </div>
             </div>
-                                    <div className="relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] bg-gradient-to-br from-black via-zinc-900 to-black rounded-xl md:rounded-2xl overflow-hidden">
-              {/* Enhanced Futuristic Video Grid - Mobile Responsive */}
-              <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 xl:gap-6 p-1.5 sm:p-2 md:p-3 lg:p-4 xl:p-6 h-full">
+                                    <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-xl md:rounded-2xl overflow-hidden">
+              {/* Enhanced Futuristic Video Grid - Square Layout */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 p-2 sm:p-3 md:p-4 lg:p-6 aspect-square">
                 
-                {/* Video 1 - GROC Paint (Featured) */}
+                {/* Video 1 - GROC Paint (Top Left) */}
                 <motion.div 
-                  className="w-full h-full relative group"
+                  className="relative group aspect-square"
                   whileHover={{ 
                     scale: 1.02,
                     rotateY: 2,
@@ -191,7 +190,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="src/assets/sections/studio/groc-paint.mp4" type="video/mp4" />
+                    <source src="assets/sections/studio/groc-paint.mp4" type="video/mp4" />
                     GROC Paint
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -208,9 +207,9 @@ export function TattooStudio() {
                   </div>
                 </motion.div>
 
-                {/* Video 2 - Party Video */}
+                {/* Video 2 - Party Video (Top Right) */}
                 <motion.div 
-                  className="w-full h-full relative group"
+                  className="relative group aspect-square"
                   whileHover={{ 
                     scale: 1.02,
                     rotateY: -2,
@@ -226,7 +225,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="src/assets/sections/studio/party-video.mp4" type="video/mp4" />
+                    <source src="assets/sections/studio/party-video.mp4" type="video/mp4" />
                     Party Video
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -243,9 +242,9 @@ export function TattooStudio() {
                   </div>
                 </motion.div>
 
-                {/* Video 3 - Party Video 2 */}
+                {/* Video 3 - Party Video 2 (Bottom Left) */}
                 <motion.div 
-                  className="w-full h-full relative group"
+                  className="relative group aspect-square"
                   whileHover={{ 
                     scale: 1.02,
                     rotateY: 2,
@@ -261,7 +260,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="src/assets/sections/studio/party-video-2.mp4" type="video/mp4" />
+                    <source src="assets/sections/studio/party-video-2.mp4" type="video/mp4" />
                     Party Video 2
                   </video>
                   {/* Enhanced Glow Effect */}
@@ -278,9 +277,9 @@ export function TattooStudio() {
                   </div>
                 </motion.div>
 
-                {/* Video 4 - Lady Monstera Video */}
+                {/* Video 4 - Lady Monstera Video (Bottom Right) */}
                 <motion.div 
-                  className="w-full h-full relative group"
+                  className="relative group aspect-square"
                   whileHover={{ 
                     scale: 1.02,
                     rotateY: -2,
@@ -296,7 +295,7 @@ export function TattooStudio() {
                     playsInline
                     className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
                   >
-                    <source src="src/assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
+                    <source src="assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
                     Lady Mostera
                   </video>
                   {/* Enhanced Glow Effect */}

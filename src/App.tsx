@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "motion/react";
+import { AnimatePresence } from "framer-motion";
 import { LoadingAnimation } from "./components/LoadingAnimation";
 import { TattooStudio } from "./components/TattooStudio";
 
