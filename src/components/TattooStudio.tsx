@@ -150,15 +150,14 @@ function AboutSection() {
           viewport={{ once: true }}
         >
           <div>
-            <h2 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-8 text-white tracking-tight py-1">
-              WHERE ART<br />MEETS SKIN
-            </h2>
+                         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 md:mb-8 text-white tracking-tight py-1 leading-tight">
+               PROFESSIONAL<br />TATTOO &<br className="sm:hidden" /> PIERCING
+             </h2>
             <div className="w-24 h-1.5 bg-white mb-8" />
-            <p className="text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed">
-              Located in the heart of Tel Aviv-Yaffo, {STUDIO_CONFIG.name} combines traditional 
-              tattoo artistry with modern techniques. Each piece is a collaboration 
-              between artist and client, creating timeless works that tell your unique story.
-            </p>
+                         <p className="text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed">
+               Located in Tel Aviv-Yaffo, {STUDIO_CONFIG.name} combines traditional 
+               tattoo artistry with modern techniques. Each piece tells your unique story.
+             </p>
           </div>
           
           <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10">
