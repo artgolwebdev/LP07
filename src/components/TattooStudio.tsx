@@ -307,7 +307,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
           </motion.h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
           {STUDIO_CONFIG.artists.map((artist, index) => (
             <motion.div
               key={artist.id}
@@ -424,7 +424,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                         muted
                         loop
                         playsInline
-                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className="w-full h-64 md:h-72 lg:h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       >
                         <source src={artist.image} type="video/mp4" />
                         {artist.name}
@@ -433,23 +433,23 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                       <ImageWithFallback 
                         src={artist.image} 
                         alt={artist.name}
-                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className="w-full h-64 md:h-72 lg:h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       />
                     )}
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 group-hover:via-black/50 transition-all duration-300" />
                     
                     <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-2xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
+                      <h3 className="text-lg md:text-xl lg:text-2xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
                         {artist.name}
                       </h3>
-                      <p className="text-white/70 group-hover:text-white/90 transition-colors duration-300">
+                      <p className="text-sm md:text-base text-white/70 group-hover:text-white/90 transition-colors duration-300">
                         {artist.specialties.join(' • ')}
                       </p>
                     </div>
                   </div>
                   
-                  <div className="p-6">
+                  <div className="p-4 md:p-6">
                     <ArtistPortfolio 
                       artistId={artist.id} 
                       className="mb-2"
@@ -462,7 +462,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                     >
                       <Button
                         onClick={() => onArtistSelect(artist.id)}
-                        className="w-full bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white transition-all duration-300 font-bold tracking-wider py-3 shadow-lg hover:shadow-xl hover:shadow-white/20"
+                        className="w-full bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white transition-all duration-300 font-bold tracking-wider py-2 md:py-3 text-sm md:text-base shadow-lg hover:shadow-xl hover:shadow-white/20"
                       >
                         Book with {artist.name.split(' ')[0]}
                       </Button>

@@ -58,15 +58,45 @@ export const STUDIO_CONFIG: {
   artists: [
     {
       id: "groc",
-      name: "GROC",
+      name: "GROC 08",
       image: "assets/artists/groc/LAFLARE.mp4",
-      specialties: ["Traditional", "Neo-Traditional", "Japanese"]
+      specialties: ["Lettering", "Calligraphy"]
     },
     {
-      id: "2", 
+      id: "sunches", 
       name: "SUNCHES",
-      specialties: ["Fine Line", "Minimalist", "Botanical"],
+      specialties: ["Black & Grey"],
       image: "assets/artists/sunches/sunches.jpg"
+    },
+    {
+      id: "derk",
+      name: "DERK",
+      specialties: ["NeoJapanese", "Color Illustration"],
+      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+    },
+    {
+      id: "jenya",
+      name: "JENYA NINTENDO",
+      specialties: ["Japanese & Floral", "Color"],
+      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+    },
+    {
+      id: "gosha",
+      name: "GOSHA IMAS",
+      specialties: ["Traditional", "Bold"],
+      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+    },
+    {
+      id: "tactink",
+      name: "TACT INK",
+      specialties: ["Traditional"],
+      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+    },
+    {
+      id: "danilitt",
+      name: "DANI LITT",
+      specialties: ["Neo Traditional", "Illustrative"],
+      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
     }
   ],
   
