@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Menu, X, Home, Users, Image, Calendar } from "lucide-react";
+import { Menu, X, Home, Users, Calendar, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { STUDIO_CONFIG } from "../config/studio-config";
 
@@ -31,7 +31,7 @@ export function Navigation({ onBookingClick }: NavigationProps) {
   const menuItems = [
     { name: "HOME", icon: Home, action: () => scrollToSection('hero') },
     { name: "ARTISTS", icon: Users, action: () => scrollToSection('artists') },
-    { name: "GALLERY", icon: Image, action: () => scrollToSection('gallery') },
+    { name: "CONTACT", icon: MessageCircle, action: () => scrollToSection('contact') },
   ];
 
   return (

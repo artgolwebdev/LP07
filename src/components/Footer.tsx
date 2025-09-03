@@ -1,3 +1,4 @@
+import React from "react";
 import { motion } from "motion/react";
 import { MapPin, Phone, Mail, Instagram, Facebook, Clock, Heart } from "lucide-react";
 import { Button } from "./ui/button";

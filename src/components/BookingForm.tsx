@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,14 +15,15 @@ interface BookingFormProps {
   isOpen: boolean;
   onClose: () => void;
   artists: Array<{ id: string; name: string; specialties: string[]; image: string }>;
+  preSelectedArtist?: string | null;
 }
 
 
 
-export function BookingForm({ isOpen, onClose, artists }: BookingFormProps) {
-  const [currentStep, setCurrentStep] = useState(1);
+export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: BookingFormProps) {
+  const [currentStep, setCurrentStep] = useState(preSelectedArtist ? 2 : 1);
   const [formData, setFormData] = useState<FormData>({
-    artistId: "",
+    artistId: preSelectedArtist || "",
     description: "",
     placement: "",
     size: "",
@@ -61,6 +62,14 @@ export function BookingForm({ isOpen, onClose, artists }: BookingFormProps) {
   useEffect(() => {
     scrollToTop();
   }, [currentStep]);
+
+  // Handle pre-selected artist
+  useEffect(() => {
+    if (preSelectedArtist) {
+      setFormData(prev => ({ ...prev, artistId: preSelectedArtist }));
+      setCurrentStep(2);
+    }
+  }, [preSelectedArtist]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -183,6 +192,9 @@ export function BookingForm({ isOpen, onClose, artists }: BookingFormProps) {
               {currentStep === 1 && (
                 <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                   <h3 className="text-xl font-bold text-white mb-6">Choose Your Artist</h3>
+                  
+
+                  
                   {isSelectingArtist && (
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -230,6 +242,8 @@ export function BookingForm({ isOpen, onClose, artists }: BookingFormProps) {
                       </Card>
                     ))}
                   </div>
+                  
+
                 </motion.div>
               )}
 

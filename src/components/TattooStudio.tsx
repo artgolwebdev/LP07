@@ -1,17 +1,19 @@
-import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { MapPin, Phone, Calendar, MessageCircle } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { Calendar, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { BookingForm } from "./BookingForm";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { STUDIO_CONFIG, type Artist } from "../config/studio-config";
+import { STUDIO_CONFIG } from "../config/studio-config";
+import { DynamicGallery } from "./DynamicGallery";
+import { ArtistPortfolio } from "./ArtistPortfolio";
+import { HeroGallery } from "./HeroGallery";
 
-export function TattooStudio() {
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [selectedArtist, setSelectedArtist] = useState<string | null>(null);
+// Hero Section Component
+function HeroSection() {
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   
   // Smooth Parallax scroll effect
@@ -26,72 +28,69 @@ export function TattooStudio() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeroIndex((prev) => 
-        prev === STUDIO_CONFIG.images.hero.length - 1 ? 0 : prev + 1
+        prev === STUDIO_CONFIG.heroImages.length - 1 ? 0 : prev + 1
       );
-    }, 10000); // Change every 10 seconds
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const handleWhatsAppCall = () => {
-    const phoneNumber = STUDIO_CONFIG.phone.replace(/\D/g, ''); // Remove non-digits
-    const message = encodeURIComponent(STUDIO_CONFIG.whatsappMessage);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-    window.open(whatsappUrl, '_blank');
-  };
-
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Navigation */}
-      <Navigation onBookingClick={() => setIsBookingOpen(true)} />
-
-      {/* Hero Section */}
-      <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image Slideshow */}
-        <motion.div 
-          className="absolute inset-0"
-          style={{ y: heroY, scale: heroScale }}
-        >
-          {/* Current Background Image */}
-          <motion.div
-            key={currentHeroIndex}
-            className="absolute inset-0"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-          >
-            <ImageWithFallback 
-              src={STUDIO_CONFIG.images.hero[currentHeroIndex]} 
-              alt="SAGE Tattoo Studio" 
-              className="w-full h-full object-cover opacity-40"
-            />
-          </motion.div>
-          
-          {/* Clean Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        </motion.div>
-
-        {/* Hero Content with Epic Text Reveal Animations */}
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* Background Image Slideshow */}
+      <motion.div 
+        className="absolute inset-0 z-0"
+        style={{ y: heroY, scale: heroScale }}
+      >
+        {/* Current Background Image */}
         <motion.div
-          className="relative z-10 text-center max-w-7xl mx-auto px-3 sm:px-4 md:px-6"
+          key={currentHeroIndex}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+        >
+          <ImageWithFallback 
+            src={STUDIO_CONFIG.heroImages[currentHeroIndex]} 
+            alt="SAGE Tattoo Studio" 
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+        
+        {/* Subtle gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+      </motion.div>
+
+      {/* Hero Content Container */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
+        {/* Main Title and Subtitle Section */}
+        <motion.div
+          className="text-center mb-8 sm:mb-12 md:mb-16"
           style={{ y: textY, opacity: textOpacity, scale: titleScale }}
         >
           {/* Main Title */}
           <motion.h1 
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-6 glow-text tracking-wider hero-text cursor-pointer select-none"
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-6 tracking-wider hero-text cursor-pointer select-none"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8f8f8 25%, #e8e8e8 50%, #f8f8f8 75%, #ffffff 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 0 40px rgba(255, 255, 255, 0.4), 0 0 80px rgba(255, 255, 255, 0.2)',
+              filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.3))'
+            }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             whileHover={{ 
-              scale: 1.05,
-              textShadow: "0 0 50px rgba(255,255,255,0.8), 0 0 100px rgba(255,255,255,0.4)",
-              filter: "brightness(1.2) contrast(1.1)",
+              scale: 1.02,
+              filter: 'drop-shadow(0 0 30px rgba(255, 255, 255, 0.5)) brightness(1.1)',
               transition: { duration: 0.3, ease: "easeOut" }
             }}
             whileTap={{ scale: 0.98 }}
             onClick={() => {
-              document.getElementById('about')?.scrollIntoView({ 
+              document.getElementById('gallery')?.scrollIntoView({ 
                 behavior: 'smooth',
                 block: 'start'
               });
@@ -110,574 +109,543 @@ export function TattooStudio() {
 
           {/* Tagline */}
           <motion.p 
-            className="text-lg sm:text-xl md:text-2xl text-white/80 mb-6 sm:mb-8 tracking-[0.1em] sm:tracking-[0.2em] uppercase px-2"
+            className="text-lg sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8 tracking-[0.1em] sm:tracking-[0.2em] uppercase px-2 font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
             {STUDIO_CONFIG.tagline}
           </motion.p>
-          
-
         </motion.div>
+      </div>
 
-        {/* Scroll Indicator */}
+      {/* Scroll Indicator */}
+      <motion.div
+        className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
+          <div className="w-0.5 h-2 sm:h-3 bg-white/50 rounded-full mt-1.5 sm:mt-2" />
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+// Gallery Section Component with Bold Futuristic Design
+function GallerySection() {
+  return (
+    <section id="gallery" className="py-24 px-6 bg-gradient-to-b from-black via-zinc-900/30 to-black relative overflow-hidden">
+      {/* Futuristic Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Geometric Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div 
+            className="w-full h-full" 
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '60px 60px'
+            }} 
+          />
+        </div>
+        
+        {/* Floating Geometric Shapes */}
+        <motion.div 
+          className="absolute top-20 left-10 w-4 h-4 border-2 border-white/20 rounded-full"
+          animate={{ 
+            scale: [1, 1.5, 1],
+            opacity: [0.2, 0.4, 0.2],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute top-40 right-20 w-6 h-6 border-2 border-white/15 transform rotate-45"
+          animate={{ 
+            scale: [1, 1.3, 1],
+            opacity: [0.15, 0.3, 0.15],
+            rotate: [45, 225, 405]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+        <motion.div 
+          className="absolute bottom-20 left-1/4 w-3 h-3 bg-white/20 rounded-full"
+          animate={{ 
+            y: [0, -30, 0],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Gallery Container - No title/subtitle, just the gallery */}
         <motion.div
-          className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="relative"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          viewport={{ once: true }}
         >
-          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <div className="w-0.5 h-2 sm:h-3 bg-white/50 rounded-full mt-1.5 sm:mt-2" />
+          {/* Futuristic Border Frame */}
+          <div className="relative bg-gradient-to-br from-zinc-900/50 via-black/30 to-zinc-900/50 rounded-3xl overflow-hidden border border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.1)]">
+            {/* Corner Accents */}
+            <div className="absolute top-4 left-4 w-6 h-6 border-l-2 border-t-2 border-white/40 rounded-tl" />
+            <div className="absolute top-4 right-4 w-6 h-6 border-r-2 border-t-2 border-white/40 rounded-tr" />
+            <div className="absolute bottom-4 left-4 w-6 h-6 border-l-2 border-b-2 border-white/40 rounded-bl" />
+            <div className="absolute bottom-4 right-4 w-6 h-6 border-r-2 border-b-2 border-white/40 rounded-br" />
+            
+            {/* Gallery Component */}
+            <DynamicGallery className="p-8 md:p-12" />
           </div>
         </motion.div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* About Section */}
-      <section id="about" className="py-16 sm:py-20 md:py-24 lg:py-32 px-3 sm:px-4 md:px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 sm:mb-8 glow-text">
-                WHERE ART<br />MEETS SKIN
-              </h2>
-              <div className="w-16 sm:w-20 md:w-24 h-0.5 sm:h-1 bg-white mb-6 sm:mb-8" />
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed mb-6 sm:mb-8">
-                Located in the heart of Tel Aviv-Yaffo, {STUDIO_CONFIG.name} combines traditional 
-                tattoo artistry with modern techniques. Each piece is a collaboration 
-                between artist and client, creating timeless works that tell your unique story.
-              </p>
-              <div className="space-y-3 sm:space-y-4 text-white/60 text-base sm:text-lg md:text-xl">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full flex-shrink-0" />
-                  <span>Custom Designs & Consultations</span>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full flex-shrink-0" />
-                  <span>Sterile Environment & Premium Equipment</span>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full flex-shrink-0" />
-                  <span>Experienced Artists Specializing in Multiple Styles</span>
-                </div>
-              </div>
-            </div>
-                                    <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-xl md:rounded-2xl overflow-hidden">
-              {/* Enhanced Futuristic Video Grid - Square Layout */}
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 p-2 sm:p-3 md:p-4 lg:p-6 aspect-square">
-                
-                {/* Video 1 - GROC Paint (Top Left) */}
-                <motion.div 
-                  className="relative group aspect-square"
-                  whileHover={{ 
-                    scale: 1.02,
-                    rotateY: 2,
-                    boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
-                  >
-                    <source src="assets/sections/studio/groc-paint.mp4" type="video/mp4" />
-                    GROC Paint
-                  </video>
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 rounded-lg md:rounded-xl border border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.15)] md:shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] md:group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-                  {/* Corner Accent with Animation */}
-                  <motion.div 
-                    className="absolute top-1 sm:top-2 md:top-3 right-1 sm:right-2 md:right-3 w-1.5 sm:w-2 md:w-3 h-1.5 sm:h-2 md:h-3 bg-white/50 rounded-full"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  {/* Video Label */}
-                  <div className="absolute bottom-1 sm:bottom-2 md:bottom-3 left-1 sm:left-2 md:left-3 bg-black/60 backdrop-blur-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1 rounded-md md:rounded-lg border border-white/20">
-                    <span className="text-white/80 text-xs sm:text-sm font-medium">GROC Paint</span>
-                  </div>
-                </motion.div>
-
-                {/* Video 2 - Party Video (Top Right) */}
-                <motion.div 
-                  className="relative group aspect-square"
-                  whileHover={{ 
-                    scale: 1.02,
-                    rotateY: -2,
-                    boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
-                  >
-                    <source src="assets/sections/studio/party-video.mp4" type="video/mp4" />
-                    Party Video
-                  </video>
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 rounded-lg md:rounded-xl border border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.15)] md:shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] md:group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-                  {/* Corner Accent with Animation */}
-                  <motion.div 
-                    className="absolute top-1 sm:top-2 md:top-3 right-1 sm:right-2 md:right-3 w-1.5 sm:w-2 md:w-3 h-1.5 sm:h-2 md:h-3 bg-white/50 rounded-full"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  {/* Video Label */}
-                  <div className="absolute bottom-1 sm:bottom-2 md:bottom-3 left-1 sm:left-2 md:left-3 bg-black/60 backdrop-blur-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1 rounded-md md:rounded-lg border border-white/20">
-                    <span className="text-white/80 text-xs sm:text-sm font-medium">Party Video</span>
-                  </div>
-                </motion.div>
-
-                {/* Video 3 - Party Video 2 (Bottom Left) */}
-                <motion.div 
-                  className="relative group aspect-square"
-                  whileHover={{ 
-                    scale: 1.02,
-                    rotateY: 2,
-                    boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
-                  >
-                    <source src="assets/sections/studio/party-video-2.mp4" type="video/mp4" />
-                    Party Video 2
-                  </video>
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 rounded-lg md:rounded-xl border border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.15)] md:shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] md:group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-                  {/* Corner Accent with Animation */}
-                  <motion.div 
-                    className="absolute top-1 sm:top-2 md:top-3 right-1 sm:right-2 md:right-3 w-1.5 sm:w-2 md:w-3 h-1.5 sm:h-2 md:h-3 bg-white/50 rounded-full"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  {/* Video Label */}
-                  <div className="absolute bottom-1 sm:bottom-2 md:bottom-3 left-1 sm:left-2 md:left-3 bg-black/60 backdrop-blur-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1 rounded-md md:rounded-lg border border-white/20">
-                    <span className="text-white/80 text-xs sm:text-sm font-medium">Party Video 2</span>
-                  </div>
-                </motion.div>
-
-                {/* Video 4 - Lady Monstera Video (Bottom Right) */}
-                <motion.div 
-                  className="relative group aspect-square"
-                  whileHover={{ 
-                    scale: 1.02,
-                    rotateY: -2,
-                    boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="w-full h-full object-cover rounded-lg md:rounded-xl border-2 border-white/40 shadow-lg md:shadow-2xl"
-                  >
-                    <source src="assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
-                    Lady Mostera
-                  </video>
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 rounded-lg md:rounded-xl border border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.15)] md:shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] md:group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-                  {/* Corner Accent with Animation */}
-                  <motion.div 
-                    className="absolute top-1 sm:top-2 md:top-3 right-1 sm:right-2 md:right-3 w-1.5 sm:w-2 md:w-3 h-1.5 sm:h-2 md:h-3 bg-white/50 rounded-full"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                  {/* Video Label */}
-                  <div className="absolute bottom-1 sm:bottom-2 md:bottom-3 left-1 sm:left-2 md:left-3 bg-black/60 backdrop-blur-sm px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1 rounded-md md:rounded-lg border border-white/20">
-                    <span className="text-white/80 text-xs sm:text-sm font-medium">Lady Mostera</span>
-                  </div>
-                  {/* Futuristic Pulse Ring */}
-                  <motion.div 
-                    className="absolute top-1/2 left-1/2 w-2 h-2 bg-white/60 rounded-full opacity-0 group-hover:opacity-100"
-                    animate={{ 
-                      scale: [1, 2, 1],
-                      opacity: [0.6, 0, 0.6]
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                </motion.div>
-              </div>
-
-              {/* Enhanced Futuristic Center Element */}
-              <motion.div 
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 sm:w-8 md:w-12 h-6 sm:h-8 md:h-12 border border-white/20 rounded-full flex items-center justify-center z-30"
-                animate={{ 
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 180, 360]
-                }}
-                transition={{ 
-                  scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-                  rotate: { duration: 8, repeat: Infinity, ease: "linear" }
-                }}
-              >
-                <div className="w-1 sm:w-1.5 md:w-2 h-1 sm:h-1.5 md:h-2 bg-white/40 rounded-full" />
-              </motion.div>
-
-              {/* Enhanced Flowing Lines */}
-              <motion.div 
-                className="absolute top-0 left-0 w-full h-full pointer-events-none z-20"
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                  <motion.path
-                    d="M10,50 Q25,25 50,50 T90,50"
-                    stroke="rgba(255,255,255,0.1)"
-                    strokeWidth="0.5"
-                    fill="none"
-                    animate={{ 
-                      d: [
-                        "M10,50 Q25,25 50,50 T90,50",
-                        "M10,50 Q25,75 50,50 T90,50",
-                        "M10,50 Q25,25 50,50 T90,50"
-                      ]
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                </svg>
-              </motion.div>
-
-              {/* Enhanced Corner Accents */}
-              <motion.div 
-                className="absolute top-2 sm:top-3 md:top-4 left-2 sm:left-3 md:left-4 w-2 sm:w-3 md:w-4 h-2 sm:h-3 md:h-4 border-l-2 border-t-2 border-white/20 rounded-tl-lg z-30"
-                animate={{ 
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div 
-                className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 w-2 sm:w-3 md:w-4 h-2 sm:h-3 md:h-4 border-r-2 border-t-2 border-white/20 rounded-tr-lg z-30"
-                animate={{ 
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              />
-              <motion.div 
-                className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-2 sm:left-3 md:left-4 w-2 sm:w-3 md:w-4 h-2 sm:h-3 md:h-4 border-l-2 border-b-2 border-white/20 rounded-bl-lg z-30"
-                animate={{ 
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              />
-              <motion.div 
-                className="absolute bottom-2 sm:bottom-3 md:bottom-4 right-2 sm:right-3 md:right-4 w-2 sm:w-3 md:w-4 h-2 sm:h-3 md:h-4 border-r-2 border-b-2 border-white/20 rounded-br-lg z-30"
-                animate={{ 
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-              />
-
-              {/* Floating Energy Particles */}
-              <motion.div 
-                className="absolute top-1/4 left-1/4 w-1 sm:w-1.5 md:w-2 h-1 sm:h-1.5 md:h-2 bg-white/30 rounded-full z-30"
-                animate={{ 
-                  y: [0, -10, 0],
-                  opacity: [0.3, 0.8, 0.3]
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div 
-                className="absolute top-3/4 right-1/4 w-1 sm:w-1.5 md:w-2 h-1 sm:h-1.5 md:h-2 bg-white/30 rounded-full z-30"
-                animate={{ 
-                  y: [0, 10, 0],
-                  opacity: [0.3, 0.8, 0.3]
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              />
-              <motion.div 
-                className="absolute bottom-1/4 left-1/3 w-1 sm:w-1.5 md:w-2 h-1 sm:h-1.5 md:h-2 bg-white/30 rounded-full z-30"
-                animate={{ 
-                  x: [0, 8, 0],
-                  opacity: [0.3, 0.8, 0.3]
-                }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              />
-            </div>
-              </motion.div>
-            </div>
-          </section>
-
-      {/* Artists Gallery */}
-      <section id="artists" className="py-32 px-6 bg-zinc-900/50">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-20"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl font-black mb-8 glow-text">OUR ARTISTS</h2>
-            <div className="w-24 h-1 bg-white mx-auto mb-8" />
-            <p className="text-xl text-white/60 max-w-2xl mx-auto">
-              Meet our talented artists, each with their unique style and expertise.
+// About Section Component
+function AboutSection() {
+  return (
+    <section id="about" className="py-24 px-6 bg-zinc-900/50">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          className="grid md:grid-cols-2 gap-12 md:gap-16 items-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <div>
+            <h2 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-8 text-white tracking-tight">
+              WHERE ART<br />MEETS SKIN
+            </h2>
+            <div className="w-24 h-1.5 bg-white mb-8" />
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed">
+              Located in the heart of Tel Aviv-Yaffo, {STUDIO_CONFIG.name} combines traditional 
+              tattoo artistry with modern techniques. Each piece is a collaboration 
+              between artist and client, creating timeless works that tell your unique story.
             </p>
-          </motion.div>
+          </div>
+          
+          <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+            {/* Enhanced Futuristic Video Grid */}
+            <div className="grid grid-cols-2 gap-3 lg:gap-4 p-3 lg:p-4 aspect-square">
+              {/* Video 1 - GROC Paint */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: 2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/groc-paint.mp4" type="video/mp4" />
+                  GROC Paint
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {STUDIO_CONFIG.artists.map((artist, index) => (
+              {/* Video 2 - Party Video */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: -2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/party-video.mp4" type="video/mp4" />
+                  Party Video
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
+
+              {/* Video 3 - Party Video 2 */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: 2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/party-video-2.mp4" type="video/mp4" />
+                  Party Video 2
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
+
+              {/* Video 4 - Lady Monstera */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: -2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
+                  Lady Mostera
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
+            </div>
+
+            {/* Central Futuristic Element */}
+            <motion.div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border border-white/20 rounded-full flex items-center justify-center z-30"
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ 
+                scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                rotate: { duration: 8, repeat: Infinity, ease: "linear" }
+              }}
+            >
+              <div className="w-2 h-2 bg-white/40 rounded-full" />
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// Artists Section Component
+function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string) => void }) {
+  return (
+    <section id="artists" className="py-32 px-6 bg-zinc-900/50">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          className="text-center mb-20"
+          initial={{ opacity: 0, y: 100, scale: 0.8 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <motion.h2 
+            className="text-6xl md:text-7xl lg:text-8xl font-black mb-4 text-white tracking-tight"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
+              OUR ARTISTS
+            </span>
+          </motion.h2>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {STUDIO_CONFIG.artists.map((artist, index) => (
+            <motion.div
+              key={artist.id}
+              initial={{ opacity: 0, y: 80, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1, delay: index * 0.15, ease: "easeOut" }}
+              viewport={{ once: true }}
+            >
               <motion.div
-                key={artist.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
+                className="relative group"
+                initial={{ opacity: 0, y: 80, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 1, delay: index * 0.15, ease: "easeOut" }}
                 viewport={{ once: true }}
               >
-                <motion.div
-                  className="relative group"
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                >
-                  <Card className="relative bg-black border-white/20 overflow-hidden group-hover:border-white/50 transition-all duration-300 shadow-lg group-hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]">
-                    <div className="relative">
-                      {artist.image.endsWith('.mp4') ? (
-                        <video
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                        >
-                          <source src={artist.image} type="video/mp4" />
-                          {artist.name}
-                        </video>
-                      ) : (
-                        <ImageWithFallback 
-                          src={artist.image} 
-                          alt={artist.name}
-                          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                        />
-                      )}
-                      
-                      {/* Clean Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 group-hover:via-black/50 transition-all duration-300 group-hover:scale-105" style={{ transformOrigin: 'center' }} />
-                      
-                      {/* Simple Corner Accent */}
-                      <div className="absolute top-3 left-3 w-2 h-2 border-l-2 border-t-2 border-white/70 rounded-tl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <h3 className="text-2xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
-                          {artist.name}
-                        </h3>
-                        <p className="text-white/70 group-hover:text-white/90 transition-colors duration-300">
-                          {artist.specialties.join(' • ')}
-                        </p>
-                      </div>
-                    </div>
+                <Card className="relative bg-gradient-to-br from-black via-zinc-900 to-black border border-white/20 overflow-hidden rounded-2xl shadow-lg group">
+                  {/* Artistic Flowing Border Animation */}
+                  <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                    {/* Top Border Flow */}
+                    <motion.div 
+                      className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent"
+                      initial={{ width: 0, opacity: 0 }}
+                      whileHover={{ 
+                        width: "100%",
+                        opacity: 1
+                      }}
+                      transition={{ duration: 0.6, ease: "easeOut" }}
+                    />
                     
-                    <div className="p-6">
-                      <div className="grid grid-cols-2 gap-2 mb-4">
-                        {artist.portfolio.map((img, i) => (
-                          <motion.div
-                            key={i}
-                            className="relative group/portfolio overflow-hidden rounded-lg"
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
-                          >
-                            <ImageWithFallback
-                              src={img}
-                              alt={`${artist.name} work ${i + 1}`}
-                              className="w-full h-32 object-cover group-hover/portfolio:scale-110 transition-transform duration-400"
-                            />
-                            
-                            {/* Subtle Hover Overlay */}
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/portfolio:opacity-100 transition-opacity duration-300" />
-                          </motion.div>
-                        ))}
-                      </div>
-                      
-                      {/* Clean Button */}
+                    {/* Right Border Flow */}
+                    <motion.div 
+                      className="absolute top-0 right-0 w-0.5 bg-gradient-to-b from-transparent via-white to-transparent"
+                      initial={{ height: 0, opacity: 0 }}
+                      whileHover={{ 
+                        height: "100%",
+                        opacity: 1
+                      }}
+                      transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                    />
+                    
+                    {/* Bottom Border Flow */}
+                    <motion.div 
+                      className="absolute bottom-0 right-0 h-0.5 bg-gradient-to-l from-transparent via-white to-transparent"
+                      initial={{ width: 0, opacity: 0 }}
+                      whileHover={{ 
+                        width: "100%",
+                        opacity: 1
+                      }}
+                      transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                    />
+                    
+                    {/* Left Border Flow */}
+                    <motion.div 
+                      className="absolute bottom-0 left-0 w-0.5 bg-gradient-to-t from-transparent via-white to-transparent"
+                      initial={{ height: 0, opacity: 0 }}
+                      whileHover={{ 
+                        height: "100%",
+                        opacity: 1
+                      }}
+                      transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+                    />
+                  </div>
+                  
+                  {/* Corner Glow Effects */}
+                  <motion.div 
+                    className="absolute top-0 left-0 w-3 h-3 rounded-tl-2xl border-l border-t border-white/0"
+                    whileHover={{ 
+                      borderColor: "rgba(255,255,255,0.8)",
+                      boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                    }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                  />
+                  
+                  <motion.div 
+                    className="absolute top-0 right-0 w-3 h-3 rounded-tr-2xl border-r border-t border-white/0"
+                    whileHover={{ 
+                      borderColor: "rgba(255,255,255,0.8)",
+                      boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                    }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                  />
+                  
+                  <motion.div 
+                    className="absolute bottom-0 right-0 w-3 h-3 rounded-br-2xl border-r border-b border-white/0"
+                    whileHover={{ 
+                      borderColor: "rgba(255,255,255,0.8)",
+                      boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                    }}
+                    transition={{ duration: 0.4, delay: 0.5 }}
+                  />
+                  
+                  <motion.div 
+                    className="absolute bottom-0 left-0 w-3 h-3 rounded-bl-2xl border-l border-b border-white/0"
+                    whileHover={{ 
+                      borderColor: "rgba(255,255,255,0.8)",
+                      boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                    }}
+                    transition={{ duration: 0.4, delay: 0.7 }}
+                  />
+                  
+                  {/* Inner Glow Effect */}
+                  <motion.div 
+                    className="absolute inset-0 rounded-2xl border border-white/0"
+                    whileHover={{ 
+                      borderColor: "rgba(255,255,255,0.3)",
+                      boxShadow: "inset 0 0 20px rgba(255,255,255,0.1)"
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  />
+                  <div className="relative overflow-hidden">
+                    {artist.image.endsWith('.mp4') ? (
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      >
+                        <source src={artist.image} type="video/mp4" />
+                        {artist.name}
+                      </video>
+                    ) : (
+                      <ImageWithFallback 
+                        src={artist.image} 
+                        alt={artist.name}
+                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      />
+                    )}
+                    
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 group-hover:via-black/50 transition-all duration-300" />
+                    
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-2xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
+                        {artist.name}
+                      </h3>
+                      <p className="text-white/70 group-hover:text-white/90 transition-colors duration-300">
+                        {artist.specialties.join(' • ')}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <ArtistPortfolio 
+                      artistId={artist.id} 
+                      className="mb-2"
+                    />
+                    
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="relative z-10"
+                    >
                       <Button
-                        onClick={() => {
-                          setSelectedArtist(artist.id);
-                          setIsBookingOpen(true);
-                        }}
-                        className="w-full bg-white text-black hover:bg-white/90 transition-colors duration-300 font-bold tracking-wider"
+                        onClick={() => onArtistSelect(artist.id)}
+                        className="w-full bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white transition-all duration-300 font-bold tracking-wider py-3 shadow-lg hover:shadow-xl hover:shadow-white/20"
                       >
                         Book with {artist.name.split(' ')[0]}
                       </Button>
-                    </div>
-                  </Card>
-                </motion.div>
+                    </motion.div>
+                  </div>
+                </Card>
               </motion.div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* Gallery Showcase */}
-      <section id="gallery" className="py-40 px-6 bg-gradient-to-b from-black via-zinc-900/30 to-black">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-24"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl md:text-6xl font-black mb-8 glow-text">OUR MASTERPIECES</h2>
-            <div className="w-32 h-1 bg-white mx-auto mb-8" />
-            <p className="text-xl text-white/60 max-w-3xl mx-auto leading-relaxed">
-              Explore our collection of exceptional tattoo artistry. Each piece represents hours of dedication, 
-              precision, and creative passion - from bold traditional designs to intricate fine line work.
-            </p>
-          </motion.div>
+// Contact Section Component
+function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
+  const handleWhatsAppCall = () => {
+    const phoneNumber = STUDIO_CONFIG.phone.replace(/\D/g, '');
+    const message = encodeURIComponent(STUDIO_CONFIG.whatsappMessage);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
-          {/* Unified Masterpieces Gallery */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              STUDIO_CONFIG.images.groc.main,
-              STUDIO_CONFIG.images.sunches.main,
-              STUDIO_CONFIG.images.studio,
-              ...STUDIO_CONFIG.images.groc.portfolio,
-              ...STUDIO_CONFIG.images.sunches.portfolio
-            ].map((img, index) => (
-              <motion.div
-                key={`gallery-${index}`}
-                className="relative group cursor-pointer overflow-hidden rounded"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
+  return (
+    <section id="contact" className="py-32 px-6 bg-zinc-900/50">
+      <div className="max-w-4xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-6xl font-black mb-8 text-white">
+            READY TO GET<br />SAGED?
+          </h2>
+          <div className="w-32 h-1 bg-white mx-auto mb-12" />
+          
+          <p className="text-2xl text-white/80 mb-16 leading-relaxed">
+            Start your tattoo journey today. Book a consultation with our artists 
+            and bring your vision to life.
+          </p>
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                onClick={onBookingClick}
+                size="lg"
+                className="bg-white text-black hover:bg-white/90 text-2xl px-16 py-8 h-auto font-black tracking-wider uppercase transition-all duration-300 transform hover:shadow-2xl hover:shadow-white/20"
               >
-                <ImageWithFallback 
-                  src={img} 
-                  alt={`Gallery ${index + 1}`}
-                  className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <motion.span 
-                    className="text-white font-bold text-lg"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    View Details
-                  </motion.span>
-                </div>
-              </motion.div>
-            ))}
+                <Calendar className="mr-4 h-8 w-8" />
+                Start Booking
+              </Button>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Button
+                onClick={handleWhatsAppCall}
+                size="lg"
+                className="bg-green-500 text-white hover:bg-green-400 text-2xl px-12 py-8 h-auto font-black tracking-wider uppercase transition-all duration-300 transform hover:shadow-2xl hover:shadow-green-500/30"
+              >
+                <MessageCircle className="mr-4 h-8 w-8" />
+                Talk Now
+              </Button>
+            </motion.div>
           </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
+// Main TattooStudio Component
+export function TattooStudio() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedArtist, setSelectedArtist] = useState<string | null>(null);
 
-        </div>
-      </section>
+  const handleArtistSelect = (artistId: string) => {
+    setSelectedArtist(artistId);
+    setIsBookingOpen(true);
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      {/* Navigation */}
+      <Navigation onBookingClick={() => setIsBookingOpen(true)} />
+
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Hero Gallery - Featured artwork below hero */}
+      <HeroGallery />
+
+      {/* Gallery Section - Now below hero with bold futuristic design */}
+      <GallerySection />
+
+      {/* About Section */}
+      <AboutSection />
+
+      {/* Artists Gallery */}
+      <ArtistsSection onArtistSelect={handleArtistSelect} />
 
       {/* Contact & Booking Section */}
-      <section className="py-32 px-6 bg-zinc-900/50">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-6xl font-black mb-8 glow-text">
-              READY TO GET<br />SAGED?
-            </h2>
-            <div className="w-32 h-1 bg-white mx-auto mb-12" />
-            
-            <p className="text-2xl text-white/80 mb-16 leading-relaxed">
-              Start your tattoo journey today. Book a consultation with our artists 
-              and bring your vision to life.
-            </p>
-
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  onClick={() => setIsBookingOpen(true)}
-                  size="lg"
-                  className="bg-white text-black hover:bg-white/90 text-2xl px-16 py-8 h-auto font-black tracking-wider uppercase transition-all duration-300 transform hover:shadow-2xl hover:shadow-white/20"
-                >
-                  <Calendar className="mr-4 h-8 w-8" />
-                  Start Booking
-                </Button>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ 
-                  scale: 1.1,
-                  rotate: [0, -5, 5, 0],
-                }}
-                whileTap={{ scale: 0.9 }}
-                animate={{ 
-                  y: [0, -5, 0],
-                }}
-                transition={{ 
-                  y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-                  hover: { duration: 0.3 }
-                }}
-              >
-                <Button
-                  onClick={handleWhatsAppCall}
-                  size="lg"
-                  className="bg-green-500 text-white hover:bg-green-400 text-2xl px-12 py-8 h-auto font-black tracking-wider uppercase transition-all duration-300 transform hover:shadow-2xl hover:shadow-green-500/30 relative overflow-hidden group whatsapp-pulse whatsapp-glow"
-                >
-                  {/* Animated background pulse */}
-                  <motion.div
-                    className="absolute inset-0 bg-green-400"
-                    animate={{ 
-                      scale: [1, 1.2, 1],
-                      opacity: [0, 0.3, 0]
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  <MessageCircle className="mr-4 h-8 w-8 relative z-10" />
-                  <span className="relative z-10">Talk Now</span>
-                  
-                  {/* Shine effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-                    animate={{ x: [-100, 300] }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  />
-                </Button>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <ContactSection onBookingClick={() => setIsBookingOpen(true)} />
 
       {/* Footer */}
       <Footer onBookingClick={() => setIsBookingOpen(true)} />
@@ -687,8 +655,8 @@ export function TattooStudio() {
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
         artists={STUDIO_CONFIG.artists}
+        preSelectedArtist={selectedArtist}
       />
-
     </div>
   );
 }

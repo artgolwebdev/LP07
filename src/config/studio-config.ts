@@ -1,8 +1,33 @@
 // Studio Configuration - Centralized constants and data
-export const STUDIO_CONFIG = {
+export const STUDIO_CONFIG: {
+  name: string;
+  tagline: string;
+  subtitle: string;
+  phone: string;
+  email: string;
+  address: string;
+  addressSubtext: string;
+  whatsappMessage: string;
+  social: {
+    instagram: string;
+    facebook: string;
+  };
+  openingHours: Array<{ day: string; hours: string }>;
+  heroImages: string[];
+  artists: Array<{
+    id: string;
+    name: string;
+    image: string;
+    specialties: string[];
+  }>;
+  navigation: Array<{ name: string; section: string }>;
+} = {
+  // Basic Info
   name: "SAGE",
-  tagline: "Tattoo Shop & Gallery",
-  subtitle: "Professional tattoo shop and gallery",
+  tagline: "Tattoo Shop",
+  subtitle: "Professional tattoo shop",
+  
+  // Contact Info
   phone: "+972 50-123-4567",
   email: "hello@sagetattoo.co.il",
   address: "Eilat Street 22, Tel Aviv-Yaffo",
@@ -23,33 +48,11 @@ export const STUDIO_CONFIG = {
     { day: "Sunday", hours: "10:00 - 18:00" }
   ],
   
-  // Images - Using public assets organized by artists and sections
-  images: {
-    studio: "assets/sections/studio/studio-1.jpg",
-    hero: [
-      "assets/heros-section.jpg",
-      "assets/hero-section-2.jpg"
-    ],
-    // Artist-specific images
-    groc: {
-      main: "assets/artists/groc/LAFLARE.mp4",
-      portfolio: [
-        "assets/artists/groc/groc-tattoo-1.jpg",
-        "assets/artists/groc/groc-tattoo-2.jpg",
-        "assets/artists/groc/groc-tattoo-3.jpg",
-        "assets/artists/groc/groc-tattoo-4.jpg"
-      ]
-    },
-    sunches: {
-      main: "assets/artists/sunches/sunches-tattoo-1.jpg",
-      portfolio: [
-        "assets/artists/sunches/sunches-tattoo-monstera-plant.jpg",
-        "assets/artists/sunches/sunches-tattoo-2.jpg",
-        "assets/artists/sunches/sunches-tattoo-3.jpg",
-        "assets/artists/sunches/sunches-tattoo-4.jpg"
-      ]
-    }
-  },
+  // Hero Images (for background slideshow)
+  heroImages: [
+    "assets/heros-section.jpg",
+    "assets/hero-section-2.jpg"
+  ],
   
   // Artists
   artists: [
@@ -57,21 +60,13 @@ export const STUDIO_CONFIG = {
       id: "groc",
       name: "GROC",
       image: "assets/artists/groc/LAFLARE.mp4",
-      specialties: ["Traditional", "Neo-Traditional", "Japanese"],
-      portfolio: [
-        "assets/artists/groc/groc-artwork-2.jpg",
-        "assets/artists/groc/groc-artwork-3.jpg",
-        "assets/artists/groc/groc-artwork-4.jpg"
-      ]
+      specialties: ["Traditional", "Neo-Traditional", "Japanese"]
     },
     {
       id: "2", 
       name: "SUNCHES",
       specialties: ["Fine Line", "Minimalist", "Botanical"],
-      image: "assets/artists/sunches/sunches.jpg",
-      portfolio: [
-        "assets/artists/sunches/sunches-tattoo-monstera-plant.jpg"
-      ]
+      image: "assets/artists/sunches/sunches.jpg"
     }
   ],
   
@@ -79,9 +74,9 @@ export const STUDIO_CONFIG = {
   navigation: [
     { name: "HOME", section: "hero" },
     { name: "ARTISTS", section: "artists" },
-    { name: "GALLERY", section: "gallery" }
+    { name: "CONTACT", section: "contact" }
   ]
-} as const;
+};
 
 // Export types for better type safety
 export type Artist = typeof STUDIO_CONFIG.artists[0];

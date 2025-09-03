@@ -1,6 +1,6 @@
-# 🚀 Deployment Guide - GitHub Pages
+# �� Deployment Guide - SAGE Tattoo Studio
 
-This guide will help you deploy your INK Studio landing page to GitHub Pages using the included GitHub Actions workflow.
+This guide will help you deploy the SAGE Tattoo Studio landing page to GitHub Pages.
 
 ## 📋 Prerequisites
 
@@ -110,7 +110,8 @@ To use a custom domain:
 - Images are optimized during build
 - CSS and JS are minified
 - Assets are cached for better performance
-- Consider using CDN for large images
+- Fancybox provides optimized image loading
+- Motion animations are optimized for performance
 
 ## 🔒 Security
 
