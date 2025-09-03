@@ -466,6 +466,8 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                             ? "font-['UnifrakturMaguntia'] tracking-[0.1em] text-lg bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white shadow-lg hover:shadow-xl hover:shadow-white/20" 
                             : artist.id === "sunches"
                             ? "artist-button-sunches"
+                            : artist.id === "derk"
+                            ? "artist-button-derk"
                             : "bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white shadow-lg hover:shadow-xl hover:shadow-white/20"
                         }`}
                         style={artist.id === "groc" ? { fontFamily: "'UnifrakturMaguntia', cursive" } : {}}
