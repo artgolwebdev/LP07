@@ -165,27 +165,34 @@
   }
 }
 
-/* ===== ARTIST BUTTON FONTS ===== */
+/* ===== ARTIST BUTTON STYLING ===== */
+
+/* Base artist button styles */
+.artist-button-base {
+  position: relative !important;
+  overflow: hidden !important;
+  text-transform: uppercase !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* GROC - UnifrakturMaguntia font */
 .artist-button-groc {
   font-family: 'UnifrakturMaguntia', cursive !important;
   letter-spacing: 0.1em;
   font-size: 1.125rem;
 }
 
-/* ===== SUNCHES BUTTON STYLING ===== */
+/* SUNCHES - Dark industrial style */
 .artist-button-sunches {
+  @extend .artist-button-base;
   background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 25%, #0a0a0a 50%, #1f1f1f 75%, #0a0a0a 100%) !important;
   color: #e0e0e0 !important;
   border: 2px solid #333333 !important;
-  position: relative !important;
-  overflow: hidden !important;
   font-weight: 800 !important;
   letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
   box-shadow: 
     0 0 15px rgba(0, 0, 0, 0.9),
     inset 0 0 15px rgba(255, 255, 255, 0.03) !important;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .artist-button-sunches::before {
@@ -232,32 +239,14 @@
   transition: all 0.1s ease !important;
 }
 
-@keyframes crosshatch {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 8px 8px, 6px 6px; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { 
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% { 
-    opacity: 0.8;
-    transform: scale(1.1);
-  }
-}
-
-/* ===== DERK BUTTON STYLING - NEOJAPANESE ===== */
+/* DERK - Neojapanese style */
 .artist-button-derk {
+  @extend .artist-button-base;
   background: linear-gradient(135deg, #8B0000 0%, #DC143C 25%, #8B0000 50%, #DC143C 75%, #8B0000 100%) !important;
   color: #FFD700 !important;
   border: 3px solid #FF4500 !important;
-  position: relative !important;
-  overflow: hidden !important;
   font-weight: 900 !important;
   letter-spacing: 0.25em !important;
-  text-transform: uppercase !important;
   box-shadow: 
     0 0 25px rgba(139, 0, 0, 0.8),
     inset 0 0 20px rgba(255, 215, 0, 0.1) !important;
@@ -313,32 +302,11 @@
   transition: all 0.1s ease !important;
 }
 
-@keyframes japanese-pattern {
-  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-  100% { background-position: 12px 12px, 8px 8px, 12px 12px, 8px 8px; }
-}
-
-@keyframes japanese-glow {
-  0%, 100% { 
-    opacity: 0.4;
-    transform: scale(1) rotate(0deg);
-  }
-  33% { 
-    opacity: 0.8;
-    transform: scale(1.1) rotate(120deg);
-  }
-  66% { 
-    opacity: 0.6;
-    transform: scale(0.9) rotate(240deg);
-  }
-}
-
-/* ===== JENYA BUTTON STYLING - CLASSIC NINTENDO BLUE ===== */
+/* JENYA - Classic Nintendo style */
 .artist-button-jenya {
   background: #0066CC !important;
   color: #E63946 !important;
   border: 3px solid #003366 !important;
-  position: relative !important;
   font-weight: 700 !important;
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
@@ -367,100 +335,22 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
 }
 
-/* ===== GOSHA BUTTON STYLING - TRADITIONAL BOLD ===== */
+/* GOSHA - Regular button (no custom styling) */
 .artist-button-gosha {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #1a1a1a 50%, #2d2d2d 75%, #1a1a1a 100%) !important;
-  color: #ffffff !important;
-  border: 3px solid #8B4513 !important;
-  position: relative !important;
-  overflow: hidden !important;
-  font-weight: 900 !important;
-  letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
-  box-shadow: 
-    0 0 20px rgba(139, 69, 19, 0.6),
-    inset 0 0 15px rgba(255, 255, 255, 0.05) !important;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  font-family: 'Inter', sans-serif !important;
-  border-radius: 0 !important;
+  /* Regular button styling - inherits default button styles */
 }
 
-.artist-button-gosha::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(139, 69, 19, 0.1) 4px, rgba(139, 69, 19, 0.1) 8px),
-    repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(255, 255, 255, 0.05) 4px, rgba(255, 255, 255, 0.05) 8px);
-  background-size: 8px 8px, 8px 8px;
-  animation: traditional-pattern 12s linear infinite;
-  pointer-events: none;
-}
-
-.artist-button-gosha::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(ellipse at 30% 30%, rgba(139, 69, 19, 0.2) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-  background-size: 150% 150%, 120% 120%;
-  animation: traditional-glow 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.artist-button-gosha:hover {
-  background: linear-gradient(135deg, #2d2d2d 0%, #404040 25%, #2d2d2d 50%, #404040 75%, #2d2d2d 100%) !important;
-  border-color: #D2691E !important;
-  color: #FFD700 !important;
-  transform: scale(1.02) translateY(-1px) !important;
-  box-shadow: 
-    0 8px 25px rgba(139, 69, 19, 0.8),
-    0 0 30px rgba(255, 215, 0, 0.3),
-    inset 0 0 20px rgba(139, 69, 19, 0.2) !important;
-}
-
-.artist-button-gosha:active {
-  transform: scale(0.98) translateY(1px) !important;
-  transition: all 0.1s ease !important;
-}
-
-@keyframes traditional-pattern {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 8px 8px, 8px 8px; }
-}
-
-@keyframes traditional-glow {
-  0%, 100% { 
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% { 
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
-/* ===== TACT BUTTON STYLING - TRADITIONAL TATTOO ===== */
+/* TACT - Traditional tattoo style */
 .artist-button-tact {
+  @extend .artist-button-base;
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #000000 50%, #1a1a1a 75%, #000000 100%) !important;
   color: #FFD700 !important;
   border: 2px solid #FFD700 !important;
-  position: relative !important;
-  overflow: hidden !important;
   font-weight: 800 !important;
   letter-spacing: 0.15em !important;
-  text-transform: uppercase !important;
   box-shadow: 
     0 0 15px rgba(255, 215, 0, 0.5),
     inset 0 0 10px rgba(255, 215, 0, 0.1) !important;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
   font-family: 'Inter', sans-serif !important;
   border-radius: 0 !important;
 }
@@ -511,32 +401,14 @@
   transition: all 0.1s ease !important;
 }
 
-@keyframes tattoo-pattern {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 6px 6px, 6px 6px; }
-}
-
-@keyframes tattoo-glow {
-  0%, 100% { 
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% { 
-    opacity: 0.9;
-    transform: scale(1.03);
-  }
-}
-
-/* ===== DANI BUTTON STYLING - NEO TRADITIONAL ILLUSTRATIVE ===== */
+/* DANI - Neo traditional illustrative style */
 .artist-button-dani {
+  @extend .artist-button-base;
   background: linear-gradient(135deg, #2E1B47 0%, #4A2C7A 25%, #2E1B47 50%, #4A2C7A 75%, #2E1B47 100%) !important;
   color: #E6B17A !important;
   border: 3px solid #E6B17A !important;
-  position: relative !important;
-  overflow: hidden !important;
   font-weight: 900 !important;
   letter-spacing: 0.2em !important;
-  text-transform: uppercase !important;
   box-shadow: 
     0 0 20px rgba(230, 177, 122, 0.6),
     inset 0 0 15px rgba(74, 44, 122, 0.2) !important;
@@ -593,11 +465,73 @@
   transition: all 0.1s ease !important;
 }
 
+/* ===== ANIMATION KEYFRAMES ===== */
+
+/* Crosshatch pattern animation */
+@keyframes crosshatch {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 8px 8px, 6px 6px; }
+}
+
+/* Pulse glow animation */
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* Japanese pattern animation */
+@keyframes japanese-pattern {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 12px 12px, 8px 8px, 12px 12px, 8px 8px; }
+}
+
+/* Japanese glow animation */
+@keyframes japanese-glow {
+  0%, 100% { 
+    opacity: 0.4;
+    transform: scale(1) rotate(0deg);
+  }
+  33% { 
+    opacity: 0.8;
+    transform: scale(1.1) rotate(120deg);
+  }
+  66% { 
+    opacity: 0.6;
+    transform: scale(0.9) rotate(240deg);
+  }
+}
+
+/* Tattoo pattern animation */
+@keyframes tattoo-pattern {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 6px 6px, 6px 6px; }
+}
+
+/* Tattoo glow animation */
+@keyframes tattoo-glow {
+  0%, 100% { 
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.9;
+    transform: scale(1.03);
+  }
+}
+
+/* Neo pattern animation */
 @keyframes neo-pattern {
   0% { background-position: 0 0, 0 0, 0 0, 0 0; }
   100% { background-position: 15px 15px, 12px 12px, 10px 10px, 10px 10px; }
 }
 
+/* Neo glow animation */
 @keyframes neo-glow {
   0%, 100% { 
     opacity: 0.3;
