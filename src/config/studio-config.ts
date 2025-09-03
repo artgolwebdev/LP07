@@ -24,7 +24,7 @@ export const STUDIO_CONFIG: {
 } = {
   // Basic Info
   name: "SAGE",
-  tagline: "Tattoo Shop",
+  tagline: "Tattoo Shop & Gallery",
   subtitle: "Professional tattoo shop",
   
   // Contact Info

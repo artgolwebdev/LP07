@@ -143,14 +143,14 @@ function AboutSection() {
     <section id="about" className="py-24 px-6 bg-zinc-900/50">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          className="grid md:grid-cols-2 gap-12 md:gap-16 items-center"
+          className="grid md:grid-cols-2 gap-12 md:gap-16 items-center py-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
           <div>
-            <h2 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-8 text-white tracking-tight py-4">
+            <h2 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-8 text-white tracking-tight py-1">
               WHERE ART<br />MEETS SKIN
             </h2>
             <div className="w-24 h-1.5 bg-white mb-8" />
@@ -424,7 +424,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                         muted
                         loop
                         playsInline
-                        className="w-full h-64 md:h-72 lg:h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       >
                         <source src={artist.image} type="video/mp4" />
                         {artist.name}
@@ -433,26 +433,26 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                       <ImageWithFallback 
                         src={artist.image} 
                         alt={artist.name}
-                        className="w-full h-64 md:h-72 lg:h-80 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       />
                     )}
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 group-hover:via-black/50 transition-all duration-300" />
-                    
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-lg md:text-xl lg:text-2xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
+                  </div>
+                  
+                  <div className="p-3 md:p-4">
+                    <div className="mb-3">
+                      <h3 className="text-lg md:text-xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
                         {artist.name}
                       </h3>
-                      <p className="text-sm md:text-base text-white/70 group-hover:text-white/90 transition-colors duration-300">
+                      <p className="text-sm md:text-base text-white/80 group-hover:text-white/90 transition-colors duration-300">
                         {artist.specialties.join(' • ')}
                       </p>
                     </div>
-                  </div>
-                  
-                  <div className="p-4 md:p-6">
+                    
                     <ArtistPortfolio 
                       artistId={artist.id} 
-                      className="mb-2"
+                      className="mb-3"
                     />
                     
                     <motion.div
