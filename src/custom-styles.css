@@ -170,3 +170,164 @@
   letter-spacing: 0.1em;
   font-size: 1.125rem;
 }
+
+/* ===== SUNCHES BUTTON STYLING ===== */
+.artist-button-sunches {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 25%, #0a0a0a 50%, #1f1f1f 75%, #0a0a0a 100%) !important;
+  color: #e0e0e0 !important;
+  border: 2px solid #333333 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  box-shadow: 
+    0 0 15px rgba(0, 0, 0, 0.9),
+    inset 0 0 15px rgba(255, 255, 255, 0.03) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.artist-button-sunches::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255, 255, 255, 0.05) 2px, rgba(255, 255, 255, 0.05) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px);
+  background-size: 8px 8px, 6px 6px;
+  animation: crosshatch 12s linear infinite;
+  pointer-events: none;
+}
+
+.artist-button-sunches::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  background-size: 150% 150%;
+  animation: pulse-glow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.artist-button-sunches:hover {
+  background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 25%, #1f1f1f 50%, #2a2a2a 75%, #1f1f1f 100%) !important;
+  border-color: #555555 !important;
+  color: #ffffff !important;
+  transform: scale(1.02) rotate(0.5deg) !important;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.95),
+    0 0 40px rgba(255, 255, 255, 0.15),
+    inset 0 0 30px rgba(255, 255, 255, 0.1) !important;
+}
+
+.artist-button-sunches:active {
+  transform: scale(0.98) rotate(-0.5deg) !important;
+  transition: all 0.1s ease !important;
+}
+
+@keyframes crosshatch {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 8px 8px, 6px 6px; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+/* ===== DERK BUTTON STYLING - NEOJAPANESE ===== */
+.artist-button-derk {
+  background: linear-gradient(135deg, #8B0000 0%, #DC143C 25%, #8B0000 50%, #DC143C 75%, #8B0000 100%) !important;
+  color: #FFD700 !important;
+  border: 3px solid #FF4500 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  box-shadow: 
+    0 0 25px rgba(139, 0, 0, 0.8),
+    inset 0 0 20px rgba(255, 215, 0, 0.1) !important;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.artist-button-derk::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.15) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgba(255, 69, 0, 0.12) 1px, transparent 1px),
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255, 215, 0, 0.08) 3px, rgba(255, 215, 0, 0.08) 6px),
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255, 69, 0, 0.06) 3px, rgba(255, 69, 0, 0.06) 6px);
+  background-size: 12px 12px, 8px 8px, 12px 12px, 8px 8px;
+  animation: japanese-pattern 15s linear infinite;
+  pointer-events: none;
+}
+
+.artist-button-derk::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba(255, 69, 0, 0.15) 0%, transparent 50%);
+  background-size: 200% 200%, 150% 150%;
+  animation: japanese-glow 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.artist-button-derk:hover {
+  background: linear-gradient(135deg, #DC143C 0%, #FF4500 25%, #DC143C 50%, #FF4500 75%, #DC143C 100%) !important;
+  border-color: #FFD700 !important;
+  color: #FFFFFF !important;
+  transform: scale(1.03) translateY(-3px) !important;
+  box-shadow: 
+    0 15px 35px rgba(139, 0, 0, 0.9),
+    0 0 50px rgba(255, 215, 0, 0.3),
+    inset 0 0 35px rgba(255, 215, 0, 0.2) !important;
+}
+
+.artist-button-derk:active {
+  transform: scale(0.97) translateY(1px) !important;
+  transition: all 0.1s ease !important;
+}
+
+@keyframes japanese-pattern {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 12px 12px, 8px 8px, 12px 12px, 8px 8px; }
+}
+
+@keyframes japanese-glow {
+  0%, 100% { 
+    opacity: 0.4;
+    transform: scale(1) rotate(0deg);
+  }
+  33% { 
+    opacity: 0.8;
+    transform: scale(1.1) rotate(120deg);
+  }
+  66% { 
+    opacity: 0.6;
+    transform: scale(0.9) rotate(240deg);
+  }
+}

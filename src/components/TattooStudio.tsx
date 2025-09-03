@@ -461,10 +461,12 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                     >
                       <Button
                         onClick={() => onArtistSelect(artist.id)}
-                        className={`w-full bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white transition-all duration-300 font-bold tracking-wider py-2 md:py-3 text-sm md:text-base shadow-lg hover:shadow-xl hover:shadow-white/20 ${
+                        className={`w-full transition-all duration-300 font-bold tracking-wider py-2 md:py-3 text-sm md:text-base ${
                           artist.id === "groc" 
-                            ? "font-['UnifrakturMaguntia'] tracking-[0.1em] text-lg" 
-                            : ""
+                            ? "font-['UnifrakturMaguntia'] tracking-[0.1em] text-lg bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white shadow-lg hover:shadow-xl hover:shadow-white/20" 
+                            : artist.id === "sunches"
+                            ? "artist-button-sunches"
+                            : "bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white shadow-lg hover:shadow-xl hover:shadow-white/20"
                         }`}
                         style={artist.id === "groc" ? { fontFamily: "'UnifrakturMaguntia', cursive" } : {}}
                       >
