@@ -1,132 +1,84 @@
-# �� Deployment Guide - SAGE Tattoo Studio
+# GitHub Pages Deployment Guide
 
-This guide will help you deploy the SAGE Tattoo Studio landing page to GitHub Pages.
+## 🚀 Quick Deployment
 
-## 📋 Prerequisites
+1. **Push your code to GitHub**
+   ```bash
+   git add .
+   git commit -m "SEO optimized tattoo studio landing page"
+   git push origin main
+   ```
 
-- GitHub repository with your project
-- GitHub Pages enabled in your repository
-- Node.js 18+ installed locally (for development)
+2. **Deploy to GitHub Pages**
+   ```bash
+   npm run deploy
+   ```
 
-## 🔧 Setup GitHub Pages
+3. **Configure GitHub Pages**
+   - Go to your repository settings
+   - Navigate to "Pages" section
+   - Set source to "Deploy from a branch"
+   - Select "gh-pages" branch
+   - Save
 
-### 1. Enable GitHub Pages
+## 📋 Pre-deployment Checklist
 
-1. Go to your repository on GitHub
-2. Click **Settings** tab
-3. Scroll down to **Pages** section
-4. Under **Source**, select **Deploy from a branch**
-5. Choose **main** or **master** branch
-6. Select **/ (root)** folder
-7. Click **Save**
+- [ ] Update `yourusername` in `index.html` meta tags
+- [ ] Update `yourusername` in `sitemap.xml`
+- [ ] Update `yourusername` in `robots.txt`
+- [ ] Update `homepage` in `package.json`
+- [ ] Ensure all assets are in `public/assets/` folder
 
-### 2. Configure GitHub Actions
+## 🔧 Configuration Files
 
-The workflow is already configured in `.github/workflows/deploy.yml`. It will:
-- Trigger on pushes to main/master branch
-- Build your React app
-- Deploy to GitHub Pages automatically
+### Update GitHub Username
+Replace `yourusername` with your actual GitHub username in:
+- `index.html` - Open Graph and Twitter meta tags
+- `sitemap.xml` - All URLs
+- `robots.txt` - Sitemap URL
+- `package.json` - Homepage field
 
-## 🚀 Automatic Deployment
+### Example:
+```html
+<!-- Before -->
+<meta property="og:url" content="https://yourusername.github.io/LP07/" />
 
-### What Happens Automatically
-
-1. **Push to main branch** → Triggers workflow
-2. **Workflow runs** → Builds and deploys
-3. **Site updates** → Available at `https://username.github.io/repo-name`
-
-### Workflow Details
-
-- **Build Job**: Installs dependencies and builds the project
-- **Deploy Job**: Deploys the built files to GitHub Pages
-- **Concurrency**: Prevents multiple deployments running simultaneously
-
-## 🛠️ Manual Deployment (Optional)
-
-If you prefer manual deployment:
-
-```bash
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
-
-# Deploy to GitHub Pages
-npm run deploy
+<!-- After -->
+<meta property="og:url" content="https://johndoe.github.io/LP07/" />
 ```
-
-## 📁 Build Output
-
-The build process creates a `build/` folder containing:
-- `index.html` - Main HTML file
-- `assets/` - JavaScript, CSS, and other assets
-- Static files and images
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-1. **Build fails**
-   - Check GitHub Actions logs
-   - Ensure all dependencies are in package.json
-   - Verify Node.js version compatibility
-
-2. **Site not updating**
-   - Wait a few minutes for deployment
-   - Check GitHub Actions status
-   - Clear browser cache
-
-3. **404 errors**
-   - Ensure GitHub Pages is enabled
-   - Check branch and folder settings
-   - Verify workflow file exists
-
-### Check Deployment Status
-
-1. Go to **Actions** tab in your repository
-2. Look for **Deploy to GitHub Pages** workflow
-3. Check the latest run status
-4. View logs for any errors
 
 ## 🌐 Custom Domain (Optional)
 
-To use a custom domain:
+If you want to use a custom domain:
 
-1. Add `CNAME` file in your repository root:
+1. Add `CNAME` file in `public/` folder:
    ```
    yourdomain.com
    ```
 
-2. Configure DNS records:
-   - Type: `CNAME`
-   - Name: `@`
-   - Value: `username.github.io`
+2. Update all URLs in meta tags to use your domain instead of GitHub Pages URL
 
-3. Update GitHub Pages settings with your domain
+## 📱 Testing
 
-## 📱 Performance Tips
+After deployment:
+1. Test on mobile devices
+2. Check meta tags with [Meta Tags Checker](https://metatags.io/)
+3. Validate structured data with [Google Rich Results Test](https://search.google.com/test/rich-results)
+4. Test page speed with [PageSpeed Insights](https://pagespeed.web.dev/)
 
-- Images are optimized during build
-- CSS and JS are minified
-- Assets are cached for better performance
-- Fancybox provides optimized image loading
-- Motion animations are optimized for performance
+## 🚨 Common Issues
 
-## 🔒 Security
+- **404 errors**: Ensure `base: '/LP07/'` in `vite.config.ts`
+- **Assets not loading**: Check file paths in `public/assets/`
+- **Meta tags not working**: Clear browser cache and test with meta tag checker
 
-- GitHub Pages provides HTTPS by default
-- No sensitive data should be in the repository
-- Use environment variables for API keys (if needed)
+## 📊 SEO Monitoring
 
-## 📞 Support
-
-If you encounter issues:
-1. Check GitHub Actions logs
-2. Review this deployment guide
-3. Check GitHub Pages documentation
-4. Open an issue in your repository
+- Submit sitemap to Google Search Console
+- Monitor Core Web Vitals
+- Track search rankings for target keywords
+- Monitor mobile usability
 
 ---
 
-**Happy Deploying! 🎉**
+**Need help?** Check the [GitHub Pages documentation](https://docs.github.com/en/pages)

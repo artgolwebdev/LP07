@@ -1,0 +1,20 @@
+{
+  "name": "SAGE Tattoo Studio",
+  "short_name": "SAGE Tattoo",
+  "description": "Professional tattoo studio in Tel Aviv-Yaffo featuring artists GROC & SUNCHES",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["business", "lifestyle", "art"],
+  "lang": "en",
+  "dir": "ltr"
+}

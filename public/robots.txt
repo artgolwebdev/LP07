@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://yourusername.github.io/LP07/sitemap.xml
+
+# Disallow admin or private areas (if any)
+Disallow: /admin/
+Disallow: /private/
+
+# Allow all assets
+Allow: /assets/
+Allow: /build/
