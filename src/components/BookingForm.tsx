@@ -47,6 +47,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
   const selectedArtist = artists.find(a => a.id === formData.artistId);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const visionTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Scroll to top function with smooth animation
   const scrollToTop = () => {
@@ -61,6 +62,25 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
   // Auto-scroll to top when step changes
   useEffect(() => {
     scrollToTop();
+  }, [currentStep]);
+
+  // Auto-focus on vision textarea when reaching step 2
+  useEffect(() => {
+    if (currentStep === 2) {
+      // Longer delay to ensure the component is fully rendered and animations are complete
+      const focusTimeout = setTimeout(() => {
+        if (visionTextareaRef.current) {
+          visionTextareaRef.current.focus();
+          // Also scroll the textarea into view
+          visionTextareaRef.current.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }
+      }, 800); // Increased delay to account for animations
+
+      return () => clearTimeout(focusTimeout);
+    }
   }, [currentStep]);
 
   // Handle pre-selected artist
@@ -181,8 +201,6 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
           {/* Top fade effect */}
           <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10" />
           
-          {/* Bottom fade effect */}
-          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-10" />
           
           {/* Form Steps */}
           <div className="p-6 pb-8 min-h-full">
@@ -252,76 +270,150 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                   <h3 className="text-xl font-bold text-white mb-8">Your Artist & Vision</h3>
                   
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    {/* Artist Details Section */}
+                  <div className="space-y-8">
+                    {/* Artist Details Section - Styled like "our artists" cards */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
-                      className="space-y-6"
                     >
-                      <div className="relative">
-                        <Card className="p-6 border-2 border-white/20 bg-white/5">
-                          <div className="flex items-start gap-6">
-                            <div className="relative">
-                              <ImageWithFallback 
-                                src={selectedArtist.image} 
-                                alt={selectedArtist.name} 
-                                className="w-20 h-20 object-cover rounded-full ring-2 ring-white/20" 
-                              />
-                              <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                                <Check className="h-4 w-4 text-white" />
-                              </div>
-                            </div>
-                            <div className="flex-1">
-                              <h4 className="text-xl font-bold text-white mb-2">{selectedArtist.name}</h4>
-                              <div className="flex flex-wrap gap-2 mb-3">
-                                {selectedArtist.specialties.map((specialty, index) => (
-                                  <span 
-                                    key={index}
-                                    className="px-3 py-1 bg-white/10 text-white/80 text-sm rounded-full border border-white/20"
-                                  >
-                                    {specialty}
-                                  </span>
-                                ))}
-                              </div>
-                              <p className="text-white/60 text-sm">
-                                Your selected artist specializes in {selectedArtist.specialties.join(' and ')} styles.
-                              </p>
-                            </div>
+                      <Card className="relative bg-gradient-to-br from-black via-zinc-900 to-black border border-white/20 overflow-hidden rounded-2xl shadow-lg">
+                        {/* Artistic Flowing Border Animation */}
+                        <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                          {/* Top Border Flow */}
+                          <motion.div 
+                            className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent"
+                            initial={{ width: 0, opacity: 0 }}
+                            animate={{ 
+                              width: "100%",
+                              opacity: 1
+                            }}
+                            transition={{ duration: 0.6, ease: "easeOut" }}
+                          />
+                          
+                          {/* Right Border Flow */}
+                          <motion.div 
+                            className="absolute top-0 right-0 w-0.5 bg-gradient-to-b from-transparent via-white to-transparent"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ 
+                              height: "100%",
+                              opacity: 1
+                            }}
+                            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                          />
+                          
+                          {/* Bottom Border Flow */}
+                          <motion.div 
+                            className="absolute bottom-0 right-0 h-0.5 bg-gradient-to-l from-transparent via-white to-transparent"
+                            initial={{ width: 0, opacity: 0 }}
+                            animate={{ 
+                              width: "100%",
+                              opacity: 1
+                            }}
+                            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                          />
+                          
+                          {/* Left Border Flow */}
+                          <motion.div 
+                            className="absolute bottom-0 left-0 w-0.5 bg-gradient-to-t from-transparent via-white to-transparent"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ 
+                              height: "100%",
+                              opacity: 1
+                            }}
+                            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+                          />
+                        </div>
+                        
+                        {/* Corner Glow Effects */}
+                        <motion.div 
+                          className="absolute top-0 left-0 w-3 h-3 rounded-tl-2xl border-l border-t border-white/0"
+                          animate={{ 
+                            borderColor: "rgba(255,255,255,0.8)",
+                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                          }}
+                          transition={{ duration: 0.4, delay: 0.1 }}
+                        />
+                        
+                        <motion.div 
+                          className="absolute top-0 right-0 w-3 h-3 rounded-tr-2xl border-r border-t border-white/0"
+                          animate={{ 
+                            borderColor: "rgba(255,255,255,0.8)",
+                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                          }}
+                          transition={{ duration: 0.4, delay: 0.3 }}
+                        />
+                        
+                        <motion.div 
+                          className="absolute bottom-0 right-0 w-3 h-3 rounded-br-2xl border-r border-b border-white/0"
+                          animate={{ 
+                            borderColor: "rgba(255,255,255,0.8)",
+                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                          }}
+                          transition={{ duration: 0.4, delay: 0.5 }}
+                        />
+                        
+                        <motion.div 
+                          className="absolute bottom-0 left-0 w-3 h-3 rounded-bl-2xl border-l border-b border-white/0"
+                          animate={{ 
+                            borderColor: "rgba(255,255,255,0.8)",
+                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
+                          }}
+                          transition={{ duration: 0.4, delay: 0.7 }}
+                        />
+                        
+                        {/* Inner Glow Effect */}
+                        <motion.div 
+                          className="absolute inset-0 rounded-2xl border border-white/0"
+                          animate={{ 
+                            borderColor: "rgba(255,255,255,0.3)",
+                            boxShadow: "inset 0 0 20px rgba(255,255,255,0.1)"
+                          }}
+                          transition={{ duration: 0.5, ease: "easeOut" }}
+                        />
+                        
+                        <div className="relative overflow-hidden">
+                          {selectedArtist.image.endsWith('.mp4') ? (
+                            <video
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              className="w-full h-32 object-cover transition-transform duration-700 ease-out"
+                            >
+                              <source src={selectedArtist.image} type="video/mp4" />
+                              {selectedArtist.name}
+                            </video>
+                          ) : (
+                            <ImageWithFallback 
+                              src={selectedArtist.image} 
+                              alt={selectedArtist.name}
+                              className="w-full h-32 object-cover transition-transform duration-700 ease-out"
+                            />
+                          )}
+                          
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-all duration-300" />
+                        </div>
+                        
+                        <div className="pb-4 px-3 md:px-4">
+                          <div className="mb-3">
+                            <h3 className="text-lg md:text-xl font-black text-white mb-2 transition-colors duration-300">
+                              {selectedArtist.name}
+                            </h3>
+                            <p className="text-sm md:text-base text-white/80 transition-colors duration-300">
+                              {selectedArtist.specialties.join(' • ')}
+                            </p>
                           </div>
-                        </Card>
-                      </div>
-
-                      {/* Artist Info Panel */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="p-4 bg-gradient-to-br from-white/5 to-white/10 border border-white/10 rounded-lg"
-                      >
-                        <h5 className="text-white/80 text-sm font-medium mb-3 uppercase tracking-wide flex items-center">
-                          <User className="h-4 w-4 mr-2" />
-                          Why This Artist?
-                        </h5>
-                        <ul className="space-y-2 text-xs text-white/60">
-                          <li className="flex items-center">
-                            <div className="w-1 h-1 bg-white/40 rounded-full mr-2"></div>
-                            Expert in {selectedArtist.specialties[0].toLowerCase()} techniques
-                          </li>
-                          <li className="flex items-center">
-                            <div className="w-1 h-1 bg-white/40 rounded-full mr-2"></div>
-                            Professional consultation included
-                          </li>
-                          <li className="flex items-center">
-                            <div className="w-1 h-1 bg-white/40 rounded-full mr-2"></div>
-                            Aftercare guidance provided
-                          </li>
-                        </ul>
-                      </motion.div>
+                          
+                          <div className="flex items-center gap-2 text-green-400 text-sm">
+                            <Check className="h-4 w-4" />
+                            <span>Selected Artist</span>
+                          </div>
+                        </div>
+                      </Card>
                     </motion.div>
 
-                    {/* Vision Description Section */}
+                    {/* Vision Description Section - Moved below artist info */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -334,16 +426,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                           Describe Your Vision
                         </Label>
                         <Textarea
-                          placeholder="Share your tattoo vision with us... 
-
-• What style are you looking for?
-• Any specific elements or symbols?
-• Size and placement preferences?
-• Color or black & grey?
-• Personal meaning or story behind it?"
+                          ref={visionTextareaRef}
+                          placeholder="Share your tattoo vision..."
                           value={formData.description}
                           onChange={(e) => updateFormData('description', e.target.value)}
-                          className="min-h-40 bg-white/5 border-white/20 text-white placeholder:text-white/40 resize-none"
+                          className="min-h-40 bg-white/5 border-white/20 text-white placeholder:text-white/40 resize-none focus:border-white/40 focus:bg-white/10 transition-all duration-300"
                         />
                       </div>
                       
@@ -396,8 +483,6 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       </div>
                     </motion.div>
                   </div>
-
-
                 </motion.div>
               )}
 
