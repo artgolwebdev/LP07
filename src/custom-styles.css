@@ -1,0 +1,172 @@
+/* Custom Styles for SAGE Tattoo Studio */
+
+/* ===== FONT IMPORTS ===== */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Wassimo+Graffiti&display=swap");
+
+/* ===== CUSTOM SCROLLBAR ===== */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 0px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+@media (max-width: 768px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .custom-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* ===== TEXT EFFECTS ===== */
+.glow-text {
+  text-shadow: 0 0 10px #ffffff80, 0 0 20px #ffffff4d, 0 0 30px #ffffff1a;
+  animation: 2s ease-in-out infinite alternate glow-pulse;
+}
+
+@keyframes glow-pulse {
+  from {
+    text-shadow: 0 0 10px #ffffff80, 0 0 20px #ffffff4d, 0 0 30px #ffffff1a;
+  }
+  to {
+    text-shadow: 0 0 15px #fffc, 0 0 25px #ffffff80, 0 0 35px #fff3;
+  }
+}
+
+.hero-text {
+  font-size: 3.5rem;
+  line-height: 1.1;
+}
+
+.section-heading {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .hero-text {
+    font-size: 4.5rem;
+    line-height: 1.1;
+  }
+  
+  .section-heading {
+    font-size: 3.5rem;
+    line-height: 1.2;
+  }
+}
+
+/* ===== FORM STYLES ===== */
+.contact-input-focus {
+  z-index: 10;
+  pointer-events: auto;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.contact-input-focus:focus {
+  z-index: 20;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px #ffffff1a;
+}
+
+.contact-input-focus:hover {
+  z-index: 15;
+}
+
+/* ===== ARTISTIC EFFECTS ===== */
+.artistic-gradient {
+  background: linear-gradient(135deg, #ffffff0d 0%, #ffffff26 50%, #ffffff0d 100%);
+}
+
+.ink-flow {
+  background: linear-gradient(45deg, #0000 0%, #ffffff0d 25%, #0000 50%, #ffffff0d 75%, #0000 100%) 0 0 / 200% 200%;
+  animation: 4s ease-in-out infinite ink-flow;
+}
+
+@keyframes ink-flow {
+  0%, 100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+.ink-drip {
+  background: linear-gradient(#0000 0%, #000 100%);
+}
+
+/* ===== WHATSAPP EFFECTS ===== */
+.whatsapp-pulse {
+  animation: 2s infinite whatsapp-pulse;
+}
+
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 #22c55eb3;
+  }
+  70% {
+    box-shadow: 0 0 0 20px #22c55e00;
+  }
+  100% {
+    box-shadow: 0 0 #22c55e00;
+  }
+}
+
+.whatsapp-glow {
+  filter: drop-shadow(0 0 20px #22c55e80);
+}
+
+/* ===== FLOATING ELEMENTS ===== */
+.floating-whatsapp {
+  z-index: 30;
+  animation: 3s ease-in-out infinite float;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ===== ARTIST BUTTON FONTS ===== */
+.artist-button-groc {
+  font-family: 'Wassimo Graffiti', cursive !important;
+  letter-spacing: 0.1em;
+  font-size: 1.125rem;
+}
