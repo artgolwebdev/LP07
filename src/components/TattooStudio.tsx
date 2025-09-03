@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Calendar, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
@@ -12,10 +12,8 @@ import { DynamicGallery } from "./DynamicGallery";
 import { ArtistPortfolio } from "./ArtistPortfolio";
 import { HeroGallery } from "./HeroGallery";
 
-// Hero Section Component
+// Hero Section Component with Background Video
 function HeroSection() {
-  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
-  
   // Smooth Parallax scroll effect
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 800], [0, -150]);
@@ -24,42 +22,26 @@ function HeroSection() {
   const textOpacity = useTransform(scrollY, [0, 400], [1, 0.2]);
   const titleScale = useTransform(scrollY, [0, 200], [1, 0.95]);
 
-  // Background changing effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHeroIndex((prev) => 
-        prev === STUDIO_CONFIG.heroImages.length - 1 ? 0 : prev + 1
-      );
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Background Image Slideshow */}
+      {/* Background Video */}
       <motion.div 
         className="absolute inset-0 z-0"
         style={{ y: heroY, scale: heroScale }}
       >
-        {/* Current Background Image */}
-        <motion.div
-          key={currentHeroIndex}
-          className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 2, ease: "easeInOut" }}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
         >
-          <ImageWithFallback 
-            src={STUDIO_CONFIG.heroImages[currentHeroIndex]} 
-            alt="SAGE Tattoo Studio" 
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
+          <source src="assets/dark-calli.mp4" type="video/mp4" />
+          SAGE Tattoo Studio Background
+        </video>
         
-        {/* Subtle gradient overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40" />
       </motion.div>
 
       {/* Hero Content Container */}
@@ -133,57 +115,11 @@ function HeroSection() {
   );
 }
 
-// Gallery Section Component with Bold Futuristic Design
+// Gallery Section Component
 function GallerySection() {
   return (
     <section id="gallery" className="py-1 pb-8 px-1 bg-gradient-to-b from-black via-zinc-900/30 to-black relative overflow-hidden">
-      {/* Futuristic Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Geometric Grid Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div 
-            className="w-full h-full" 
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: '60px 60px'
-            }} 
-          />
-        </div>
-        
-        {/* Floating Geometric Shapes */}
-        <motion.div 
-          className="absolute top-20 left-10 w-4 h-4 border-2 border-white/20 rounded-full"
-          animate={{ 
-            scale: [1, 1.5, 1],
-            opacity: [0.2, 0.4, 0.2],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div 
-          className="absolute top-40 right-20 w-6 h-6 border-2 border-white/15 transform rotate-45"
-          animate={{ 
-            scale: [1, 1.3, 1],
-            opacity: [0.15, 0.3, 0.15],
-            rotate: [45, 225, 405]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        />
-        <motion.div 
-          className="absolute bottom-20 left-1/4 w-3 h-3 bg-white/20 rounded-full"
-          animate={{ 
-            y: [0, -30, 0],
-            opacity: [0.2, 0.5, 0.2]
-          }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        />
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Gallery Container - No title/subtitle, just the gallery */}
         <motion.div
           className="relative"
           initial={{ opacity: 0, y: 30 }}
@@ -191,15 +127,8 @@ function GallerySection() {
           transition={{ delay: 0.3, duration: 0.8 }}
           viewport={{ once: true }}
         >
-          {/* Futuristic Border Frame */}
+          {/* Gallery Container */}
           <div className="relative bg-gradient-to-br from-zinc-900/50 via-black/30 to-zinc-900/50 rounded-3xl overflow-hidden border border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.1)]">
-            {/* Corner Accents - Made smaller */}
-            <div className="absolute top-1 left-1 w-4 h-4 border-l-2 border-t-2 border-white/40 rounded-tl" />
-            <div className="absolute top-1 right-1 w-4 h-4 border-r-2 border-t-2 border-white/40 rounded-tr" />
-            <div className="absolute bottom-1 left-1 w-4 h-4 border-l-2 border-b-2 border-white/40 rounded-bl" />
-            <div className="absolute bottom-1 right-1 w-4 h-4 border-l-2 border-b-2 border-white/40 rounded-br" />
-            
-            {/* Gallery Component */}
             <DynamicGallery className="" />
           </div>
         </motion.div>
@@ -221,7 +150,7 @@ function AboutSection() {
           viewport={{ once: true }}
         >
           <div>
-            <h2 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-8 text-white tracking-tight">
+            <h2 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black mb-8 text-white tracking-tight py-4">
               WHERE ART<br />MEETS SKIN
             </h2>
             <div className="w-24 h-1.5 bg-white mb-8" />
@@ -232,120 +161,13 @@ function AboutSection() {
             </p>
           </div>
           
-          <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-            {/* Enhanced Futuristic Video Grid */}
-            <div className="grid grid-cols-2 gap-3 lg:gap-4 p-3 lg:p-4 aspect-square">
-              {/* Video 1 - GROC Paint */}
-              <motion.div 
-                className="relative group aspect-square"
-                whileHover={{ 
-                  scale: 1.02,
-                  rotateY: 2,
-                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
-                >
-                  <source src="assets/sections/studio/groc-paint.mp4" type="video/mp4" />
-                  GROC Paint
-                </video>
-                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-              </motion.div>
-
-              {/* Video 2 - Party Video */}
-              <motion.div 
-                className="relative group aspect-square"
-                whileHover={{ 
-                  scale: 1.02,
-                  rotateY: -2,
-                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
-                >
-                  <source src="assets/sections/studio/party-video.mp4" type="video/mp4" />
-                  Party Video
-                </video>
-                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-              </motion.div>
-
-              {/* Video 3 - Party Video 2 */}
-              <motion.div 
-                className="relative group aspect-square"
-                whileHover={{ 
-                  scale: 1.02,
-                  rotateY: 2,
-                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
-                >
-                  <source src="assets/sections/studio/party-video-2.mp4" type="video/mp4" />
-                  Party Video 2
-                </video>
-                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-              </motion.div>
-
-              {/* Video 4 - Lady Monstera */}
-              <motion.div 
-                className="relative group aspect-square"
-                whileHover={{ 
-                  scale: 1.02,
-                  rotateY: -2,
-                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              >
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
-                >
-                  <source src="assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
-                  Lady Mostera
-                </video>
-                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
-              </motion.div>
+          <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 p-8">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-white mb-4">Our Studio</h3>
+              <p className="text-white/80 text-lg leading-relaxed">
+                Experience the perfect blend of creativity and professionalism in our modern studio space.
+              </p>
             </div>
-
-            {/* Central Futuristic Element */}
-            <motion.div 
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border border-white/20 rounded-full flex items-center justify-center z-30"
-              animate={{ 
-                scale: [1, 1.1, 1],
-                rotate: [0, 180, 360]
-              }}
-              transition={{ 
-                scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-                rotate: { duration: 8, repeat: Infinity, ease: "linear" }
-              }}
-            >
-              <div className="w-2 h-2 bg-white/40 rounded-full" />
-            </motion.div>
           </div>
         </motion.div>
       </div>
