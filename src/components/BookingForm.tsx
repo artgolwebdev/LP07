@@ -34,6 +34,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
     email: "",
     name: "",
     phone: "",
+    instagram: "",
     notes: "",
   });
 
@@ -107,7 +108,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
   }, [isOpen]);
 
   const nextStep = () => {
-    if (currentStep < 10) {
+    if (currentStep < 11) {
       setCurrentStep(currentStep + 1);
       setTimeout(() => scrollToTop(), 100);
     }
@@ -121,8 +122,9 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
       case 4: return formData.size !== "";
       case 5: return formData.selectedDate !== undefined && formData.time !== "";
       case 6: return formData.budget !== "";
-      case 7: return formData.name !== "" && formData.email !== "" && formData.phone !== "";
-      case 8: return true;
+      case 7: return formData.name !== "" && formData.email !== "";
+      case 8: return formData.phone !== "" || formData.instagram !== "";
+      case 9: return true;
       default: return false;
     }
   };
@@ -137,7 +139,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
   const handleSubmit = () => {
     setIsSubmitted(true);
     setTimeout(() => {
-      setCurrentStep(9);
+      setCurrentStep(10);
     }, 2000);
   };
 
@@ -166,7 +168,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className={`bg-black border border-white/20 w-full ${currentStep === 8 ? 'max-w-4xl' : 'max-w-2xl'} h-[90vh] flex flex-col rounded-lg overflow-hidden`}
+        className={`bg-black border border-white/20 w-full max-w-2xl h-[90vh] flex flex-col rounded-lg overflow-hidden`}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.1 }}
@@ -175,7 +177,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
         <div ref={headerRef} className="flex-shrink-0 p-6 border-b border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm">
           <div>
             <h2 className="text-2xl font-bold text-white">Book Your Session</h2>
-            <p className="text-white/60">Step {currentStep} of 9</p>
+            <p className="text-white/60">Step {currentStep} of 10</p>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} className="text-white hover:bg-white/10">
             <X className="h-6 w-6" />
@@ -184,12 +186,12 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
 
         {/* Fixed Progress Bar */}
         <div className="flex-shrink-0 h-1 bg-white/10">
-          <motion.div
-            className="h-full bg-white"
-            initial={{ width: 0 }}
-            animate={{ width: `${(currentStep / 9) * 100}%` }}
-            transition={{ duration: 0.3 }}
-          />
+                  <motion.div
+          className="h-full bg-white"
+          initial={{ width: 0 }}
+          animate={{ width: `${(currentStep / 10) * 100}%` }}
+          transition={{ duration: 0.3 }}
+        />
         </div>
 
         {/* Scrollable Form Steps Container */}
@@ -825,7 +827,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                 </motion.div>
               )}
 
-              {/* Step 7: Enhanced Contact Information */}
+              {/* Step 7: Name & Email */}
               {currentStep === 7 && (
                 <motion.div 
                   key="step7" 
@@ -842,75 +844,72 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     className="text-center space-y-4"
                   >
                     <h3 className="text-3xl font-bold text-white glow-text uppercase tracking-wider">
-                      Contact Information
+                      Basic Contact Information
                     </h3>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto opacity-60"></div>
                     <p className="text-white/70 text-lg">
-                      Let's make your vision a reality
+                      Let's start with your name and email
                     </p>
                   </motion.div>
 
                   {/* Contact Form */}
                   <div className="space-y-8">
-                    {/* Name & Email Row */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                      {/* Full Name */}
-                      <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="space-y-4"
-                      >
-                        <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
-                          <User className="h-5 w-5 mr-3" />
-                          Full Name
-                        </Label>
-                        <div className="relative tattoo-border">
-                          <Input
-                            placeholder="Your full name"
-                            value={formData.name}
-                            onChange={(e) => updateFormData('name', e.target.value)}
-                            className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
-                          />
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: formData.name ? 1 : 0 }}
-                            className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-20"
-                          >
-                            <Check className="h-5 w-5 text-green-400" />
-                          </motion.div>
-                        </div>
-                      </motion.div>
+                    {/* Full Name */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="space-y-4"
+                    >
+                      <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
+                        <User className="h-5 w-5 mr-3" />
+                        Full Name
+                      </Label>
+                      <div className="relative tattoo-border">
+                        <Input
+                          placeholder="Your full name"
+                          value={formData.name}
+                          onChange={(e) => updateFormData('name', e.target.value)}
+                          className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
+                        />
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: formData.name ? 1 : 0 }}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-20"
+                        >
+                          <Check className="h-5 w-5 text-green-400" />
+                        </motion.div>
+                      </div>
+                    </motion.div>
 
-                      {/* Email Address */}
-                      <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="space-y-4"
-                      >
-                        <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
-                          <Mail className="h-5 w-5 mr-3" />
-                          Email Address
-                        </Label>
-                        <div className="relative tattoo-border">
-                          <Input
-                            type="email"
-                            placeholder="your.email@example.com"
-                            value={formData.email}
-                            onChange={(e) => updateFormData('email', e.target.value)}
-                            className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
-                          />
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: formData.email ? 1 : 0 }}
-                            className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-20"
-                          >
-                            <Check className="h-5 w-5 text-green-400" />
-                          </motion.div>
-                        </div>
-                      </motion.div>
-                    </div>
+                    {/* Email Address */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="space-y-4"
+                    >
+                      <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
+                        <Mail className="h-5 w-5 mr-3" />
+                        Email Address
+                      </Label>
+                      <div className="relative tattoo-border">
+                        <Input
+                          type="email"
+                          placeholder="your.email@example.com"
+                          value={formData.email}
+                          onChange={(e) => updateFormData('email', e.target.value)}
+                          className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
+                        />
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: formData.email ? 1 : 0 }}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-20"
+                        >
+                          <Check className="h-5 w-5 text-green-400" />
+                        </motion.div>
+                      </div>
+                    </motion.div>
 
                     {/* Artistic Separator */}
                     <motion.div
@@ -926,11 +925,64 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                     </motion.div>
 
-                    {/* Phone Number - Full Width */}
+
+
+
+                  </div>
+
+                  {/* Contact Info Card */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="mt-8 p-6 bg-gradient-to-r from-white/5 via-white/10 to-white/5 border border-white/20 rounded-lg"
+                  >
+                    <div className="flex items-start gap-4">
+                      <Shield className="h-6 w-6 text-white/70 mt-1 flex-shrink-0" />
+                      <div>
+                        <h6 className="text-white font-bold mb-2 uppercase tracking-wide">Privacy & Communication</h6>
+                        <p className="text-white/70 text-sm leading-relaxed">
+                          Your contact information is securely protected and will only be used to coordinate your tattoo session. 
+                          We'll reach out within 24 hours to confirm your booking and discuss any details.
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+
+              {/* Step 8: Phone or Instagram */}
+              {currentStep === 8 && (
+                <motion.div 
+                  key="step8" 
+                  initial={{ opacity: 0, x: 20 }} 
+                  animate={{ opacity: 1, x: 0 }} 
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-8"
+                >
+                  {/* Header Section */}
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="text-center space-y-4"
+                  >
+                    <h3 className="text-3xl font-bold text-white glow-text uppercase tracking-wider">
+                      Contact Method
+                    </h3>
+                    <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto opacity-60"></div>
+                    <p className="text-white/70 text-lg">
+                      Choose your preferred way to stay in touch
+                    </p>
+                  </motion.div>
+
+                  {/* Contact Method Options */}
+                  <div className="space-y-8">
+                    {/* Phone Number Option */}
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
+                      transition={{ delay: 0.2 }}
                       className="space-y-4"
                     >
                       <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
@@ -955,48 +1007,50 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       </div>
                     </motion.div>
 
-                    {/* Artistic Separator 2 */}
+                    {/* Artistic Separator */}
                     <motion.div
                       initial={{ opacity: 0, scaleX: 0 }}
                       animate={{ opacity: 1, scaleX: 1 }}
-                      transition={{ delay: 0.45, duration: 0.8 }}
+                      transition={{ delay: 0.35, duration: 0.8 }}
                       className="flex items-center justify-center py-4"
                     >
                       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                       <div className="px-6">
-                        <div className="w-2 h-2 rounded-full bg-white/40"></div>
+                        <span className="text-white/40 text-sm uppercase tracking-wider">OR</span>
                       </div>
                       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                     </motion.div>
 
-                    {/* Additional Notes - Enhanced */}
+                    {/* Instagram Option */}
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
+                      transition={{ delay: 0.4 }}
                       className="space-y-4"
                     >
                       <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
                         <MessageCircle className="h-5 w-5 mr-3" />
-                        Additional Notes
-                        <span className="text-white/50 font-normal normal-case text-sm ml-2">(Optional)</span>
+                        Instagram Handle
                       </Label>
                       <div className="relative tattoo-border">
-                        <Textarea
-                          placeholder="Share any special requests, allergies, or additional information that will help us prepare for your session..."
-                          value={formData.notes}
-                          onChange={(e) => updateFormData('notes', e.target.value)}
-                          className="bg-gradient-to-br from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 min-h-32 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 resize-none contact-input-focus relative z-10"
+                        <Input
+                          type="text"
+                          placeholder="@yourusername"
+                          value={formData.instagram}
+                          onChange={(e) => updateFormData('instagram', e.target.value)}
+                          className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
                         />
                         <motion.div
                           initial={{ opacity: 0 }}
-                          animate={{ opacity: formData.notes ? 1 : 0 }}
-                          className="absolute right-4 top-4 pointer-events-none z-20"
+                          animate={{ opacity: formData.instagram ? 1 : 0 }}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-20"
                         >
                           <Check className="h-5 w-5 text-green-400" />
                         </motion.div>
                       </div>
                     </motion.div>
+
+
                   </div>
 
                   {/* Contact Info Card */}
@@ -1020,9 +1074,9 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                 </motion.div>
               )}
 
-              {/* Step 8: Review */}
-              {currentStep === 8 && (
-                <motion.div key="step8" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
+              {/* Step 9: Review */}
+              {currentStep === 9 && (
+                <motion.div key="step9" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                   <h3 className="text-xl font-bold text-white mb-6">Review Your Booking</h3>
                   <div className="space-y-6">
                     <Card className="p-6 border-white/20 bg-white/5">
@@ -1058,7 +1112,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                         </div>
                         <div>
                           <span className="text-white/60">Phone:</span>
-                          <span className="text-white ml-2">{formData.phone}</span>
+                          <span className="text-white ml-2">{formData.phone || 'Not provided'}</span>
+                        </div>
+                        <div>
+                          <span className="text-white/60">Instagram:</span>
+                          <span className="text-white ml-2">{formData.instagram || 'Not provided'}</span>
                         </div>
                         <div className="md:col-span-2">
                           <span className="text-white/60">Email:</span>
@@ -1072,13 +1130,42 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                         )}
                       </div>
                     </Card>
+
+                    {/* Additional Notes Section */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="space-y-4"
+                    >
+                      <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
+                        <MessageCircle className="h-5 w-5 mr-3" />
+                        Additional Notes
+                        <span className="text-white/50 font-normal normal-case text-sm ml-2">(Optional)</span>
+                      </Label>
+                      <div className="relative tattoo-border">
+                        <Textarea
+                          placeholder="Share any special requests, allergies, or additional information that will help us prepare for your session..."
+                          value={formData.notes}
+                          onChange={(e) => updateFormData('notes', e.target.value)}
+                          className="bg-gradient-to-br from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 min-h-32 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 resize-none contact-input-focus relative z-10"
+                        />
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: formData.notes ? 1 : 0 }}
+                          className="absolute right-4 top-4 pointer-events-none z-20"
+                        >
+                          <Check className="h-5 w-5 text-green-400" />
+                        </motion.div>
+                      </div>
+                    </motion.div>
                   </div>
                 </motion.div>
               )}
 
-              {/* Step 9: Success */}
-              {currentStep === 9 && (
-                <motion.div key="step9" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>
+              {/* Step 10: Success */}
+              {currentStep === 10 && (
+                <motion.div key="step10" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>
                   <div className="text-center py-12">
                     <motion.div
                       initial={{ scale: 0 }}
@@ -1103,34 +1190,34 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
         </div>
 
         {/* Fixed Navigation */}
-        {currentStep <= 8 && (
-          <div className="flex-shrink-0 p-6 border-t border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm">
-            {currentStep > 1 && currentStep <= 8 && (
-              <Button variant="ghost" onClick={prevStep} className="text-white hover:bg-white/10">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
-              </Button>
-            )}
-            
-            <div className="flex items-center space-x-4">
-              {canProceedToNextStep() && currentStep < 8 && (
-                <Button onClick={nextStep} className="bg-white text-black hover:bg-white/90">
-                  Next
-                  <ArrowRight className="h-4 w-4 ml-2" />
+        {currentStep <= 9 && (
+                      <div className="flex-shrink-0 p-6 border-t border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm">
+              {currentStep > 1 && currentStep <= 9 && (
+                <Button variant="ghost" onClick={prevStep} className="text-white hover:bg-white/10">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back
                 </Button>
               )}
               
-              {currentStep === 8 && (
-                <Button onClick={() => {
-                  handleSubmit();
-                  setTimeout(() => scrollToTop(), 100);
-                }} className="bg-white text-black hover:bg-white/90">
-                  Confirm Booking
-                  <Check className="h-4 w-4 ml-2" />
-                </Button>
-              )}
+              <div className="flex items-center space-x-4">
+                {canProceedToNextStep() && currentStep < 9 && (
+                  <Button onClick={nextStep} className="bg-white text-black hover:bg-white/90">
+                    Next
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                )}
+                
+                {currentStep === 9 && (
+                  <Button onClick={() => {
+                    handleSubmit();
+                    setTimeout(() => scrollToTop(), 100);
+                  }} className="bg-white text-black hover:bg-white/90">
+                    Confirm Booking
+                    <Check className="h-4 w-4 ml-2" />
+                  </Button>
+                )}
+              </div>
             </div>
-          </div>
         )}
       </motion.div>
     </motion.div>
