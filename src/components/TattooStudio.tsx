@@ -439,7 +439,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 group-hover:via-black/50 transition-all duration-300" />
                   </div>
                   
-                  <div className="p-3 md:p-4">
+                  <div className="pb-4 px-3 md:px-4">
                     <div className="mb-3">
                       <h3 className="text-lg md:text-xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
                         {artist.name}
@@ -480,7 +480,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                          }`}
                         style={artist.id === "groc" ? { fontFamily: "'UnifrakturMaguntia', cursive" } : {}}
                       >
-                        Book with {artist.name.split(' ')[0]}
+                        <span className="artist-book-text">Book with</span> {artist.name.split(' ')[0]}
                       </Button>
                     </motion.div>
                   </div>

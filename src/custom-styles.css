@@ -671,3 +671,10 @@
     transform: scale(0.95) rotate(240deg);
   }
 }
+
+/* ===== ARTIST BOOK BUTTON TEXT STYLING ===== */
+.artist-book-text {
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+}
