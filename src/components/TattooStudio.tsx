@@ -161,13 +161,120 @@ function AboutSection() {
             </p>
           </div>
           
-          <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 p-8">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold text-white mb-4">Our Studio</h3>
-              <p className="text-white/80 text-lg leading-relaxed">
-                Experience the perfect blend of creativity and professionalism in our modern studio space.
-              </p>
+          <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+            {/* Enhanced Futuristic Video Grid */}
+            <div className="grid grid-cols-2 gap-3 lg:gap-4 p-3 lg:p-4 aspect-square">
+              {/* Video 1 - GROC Paint */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: 2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/groc-paint.mp4" type="video/mp4" />
+                  GROC Paint
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
+
+              {/* Video 2 - Party Video */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: -2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/party-video.mp4" type="video/mp4" />
+                  Party Video
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
+
+              {/* Video 3 - Party Video 2 */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: 2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/party-video-2.mp4" type="video/mp4" />
+                  Party Video 2
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
+
+              {/* Video 4 - Lady Monstera */}
+              <motion.div 
+                className="relative group aspect-square"
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: -2,
+                  boxShadow: "0 0 40px rgba(255,255,255,0.3)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
+                >
+                  <source src="assets/sections/studio/lady-mostera.mp4" type="video/mp4" />
+                  Lady Mostera
+                </video>
+                <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
+              </motion.div>
             </div>
+
+            {/* Central Futuristic Element */}
+            <motion.div 
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 border border-white/20 rounded-full flex items-center justify-center z-30"
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ 
+                scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                rotate: { duration: 8, repeat: Infinity, ease: "linear" }
+              }}
+            >
+              <div className="w-2 h-2 bg-white/40 rounded-full" />
+            </motion.div>
           </div>
         </motion.div>
       </div>
