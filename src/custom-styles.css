@@ -425,3 +425,249 @@
     transform: scale(1.08) rotate(270deg);
   }
 }
+
+/* ===== GOSHA BUTTON STYLING - TRADITIONAL BOLD ===== */
+.artist-button-gosha {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #1a1a1a 50%, #2d2d2d 75%, #1a1a1a 100%) !important;
+  color: #ffffff !important;
+  border: 3px solid #8B4513 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  box-shadow: 
+    0 0 20px rgba(139, 69, 19, 0.6),
+    inset 0 0 15px rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-family: 'Inter', sans-serif !important;
+  border-radius: 0 !important;
+}
+
+.artist-button-gosha::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(139, 69, 19, 0.1) 4px, rgba(139, 69, 19, 0.1) 8px),
+    repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(255, 255, 255, 0.05) 4px, rgba(255, 255, 255, 0.05) 8px);
+  background-size: 8px 8px, 8px 8px;
+  animation: traditional-pattern 12s linear infinite;
+  pointer-events: none;
+}
+
+.artist-button-gosha::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(139, 69, 19, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  background-size: 150% 150%, 120% 120%;
+  animation: traditional-glow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.artist-button-gosha:hover {
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 25%, #2d2d2d 50%, #404040 75%, #2d2d2d 100%) !important;
+  border-color: #D2691E !important;
+  color: #FFD700 !important;
+  transform: scale(1.02) translateY(-1px) !important;
+  box-shadow: 
+    0 8px 25px rgba(139, 69, 19, 0.8),
+    0 0 30px rgba(255, 215, 0, 0.3),
+    inset 0 0 20px rgba(139, 69, 19, 0.2) !important;
+}
+
+.artist-button-gosha:active {
+  transform: scale(0.98) translateY(1px) !important;
+  transition: all 0.1s ease !important;
+}
+
+@keyframes traditional-pattern {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 8px 8px, 8px 8px; }
+}
+
+@keyframes traditional-glow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== TACT BUTTON STYLING - TRADITIONAL TATTOO ===== */
+.artist-button-tact {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #000000 50%, #1a1a1a 75%, #000000 100%) !important;
+  color: #FFD700 !important;
+  border: 2px solid #FFD700 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  box-shadow: 
+    0 0 15px rgba(255, 215, 0, 0.5),
+    inset 0 0 10px rgba(255, 215, 0, 0.1) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-family: 'Inter', sans-serif !important;
+  border-radius: 0 !important;
+}
+
+.artist-button-tact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255, 215, 0, 0.08) 3px, rgba(255, 215, 0, 0.08) 6px),
+    repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(255, 215, 0, 0.05) 3px, rgba(255, 215, 0, 0.05) 6px);
+  background-size: 6px 6px, 6px 6px;
+  animation: tattoo-pattern 10s linear infinite;
+  pointer-events: none;
+}
+
+.artist-button-tact::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 25% 25%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 75%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+  background-size: 120% 120%, 100% 100%;
+  animation: tattoo-glow 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.artist-button-tact:hover {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #1a1a1a 50%, #2d2d2d 75%, #1a1a1a 100%) !important;
+  border-color: #FFA500 !important;
+  color: #FFA500 !important;
+  transform: scale(1.01) translateY(-1px) !important;
+  box-shadow: 
+    0 6px 20px rgba(255, 215, 0, 0.7),
+    0 0 25px rgba(255, 215, 0, 0.4),
+    inset 0 0 15px rgba(255, 215, 0, 0.15) !important;
+}
+
+.artist-button-tact:active {
+  transform: scale(0.99) translateY(1px) !important;
+  transition: all 0.1s ease !important;
+}
+
+@keyframes tattoo-pattern {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 6px 6px, 6px 6px; }
+}
+
+@keyframes tattoo-glow {
+  0%, 100% { 
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.9;
+    transform: scale(1.03);
+  }
+}
+
+/* ===== DANI BUTTON STYLING - NEO TRADITIONAL ILLUSTRATIVE ===== */
+.artist-button-dani {
+  background: linear-gradient(135deg, #2E1B47 0%, #4A2C7A 25%, #2E1B47 50%, #4A2C7A 75%, #2E1B47 100%) !important;
+  color: #E6B17A !important;
+  border: 3px solid #E6B17A !important;
+  position: relative !important;
+  overflow: hidden !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  box-shadow: 
+    0 0 20px rgba(230, 177, 122, 0.6),
+    inset 0 0 15px rgba(74, 44, 122, 0.2) !important;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-family: 'Inter', sans-serif !important;
+  border-radius: 12px !important;
+}
+
+.artist-button-dani::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(230, 177, 122, 0.15) 2px, transparent 2px),
+    radial-gradient(circle at 80% 80%, rgba(74, 44, 122, 0.12) 2px, transparent 2px),
+    repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(230, 177, 122, 0.08) 5px, rgba(230, 177, 122, 0.08) 10px),
+    repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(74, 44, 122, 0.06) 5px, rgba(74, 44, 122, 0.06) 10px);
+  background-size: 15px 15px, 12px 12px, 10px 10px, 10px 10px;
+  animation: neo-pattern 16s linear infinite;
+  pointer-events: none;
+}
+
+.artist-button-dani::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 40% 40%, rgba(230, 177, 122, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 60% 60%, rgba(74, 44, 122, 0.2) 0%, transparent 60%);
+  background-size: 180% 180%, 140% 140%;
+  animation: neo-glow 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.artist-button-dani:hover {
+  background: linear-gradient(135deg, #4A2C7A 0%, #6B3FA0 25%, #4A2C7A 50%, #6B3FA0 75%, #4A2C7A 100%) !important;
+  border-color: #FFD700 !important;
+  color: #FFD700 !important;
+  transform: scale(1.03) translateY(-2px) !important;
+  box-shadow: 
+    0 10px 30px rgba(230, 177, 122, 0.8),
+    0 0 40px rgba(74, 44, 122, 0.5),
+    inset 0 0 25px rgba(230, 177, 122, 0.3) !important;
+}
+
+.artist-button-dani:active {
+  transform: scale(0.97) translateY(1px) !important;
+  transition: all 0.1s ease !important;
+}
+
+@keyframes neo-pattern {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 15px 15px, 12px 12px, 10px 10px, 10px 10px; }
+}
+
+@keyframes neo-glow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1) rotate(0deg);
+  }
+  33% { 
+    opacity: 0.7;
+    transform: scale(1.08) rotate(120deg);
+  }
+  66% { 
+    opacity: 0.5;
+    transform: scale(0.95) rotate(240deg);
+  }
+}
