@@ -282,7 +282,6 @@
     radial-gradient(ellipse at 30% 30%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
     radial-gradient(ellipse at 70% 70%, rgba(255, 69, 0, 0.15) 0%, transparent 50%);
   background-size: 200% 200%, 150% 150%;
-  animation: japanese-glow 6s ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -491,21 +490,6 @@
   100% { background-position: 12px 12px, 8px 8px, 12px 12px, 8px 8px; }
 }
 
-/* Japanese glow animation */
-@keyframes japanese-glow {
-  0%, 100% { 
-    opacity: 0.4;
-    transform: scale(1) rotate(0deg);
-  }
-  33% { 
-    opacity: 0.8;
-    transform: scale(1.1) rotate(120deg);
-  }
-  66% { 
-    opacity: 0.6;
-    transform: scale(0.9) rotate(240deg);
-  }
-}
 
 /* Tattoo pattern animation */
 @keyframes tattoo-pattern {
