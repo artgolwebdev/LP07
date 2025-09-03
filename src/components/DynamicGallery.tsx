@@ -50,7 +50,7 @@ function GalleryImage({ image, index }: {
       whileTap={{ scale: 0.95 }}
     >
       {/* Image Container - Made smaller */}
-      <div className="relative w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 overflow-hidden rounded-lg md:rounded-xl transition-all duration-500">
+      <div className="relative w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 overflow-hidden rounded-lg md:rounded-xl transition-all duration-500">
         <a
           href={image.src}
           data-fancybox="dynamic-gallery"
@@ -127,7 +127,7 @@ export function DynamicGallery({ className = "" }: DynamicGalleryProps) {
   const baseImages = getArtistImages();
 
   return (
-    <div className={`relative overflow-hidden p-1 ${className}`}>
+    <div className={`relative overflow-hidden p-0 ${className}`}>
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div 

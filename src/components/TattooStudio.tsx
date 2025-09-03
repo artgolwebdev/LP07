@@ -136,7 +136,7 @@ function HeroSection() {
 // Gallery Section Component with Bold Futuristic Design
 function GallerySection() {
   return (
-    <section id="gallery" className="py-6 px-6 bg-gradient-to-b from-black via-zinc-900/30 to-black relative overflow-hidden">
+    <section id="gallery" className="py-1 pb-8 px-1 bg-gradient-to-b from-black via-zinc-900/30 to-black relative overflow-hidden">
       {/* Futuristic Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Geometric Grid Pattern */}
@@ -194,10 +194,10 @@ function GallerySection() {
           {/* Futuristic Border Frame */}
           <div className="relative bg-gradient-to-br from-zinc-900/50 via-black/30 to-zinc-900/50 rounded-3xl overflow-hidden border border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.1)]">
             {/* Corner Accents - Made smaller */}
-            <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-white/40 rounded-tl" />
-            <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-white/40 rounded-tr" />
-            <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-white/40 rounded-bl" />
-            <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-white/40 rounded-br" />
+            <div className="absolute top-1 left-1 w-4 h-4 border-l-2 border-t-2 border-white/40 rounded-tl" />
+            <div className="absolute top-1 right-1 w-4 h-4 border-r-2 border-t-2 border-white/40 rounded-tr" />
+            <div className="absolute bottom-1 left-1 w-4 h-4 border-l-2 border-b-2 border-white/40 rounded-bl" />
+            <div className="absolute bottom-1 right-1 w-4 h-4 border-l-2 border-b-2 border-white/40 rounded-br" />
             
             {/* Gallery Component */}
             <DynamicGallery className="" />

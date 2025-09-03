@@ -31,7 +31,7 @@ export function HeroGallery() {
   const infiniteImages = [...featuredImages, ...featuredImages, ...featuredImages, ...featuredImages];
 
   return (
-    <section className="py-8 pb-4 px-6 bg-black relative overflow-hidden">
+    <section className="px-6 bg-black relative overflow-hidden">
       {/* Subtle grid background */}
       <div className="absolute inset-0 opacity-5">
         <div 
