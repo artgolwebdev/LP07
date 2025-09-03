@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, useAnimation } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
 import { Fancybox } from '@fancyapps/ui';
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -49,13 +49,13 @@ function GalleryImage({ image, index }: {
       }}
       whileTap={{ scale: 0.95 }}
     >
-      {/* Image Container */}
-      <div className="relative w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 overflow-hidden rounded-xl md:rounded-2xl transition-all duration-500 group-hover:ring-2 group-hover:ring-white/20">
+      {/* Image Container - Made smaller */}
+      <div className="relative w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 overflow-hidden rounded-lg md:rounded-xl transition-all duration-500">
         <a
           href={image.src}
           data-fancybox="dynamic-gallery"
           data-caption={`${image.artist} - ${image.category}`}
-          className="block w-full h-full"
+          className="block w-full h-full relative z-10"
         >
           <ImageWithFallback
             src={image.src}
@@ -67,15 +67,12 @@ function GalleryImage({ image, index }: {
         {/* Overlay Effects */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
         
-        {/* Artist Label */}
-        <div className="absolute bottom-2 left-2 right-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/40 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-          <span className="text-white/90 text-xs font-bold tracking-wider">
+        {/* Artist Label - Made smaller */}
+        <div className="absolute bottom-1 left-1 right-1 bg-black/70 backdrop-blur-md px-2 py-1 rounded border border-white/40 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-1 group-hover:translate-y-0">
+          <span className="text-white/90 text-xs font-medium tracking-wide">
             {image.artist}
           </span>
         </div>
-        
-        {/* Glow Effect */}
-        <div className="absolute inset-0 rounded-xl md:rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all duration-500" />
       </div>
     </motion.div>
   );
@@ -86,96 +83,51 @@ export function DynamicGallery({ className = "" }: DynamicGalleryProps) {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
-  const controls = useAnimation();
 
-  // Initialize Fancybox
+  // Initialize Fancybox - Fixed to wait for images to load
   useEffect(() => {
-    Fancybox.bind("[data-fancybox='dynamic-gallery']");
+    if (images.length > 0) {
+      // Small delay to ensure DOM is fully rendered
+      const timer = setTimeout(() => {
+        Fancybox.bind("[data-fancybox='dynamic-gallery']");
+      }, 100);
+
+      return () => {
+        clearTimeout(timer);
+        Fancybox.destroy();
+      };
+    }
 
     return () => {
       Fancybox.destroy();
     };
-  }, []);
+  }, [images.length]);
 
-  // Constants
-  const IMAGE_WIDTH = 176; // 160px image + 16px gap
-
-  // Create truly infinite gallery with seamless looping
-  const createInfiniteGallery = useCallback(() => {
+  useEffect(() => {
     const baseImages = getArtistImages();
-    if (baseImages.length === 0) return [];
-    
-    const setsNeeded = Math.ceil(window.innerWidth / IMAGE_WIDTH) + 4;
-    const infiniteImages: GalleryImage[] = [];
-    
-    for (let i = 0; i < setsNeeded; i++) {
-      baseImages.forEach((img) => {
-        infiniteImages.push({
-          ...img,
-          src: img.src,
-          alt: img.alt,
-          artist: img.artist,
-          category: img.category
-        });
-      });
+    if (baseImages.length > 0) {
+      // Create infinite loop by duplicating images multiple times
+      const infiniteImages = [
+        ...baseImages, 
+        ...baseImages, 
+        ...baseImages, 
+        ...baseImages, 
+        ...baseImages, 
+        ...baseImages
+      ];
+      setImages(infiniteImages);
     }
-    
-    return infiniteImages;
-  }, []);
-
-  useEffect(() => {
-    const infiniteImages = createInfiniteGallery();
-    setImages(infiniteImages);
     setIsLoading(false);
-  }, [createInfiniteGallery]);
-
-  useEffect(() => {
-    if (!isLoading && images.length > 0) {
-      const startInfiniteScroll = async () => {
-        const baseImages = getArtistImages();
-        const baseSetWidth = baseImages.length * IMAGE_WIDTH;
-        
-        await controls.start({
-          x: -baseSetWidth,
-          transition: {
-            duration: baseImages.length * 4,
-            repeat: Infinity,
-            ease: "linear"
-          }
-        });
-      };
-      
-      startInfiniteScroll();
-    }
-  }, [isLoading, images.length, controls]);
-
-  // Pause animation on hover for better user experience
-  const handleMouseEnter = useCallback(() => {
-    controls.stop();
-  }, [controls]);
-
-  const handleMouseLeave = useCallback(() => {
-    if (!isLoading && images.length > 0) {
-      const baseImages = getArtistImages();
-      const baseSetWidth = baseImages.length * IMAGE_WIDTH;
-      
-      controls.start({
-        x: -baseSetWidth,
-        transition: {
-          duration: baseImages.length * 4,
-          repeat: Infinity,
-          ease: "linear"
-        }
-      });
-    }
-  }, [controls, isLoading, images.length]);
+  }, []);
 
   if (isLoading) {
     return <LoadingSpinner className={className} />;
   }
 
+  const baseImages = getArtistImages();
+
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative overflow-hidden p-1 ${className}`}>
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div 
@@ -191,18 +143,18 @@ export function DynamicGallery({ className = "" }: DynamicGalleryProps) {
       </div>
 
       {/* Infinite Scrolling Gallery Container */}
-      <div 
-        className="relative"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div className="relative">
         {/* Gallery Track with True Infinity */}
         <div className="relative overflow-hidden" ref={containerRef}>
           <motion.div
-            className="flex gap-2 md:gap-3 lg:gap-4"
-            animate={controls}
-            style={{
-              width: `${images.length * IMAGE_WIDTH}px`
+            className="flex gap-1 md:gap-1.5 lg:gap-2"
+            animate={{ 
+              x: [-100 * baseImages.length, 0]
+            }}
+            transition={{ 
+              duration: 80,
+              repeat: Infinity,
+              ease: "linear"
             }}
           >
             {images.map((image, index) => (

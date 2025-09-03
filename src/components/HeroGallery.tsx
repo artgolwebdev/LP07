@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Fancybox } from "@fancyapps/ui";
@@ -14,17 +14,24 @@ export function HeroGallery() {
     "assets/artists/groc/groc-artwork-6.jpg"
   ];
 
-  // Initialize Fancybox
+  // Initialize Fancybox - Fixed to wait for images to load
   useEffect(() => {
-    Fancybox.bind("[data-fancybox='hero-gallery']");
+    // Small delay to ensure DOM is fully rendered
+    const timer = setTimeout(() => {
+      Fancybox.bind("[data-fancybox='hero-gallery']");
+    }, 100);
 
     return () => {
+      clearTimeout(timer);
       Fancybox.destroy();
     };
   }, []);
 
+  // Create infinite loop by duplicating images
+  const infiniteImages = [...featuredImages, ...featuredImages, ...featuredImages, ...featuredImages];
+
   return (
-    <section className="py-16 px-6 bg-black relative overflow-hidden">
+    <section className="py-8 pb-4 px-6 bg-black relative overflow-hidden">
       {/* Subtle grid background */}
       <div className="absolute inset-0 opacity-5">
         <div 
@@ -40,19 +47,6 @@ export function HeroGallery() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-            FEATURED ARTWORK
-          </h2>
-          <div className="w-24 h-1 bg-white mx-auto" />
-        </motion.div>
-
         {/* Autoscrolling Gallery */}
         <div className="relative overflow-hidden">
           <motion.div 
@@ -61,13 +55,12 @@ export function HeroGallery() {
               x: [0, -100 * featuredImages.length]
             }}
             transition={{ 
-              duration: 20 * featuredImages.length,
+              duration: 30,
               repeat: Infinity,
               ease: "linear"
             }}
           >
-            {/* Duplicate images for seamless loop */}
-            {[...featuredImages, ...featuredImages].map((image, index) => (
+            {infiniteImages.map((image, index) => (
               <motion.div
                 key={index}
                 className="group relative flex-shrink-0 w-64 md:w-80 aspect-square overflow-hidden rounded-xl cursor-pointer"
@@ -75,16 +68,17 @@ export function HeroGallery() {
                   scale: 1.05,
                   z: 10
                 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <a
                   href={image}
                   data-fancybox="hero-gallery"
-                  data-caption={`Featured artwork ${index + 1}`}
-                  className="block w-full h-full"
+                  data-caption={`Featured artwork ${(index % featuredImages.length) + 1}`}
+                  className="block w-full h-full relative z-10"
                 >
                   <ImageWithFallback
                     src={image}
-                    alt={`Featured artwork ${index + 1}`}
+                    alt={`Featured artwork ${(index % featuredImages.length) + 1}`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                 </a>
