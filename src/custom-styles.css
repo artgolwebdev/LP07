@@ -3,6 +3,7 @@
 /* ===== FONT IMPORTS ===== */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tiny5&display=swap");
 
 /* ===== CUSTOM SCROLLBAR ===== */
 .custom-scrollbar::-webkit-scrollbar {
@@ -329,5 +330,98 @@
   66% { 
     opacity: 0.6;
     transform: scale(0.9) rotate(240deg);
+  }
+}
+
+/* ===== JENYA BUTTON STYLING - NINTENDO INSPIRED ===== */
+.artist-button-jenya {
+  background: linear-gradient(135deg, #f96357 0%, #08bdde 25%, #f96357 50%, #08bdde 75%, #f96357 100%) !important;
+  color: #FFD700 !important;
+  border: 4px solid #08bdde !important;
+  position: relative !important;
+  overflow: hidden !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  box-shadow: 
+    0 0 25px rgba(249, 99, 87, 0.6),
+    inset 0 0 20px rgba(8, 189, 222, 0.2) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-family: 'Tiny5', monospace !important;
+  border-radius: 8px !important;
+}
+
+.artist-button-jenya::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(249, 99, 87, 0.2) 3px, transparent 3px),
+    radial-gradient(circle at 75% 75%, rgba(8, 189, 222, 0.15) 3px, transparent 3px),
+    radial-gradient(circle at 50% 50%, rgba(249, 99, 87, 0.1) 3px, transparent 3px),
+    repeating-linear-gradient(90deg, transparent, transparent 6px, rgba(249, 99, 87, 0.1) 6px, rgba(249, 99, 87, 0.1) 12px),
+    repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(8, 189, 222, 0.08) 6px, rgba(8, 189, 222, 0.08) 12px),
+    repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(249, 99, 87, 0.06) 4px, rgba(249, 99, 87, 0.06) 8px);
+  background-size: 20px 20px, 16px 16px, 24px 24px, 24px 24px, 16px 16px, 12px 12px;
+  animation: nintendo-pattern 18s linear infinite;
+  pointer-events: none;
+}
+
+.artist-button-jenya::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 30% 30%, rgba(249, 99, 87, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse at 70% 70%, rgba(8, 189, 222, 0.25) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(249, 99, 87, 0.2) 0%, transparent 80%);
+  background-size: 200% 200%, 150% 150%, 180% 180%;
+  animation: nintendo-glow 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.artist-button-jenya:hover {
+  background: linear-gradient(135deg, #08bdde 0%, #f96357 25%, #08bdde 50%, #f96357 75%, #08bdde 100%) !important;
+  border-color: #f96357 !important;
+  color: #FFD700 !important;
+  transform: scale(1.05) translateY(-2px) !important;
+  box-shadow: 
+    0 12px 30px rgba(249, 99, 87, 0.8),
+    0 0 40px rgba(8, 189, 222, 0.5),
+    inset 0 0 30px rgba(8, 189, 222, 0.3) !important;
+}
+
+.artist-button-jenya:active {
+  transform: scale(0.95) translateY(1px) !important;
+  transition: all 0.1s ease !important;
+}
+
+@keyframes nintendo-pattern {
+  0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  100% { background-position: 20px 20px, 16px 16px, 24px 24px, 24px 24px, 16px 16px, 12px 12px; }
+}
+
+@keyframes nintendo-glow {
+  0%, 100% { 
+    opacity: 0.4;
+    transform: scale(1) rotate(0deg);
+  }
+  25% { 
+    opacity: 0.8;
+    transform: scale(1.08) rotate(90deg);
+  }
+  50% { 
+    opacity: 0.6;
+    transform: scale(1.15) rotate(180deg);
+  }
+  75% { 
+    opacity: 0.9;
+    transform: scale(1.08) rotate(270deg);
   }
 }
