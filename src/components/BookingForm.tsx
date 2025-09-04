@@ -225,7 +225,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
         transition={{ delay: 0.1 }}
       >
         {/* Fixed Header */}
-        <div ref={headerRef} className="flex-shrink-0 p-6 border-b border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm">
+        <div ref={headerRef} className="flex-shrink-0 p-6 border-b border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm booking-form-header">
           <div>
             <h2 className="text-2xl font-bold text-white">{t('booking.title')}</h2>
             <p className="text-white/60">{t('booking.step')} {currentStep} {t('booking.of')} 10</p>
@@ -1259,10 +1259,10 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
 
         {/* Fixed Navigation */}
         {currentStep <= 9 && (
-                      <div className="flex-shrink-0 p-6 border-t border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm">
+                      <div className="flex-shrink-0 p-6 border-t border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm booking-navigation">
               {currentStep > 1 && currentStep <= 9 && (
                 <Button variant="ghost" onClick={prevStep} className="text-white hover:bg-white/10">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  <ArrowLeft className="h-4 w-4 mr-2 rtl-arrow" />
                   {t('booking.back')}
                 </Button>
               )}
@@ -1271,7 +1271,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                 {canProceedToNextStep() && currentStep < 9 && (
                   <Button onClick={nextStep} className="bg-white text-black hover:bg-white/90">
                     {t('booking.next')}
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                    <ArrowRight className="h-4 w-4 ml-2 rtl-arrow" />
                   </Button>
                 )}
                 

@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { detectBrowserLanguage, isRTL } from '../utils/languageUtils';
 
-export type Language = 'en' | 'ru' | 'fr';
+export type Language = 'en' | 'ru' | 'fr' | 'he';
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  detectBrowserLanguage: () => Language;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -17,21 +19,30 @@ interface LanguageProviderProps {
 export function LanguageProvider({ children }: LanguageProviderProps) {
   const [language, setLanguage] = useState<Language>('en');
 
-  // Load language from localStorage on mount
+
+  // Load language from localStorage on mount, fallback to browser language
   useEffect(() => {
     const savedLanguage = localStorage.getItem('sage-language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ru' || savedLanguage === 'fr')) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ru' || savedLanguage === 'fr' || savedLanguage === 'he')) {
+      console.log('🌍 Using saved language:', savedLanguage);
       setLanguage(savedLanguage);
+    } else {
+      // No saved language found, detect browser language
+      const browserLanguage = detectBrowserLanguage();
+      const browserLang = navigator.language || (navigator as any).userLanguage;
+      console.log('🌍 Browser language detected:', browserLang, '→ mapped to:', browserLanguage);
+      setLanguage(browserLanguage);
     }
   }, []);
 
   // Save language to localStorage when changed
   useEffect(() => {
     localStorage.setItem('sage-language', language);
-    // Update document language attribute
+    // Update document language and direction attributes
     const htmlElement = document.documentElement;
     if (htmlElement) {
       htmlElement.lang = language;
+      htmlElement.dir = isRTL(language) ? 'rtl' : 'ltr';
     }
   }, [language]);
 
@@ -42,7 +53,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, detectBrowserLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -565,6 +576,175 @@ function getTranslations(language: Language): Record<string, string> {
       // Availability Status
       'availability.available': 'Disponible',
       'availability.unavailable': 'Indisponible',
+    },
+    he: {
+      // Navigation
+      'nav.home': 'בית',
+      'nav.artists': 'אמנים',
+      'nav.contact': 'צור קשר',
+      'nav.book': 'הזמן',
+      'nav.book-session': 'הזמן את הפגישה שלך',
+
+      // Hero Section
+      'hero.title': 'SAGE',
+      'hero.tagline': 'סטודיו קעקועים וגלריה',
+      'hero.subtitle': 'סטודיו קעקועים מקצועי',
+
+      // About Section
+      'about.title': 'קעקועים ופירסינג מקצועיים',
+      'about.title.line1': 'קעקועים',
+      'about.title.line2': 'ופירסינג',
+      'about.title.line3': 'מקצועיים',
+      'about.description': 'ממוקם בתל אביב-יפו, SAGE מעצב קעקועים מקצועיים עם מגע אישי.',
+
+      // Artists Section
+      'artists.title': 'האמנים שלנו',
+      'artists.book-with': 'הזמן עם',
+
+      // Contact Section
+      'contact.title': 'מוכנים להיות SAGED?',
+      'contact.title.line1': 'מוכנים',
+      'contact.title.line2': 'להיות SAGED?',
+      'contact.start-booking': 'התחל הזמנה',
+      'contact.talk-now': 'דבר עכשיו',
+
+      // Footer
+      'footer.studio-hours': 'שעות הסטודיו',
+      'footer.find-us': 'מצא אותנו',
+      'footer.open-maps': 'פתח במפות',
+      'footer.navigate-waze': 'נווט עם Waze',
+      'footer.made-with': 'נוצר עם',
+      'footer.for-enthusiasts': 'לחובבי SAGE',
+      'footer.privacy': 'מדיניות פרטיות',
+      'footer.terms': 'תנאי שירות',
+
+      // Booking Form
+      'booking.title': 'הזמן את הפגישה שלך',
+      'booking.step': 'שלב',
+      'booking.of': 'מתוך',
+      'booking.choose-artist': 'בחר את האמן שלך',
+      'booking.artist-vision': 'האמן והחזון שלך',
+      'booking.reference-images': 'תמונות התייחסות',
+      'booking.share-inspiration': 'שתף תמונות השראה',
+      'booking.browse-files': 'עיין בקבצים',
+      'booking.describe-vision': 'תאר את החזון שלך',
+      'booking.vision-placeholder': 'שתף את החזון שלך לקעקוע...',
+      'booking.choose-placement': 'בחר מיקום',
+      'booking.choose-size': 'בחר גודל',
+      'booking.choose-datetime': 'בחר תאריך ושעה',
+      'booking.select-date': 'בחר תאריך',
+      'booking.available-times': 'זמנים זמינים',
+      'booking.choose-budget': 'בחר טווח תקציב',
+      'booking.basic-contact': 'מידע קשר בסיסי',
+      'booking.lets-start': 'בואו נתחיל עם השם והאימייל שלך',
+      'booking.full-name': 'שם מלא',
+      'booking.name-placeholder': 'השם המלא שלך',
+      'booking.email': 'כתובת אימייל',
+      'booking.email-placeholder': 'your.email@example.com',
+      'booking.contact-method': 'שיטת קשר',
+      'booking.choose-preferred': 'בחר את הדרך המועדפת שלך לשמור על קשר',
+      'booking.phone': 'מספר טלפון',
+      'booking.phone-placeholder': 'מספר הטלפון שלך',
+      'booking.instagram': 'שם משתמש באינסטגרם',
+      'booking.instagram-placeholder': '@yourusername',
+      'booking.review': 'סקור את ההזמנה שלך',
+      'booking.booking-summary': 'סיכום הזמנה',
+      'booking.additional-notes': 'הערות נוספות',
+      'booking.notes-placeholder': 'שתף כל בקשה מיוחדת, אלרגיות או מידע נוסף שיעזור לנו להתכונן לפגישה שלך...',
+      'booking.confirmed': 'ההזמנה אושרה!',
+      'booking.success-message': 'ההזמנה שלך נשלחה בהצלחה! נצור איתך קשר תוך 24 שעות לאישור פרטי הפגישה.',
+      'booking.artist': 'אמן',
+      'booking.placement': 'מיקום',
+      'booking.size': 'גודל',
+      'booking.budget': 'תקציב',
+      'booking.date': 'תאריך',
+      'booking.time': 'שעה',
+      'booking.name': 'שם',
+      'booking.phone-field': 'טלפון',
+      'booking.instagram-field': 'אינסטגרם',
+      'booking.email-field': 'אימייל',
+      'booking.vision': 'חזון',
+      'booking.not-provided': 'לא סופק',
+      'booking.optional': '(אופציונלי)',
+      'booking.back': 'חזור',
+      'booking.next': 'הבא',
+      'booking.confirm-booking': 'אשר הזמנה',
+      'booking.submitting': 'שולח...',
+      'booking.close': 'סגור',
+      'booking.selected-artist': 'אמן נבחר',
+      'booking.selecting-artist': 'בוחר אמן...',
+      'booking.selecting-placement': 'בוחר מיקום...',
+      'booking.selecting-size': 'בוחר גודל...',
+      'booking.selecting-time': 'בוחר שעה...',
+      'booking.selecting-budget': 'בוחר תקציב...',
+      'booking.available': 'זמין',
+      'booking.unavailable': 'לא זמין',
+
+      // Common
+      'common.or': 'או',
+      'common.privacy-communication': 'פרטיות ותקשורת',
+      'booking.privacy-text': 'מידע הקשר שלך מוגן בצורה מאובטחת וישמש רק לתיאום פגישת הקעקוע שלך. נצור איתך קשר תוך 24 שעות לאישור ההזמנה שלך ודיון בפרטים.',
+
+      // Studio Info
+      'studio.address': 'רחוב אילת 22, תל אביב-יפו',
+      'studio.phone': '+972 50-123-4567',
+      'studio.email': 'hello@sagetattoo.co.il',
+      'studio.powered-by': 'מופעל על ידי Groc&Sunches',
+      'studio.whatsapp-message': 'שלום! אני רוצה להזמין פגישת קעקוע ב-SAGE Tattoo. האם נוכל לקבוע פגישת ייעוץ?',
+
+      // Placement Options
+      'placement.arm': 'זרוע',
+      'placement.arm-desc': 'חלק עליון של הזרוע',
+      'placement.leg': 'רגל',
+      'placement.leg-desc': 'ירך או שוק',
+      'placement.back': 'גב',
+      'placement.back-desc': 'כל הגב',
+      'placement.chest': 'חזה',
+      'placement.chest-desc': 'חלק עליון של החזה',
+      'placement.shoulder': 'כתף',
+      'placement.shoulder-desc': 'שכמה',
+      'placement.forearm': 'אמה',
+      'placement.forearm-desc': 'חלק תחתון של הזרוע',
+      'placement.wrist': 'שורש כף היד',
+      'placement.wrist-desc': 'אזור שורש כף היד',
+      'placement.ankle': 'קרסול',
+      'placement.ankle-desc': 'מיקום קרסול',
+      'placement.neck': 'צוואר',
+      'placement.neck-desc': 'אזור הצוואר',
+      'placement.other': 'אחר',
+      'placement.other-desc': 'מיקום מותאם אישית',
+
+      // Size Options
+      'size.small': 'קטן (5-10ס״מ)',
+      'size.small-desc': 'פרטים עדינים',
+      'size.medium': 'בינוני (10-15ס״מ)',
+      'size.medium-desc': 'איזון מושלם',
+      'size.large': 'גדול (15-25ס״מ)',
+      'size.large-desc': 'הצהרה נועזת',
+      'size.extra-large': 'גדול מאוד (25ס״מ+)',
+      'size.extra-large-desc': 'קנבס מלא',
+
+      // Time Periods
+      'time.morning': 'בוקר',
+      'time.afternoon': 'צהריים',
+      'time.evening': 'ערב',
+
+      // Budget Options
+      'budget.basic': 'בסיסי',
+      'budget.standard': 'סטנדרטי',
+      'budget.premium': 'פרימיום',
+      'budget.luxury': 'לוקסוס',
+      'budget.consultation': 'ייעוץ',
+      'budget.small-pieces': 'עבודות קטנות',
+      'budget.medium-artwork': 'עבודות בינוניות',
+      'budget.large-designs': 'עיצובים גדולים',
+      'budget.full-sessions': 'פגישות מלאות',
+      'budget.custom-quote': 'מחיר מותאם אישית',
+      'budget.need-consultation': 'צריך ייעוץ',
+
+      // Availability Status
+      'availability.available': 'זמין',
+      'availability.unavailable': 'לא זמין',
     }
   };
 

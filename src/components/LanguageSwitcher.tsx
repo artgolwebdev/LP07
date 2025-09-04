@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Globe, ChevronDown, Check } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getBrowserLanguageInfo } from '../utils/languageUtils';
 
 interface LanguageOption {
-  code: 'en' | 'ru' | 'fr';
+  code: 'en' | 'ru' | 'fr' | 'he';
   name: string;
   flag: string;
   iso2: string;
@@ -28,6 +29,12 @@ const languages: LanguageOption[] = [
     name: 'French',
     flag: '🇫🇷',
     iso2: 'FR'
+  },
+  {
+    code: 'he',
+    name: 'Hebrew',
+    flag: '🇮🇱',
+    iso2: 'HE'
   }
 ];
 
@@ -35,6 +42,16 @@ export const LanguageSwitcher = memo(function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  
+  // Development mode: log browser language info
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      const browserInfo = getBrowserLanguageInfo();
+      if (browserInfo) {
+        console.log('🌍 Browser Language Info:', browserInfo);
+      }
+    }
+  }, []);
 
   const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
 
@@ -52,7 +69,7 @@ export const LanguageSwitcher = memo(function LanguageSwitcher() {
     };
   }, []);
 
-  const handleLanguageChange = (langCode: 'en' | 'ru' | 'fr') => {
+  const handleLanguageChange = (langCode: 'en' | 'ru' | 'fr' | 'he') => {
     setLanguage(langCode);
     setIsOpen(false);
   };
@@ -74,7 +91,7 @@ export const LanguageSwitcher = memo(function LanguageSwitcher() {
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown className="h-4 w-4 rtl-arrow" />
         </motion.div>
       </motion.button>
 
