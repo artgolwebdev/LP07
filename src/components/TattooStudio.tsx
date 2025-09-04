@@ -263,42 +263,216 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
   return (
     <section id="artists" className="py-20 px-6 bg-zinc-900/50">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 100, scale: 0.8 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <motion.h2 
-            className="text-6xl md:text-7xl lg:text-8xl font-black mb-4 text-white tracking-tight"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+        <div className="text-center mb-20 relative">
+          {/* Futuristic Background Grid */}
+          <motion.div
+            className="absolute inset-0 opacity-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.2 }}
+            transition={{ duration: 2, delay: 0.5 }}
             viewport={{ once: true }}
           >
-            <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
-              OUR ARTISTS
+            <div className="grid grid-cols-12 gap-4 h-full">
+              {Array.from({ length: 144 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="border border-cyan-400/30"
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ 
+                    duration: 0.1, 
+                    delay: i * 0.01,
+                    ease: "easeOut"
+                  }}
+                  viewport={{ once: true }}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Glitch Overlay */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.1, delay: 0.8 }}
+            viewport={{ once: true }}
+            animate={{
+              opacity: [0, 1, 0, 1, 0],
+              x: [0, -2, 2, -1, 0],
+              y: [0, 1, -1, 0.5, 0]
+            }}
+            transition={{
+              duration: 0.3,
+              delay: 0.8,
+              repeat: 2,
+              repeatDelay: 0.1
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent transform -skew-x-12" />
+          </motion.div>
+
+          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-4 text-white tracking-tight relative z-10">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+              {["OUR", "ARTISTS"].map((word, wordIndex) => (
+                <motion.span
+                  key={word}
+                  className="inline-block mr-4 relative"
+                  initial={{ 
+                    opacity: 0, 
+                    y: 200,
+                    rotateX: -90,
+                    scale: 0.1,
+                    filter: "blur(20px)"
+                  }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: 0,
+                    rotateX: 0,
+                    scale: 1,
+                    filter: "blur(0px)"
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    delay: wordIndex * 0.6,
+                    ease: [0.25, 0.1, 0.25, 1],
+                    times: [0, 0.3, 0.7, 1]
+                  }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  whileHover={{
+                    scale: 1.05,
+                    rotateX: 5,
+                    textShadow: "0 0 30px #00ffff, 0 0 60px #0080ff, 0 0 90px #8000ff",
+                    filter: "drop-shadow(0 0 20px #00ffff)",
+                    transition: { duration: 0.3, ease: "easeOut" }
+                  }}
+                >
+                  {/* Holographic Effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-600/20 blur-sm"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1.1 }}
+                    transition={{ duration: 1, delay: wordIndex * 0.6 + 0.3 }}
+                    viewport={{ once: true }}
+                    animate={{
+                      opacity: [0.3, 0.6, 0.3],
+                      scale: [1.1, 1.2, 1.1]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  {word.split("").map((letter, letterIndex) => (
+                    <motion.span
+                      key={`${word}-${letterIndex}`}
+                      className="inline-block relative"
+                      initial={{ 
+                        opacity: 0, 
+                        y: 150,
+                        rotateZ: -180,
+                        scale: 0.1,
+                        skewY: 45,
+                        x: Math.random() * 200 - 100,
+                        filter: "blur(15px) brightness(0)"
+                      }}
+                      whileInView={{ 
+                        opacity: 1, 
+                        y: 0,
+                        rotateZ: 0,
+                        scale: 1,
+                        skewY: 0,
+                        x: 0,
+                        filter: "blur(0px) brightness(1)"
+                      }}
+                      transition={{
+                        duration: 1.2,
+                        delay: wordIndex * 0.6 + letterIndex * 0.1,
+                        ease: [0.25, 0.1, 0.25, 1],
+                        times: [0, 0.2, 0.8, 1]
+                      }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      whileHover={{
+                        scale: 1.2,
+                        rotateZ: 10,
+                        skewY: 5,
+                        y: -5,
+                        color: "#00ffff",
+                        textShadow: "0 0 20px #00ffff, 0 0 40px #0080ff, 0 0 60px #8000ff",
+                        filter: "drop-shadow(0 0 15px #00ffff) brightness(1.5)",
+                        transition: { 
+                          duration: 0.2, 
+                          ease: "easeOut",
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 10
+                        }
+                      }}
+                      whileTap={{
+                        scale: 0.95,
+                        rotateZ: -3,
+                        transition: { duration: 0.1 }
+                      }}
+                      style={{ 
+                        display: "inline-block",
+                        transformOrigin: "center center",
+                        fontFamily: "inherit"
+                      }}
+                    >
+                      {/* Matrix-style Digital Rain Effect */}
+                      <motion.div
+                        className="absolute inset-0 overflow-hidden"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: wordIndex * 0.6 + letterIndex * 0.1 + 0.5 }}
+                        viewport={{ once: true }}
+                      >
+                        <motion.div
+                          className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent"
+                          initial={{ y: "-100%" }}
+                          whileInView={{ y: "100%" }}
+                          transition={{ 
+                            duration: 0.8, 
+                            delay: wordIndex * 0.6 + letterIndex * 0.1 + 0.5,
+                            ease: "easeInOut"
+                          }}
+                          viewport={{ once: true }}
+                        />
+                      </motion.div>
+                      
+                      {letter}
+                    </motion.span>
+                  ))}
+                </motion.span>
+              ))}
             </span>
-          </motion.h2>
-        </motion.div>
+          </h2>
+
+          {/* Cyberpunk Scan Line */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+            initial={{ x: "-100%" }}
+            whileInView={{ x: "100%" }}
+            transition={{ duration: 1.5, delay: 1.2, ease: "easeInOut" }}
+            viewport={{ once: true }}
+          />
+          
+          {/* Bottom Scan Line */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+            initial={{ x: "100%" }}
+            whileInView={{ x: "-100%" }}
+            transition={{ duration: 1.5, delay: 1.8, ease: "easeInOut" }}
+            viewport={{ once: true }}
+          />
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
           {STUDIO_CONFIG.artists.map((artist, index) => (
-            <motion.div
-              key={artist.id}
-              initial={{ opacity: 0, y: 80, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 1, delay: index * 0.15, ease: "easeOut" }}
-              viewport={{ once: true }}
-            >
-              <motion.div
-                className="relative group"
-                initial={{ opacity: 0, y: 80, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 1, delay: index * 0.15, ease: "easeOut" }}
-                viewport={{ once: true }}
-              >
+            <div key={artist.id}>
+              <div className="relative group">
                 <Card className="relative bg-gradient-to-br from-black via-zinc-900 to-black border border-white/20 overflow-hidden rounded-2xl shadow-lg group">
                   {/* Artistic Flowing Border Animation */}
                   <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
@@ -462,8 +636,8 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                     </motion.div>
                   </div>
                 </Card>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
