@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { MapPin, Phone, Mail, Instagram, Facebook, Clock, Heart } from "lucide-react";
 import { Button } from "./ui/button";
+import { useLanguage } from "../contexts/LanguageContext";
 import { STUDIO_CONFIG } from "../config/studio-config";
 
 interface FooterProps {
@@ -9,6 +10,7 @@ interface FooterProps {
 }
 
 export function Footer({ onBookingClick }: FooterProps) {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
@@ -17,9 +19,9 @@ export function Footer({ onBookingClick }: FooterProps) {
   ];
 
   const contactInfo = [
-    { icon: MapPin, text: STUDIO_CONFIG.address, subtext: STUDIO_CONFIG.addressSubtext },
-    { icon: Phone, text: STUDIO_CONFIG.phone, subtext: "Call or WhatsApp" },
-    { icon: Mail, text: STUDIO_CONFIG.email, subtext: "Quick response guaranteed" },
+    { icon: MapPin, text: t('studio.address'), subtext: t('studio.powered-by') },
+    { icon: Phone, text: t('studio.phone'), subtext: "Call or WhatsApp" },
+    { icon: Mail, text: t('studio.email'), subtext: "Quick response guaranteed" },
   ];
 
   const openingHours = STUDIO_CONFIG.openingHours;
@@ -135,8 +137,7 @@ export function Footer({ onBookingClick }: FooterProps) {
               {STUDIO_CONFIG.name}
             </motion.h3>
             <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-md">
-              {STUDIO_CONFIG.subtitle}. Professional tattoo artists creating timeless pieces 
-              with precision, passion, and uncompromising quality since 2018.
+              {t('hero.subtitle')}. {t('about.description')}
             </p>
             
             <motion.div
@@ -149,7 +150,7 @@ export function Footer({ onBookingClick }: FooterProps) {
                 size="lg"
                 className="bg-white text-black hover:bg-white/90 font-black tracking-wider uppercase px-8 py-6"
               >
-                Book Your Session
+                {t('nav.book-session')}
               </Button>
             </motion.div>
 
@@ -181,7 +182,7 @@ export function Footer({ onBookingClick }: FooterProps) {
             viewport={{ once: true }}
           >
             <h4 className="text-xl font-bold mb-6 text-white uppercase tracking-wider">
-              Contact
+              {t('nav.contact')}
             </h4>
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
@@ -223,7 +224,7 @@ export function Footer({ onBookingClick }: FooterProps) {
               <div className="flex items-center gap-3 mb-8">
                 <Clock className="h-7 w-7 text-white" />
                 <h3 className="text-2xl font-black text-white uppercase tracking-wider glow-text">
-                  Studio Hours
+                  {t('footer.studio-hours')}
                 </h3>
               </div>
               <div className="space-y-4">
@@ -258,7 +259,7 @@ export function Footer({ onBookingClick }: FooterProps) {
               <div className="flex items-center gap-3 mb-8">
                 <MapPin className="h-7 w-7 text-white" />
                 <h3 className="text-2xl font-black text-white uppercase tracking-wider glow-text">
-                  Find Us
+                  {t('footer.find-us')}
                 </h3>
               </div>
               
@@ -299,7 +300,7 @@ export function Footer({ onBookingClick }: FooterProps) {
                   transition={{ delay: 0.6 }}
                   viewport={{ once: true }}
                 >
-                  Open in Maps
+                  {t('footer.open-maps')}
                 </motion.a>
                 <motion.a
                   href="https://waze.com/ul?q=Eilat+Street+22,+Tel+Aviv-Yaffo,+Israel"
@@ -313,7 +314,7 @@ export function Footer({ onBookingClick }: FooterProps) {
                   transition={{ delay: 0.8 }}
                   viewport={{ once: true }}
                 >
-                  Navigate with Waze
+                  {t('footer.navigate-waze')}
                 </motion.a>
               </div>
             </motion.div>
@@ -330,14 +331,14 @@ export function Footer({ onBookingClick }: FooterProps) {
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2 text-white/60">
-              <span>&copy; {currentYear} SAGE Studio. All rights reserved.</span>
+              <span>&copy; {currentYear} {STUDIO_CONFIG.name} Studio. All rights reserved.</span>
             </div>
             
             <motion.div
               className="flex items-center gap-2 text-white/60"
               whileHover={{ scale: 1.05 }}
             >
-              <span>Made with</span>
+              <span>{t('footer.made-with')}</span>
               <motion.div
                 animate={{
                   scale: [1, 1.2, 1],
@@ -350,7 +351,7 @@ export function Footer({ onBookingClick }: FooterProps) {
               >
                 <Heart className="h-4 w-4 text-red-500 fill-red-500" />
               </motion.div>
-              <span>for SAGE enthusiasts</span>
+              <span>{t('footer.for-enthusiasts')}</span>
             </motion.div>
 
             <div className="flex gap-6 text-sm text-white/60">
@@ -359,14 +360,14 @@ export function Footer({ onBookingClick }: FooterProps) {
                 className="hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
               >
-                Privacy Policy
+                {t('footer.privacy')}
               </motion.a>
               <motion.a
                 href="#"
                 className="hover:text-white transition-colors"
                 whileHover={{ scale: 1.05 }}
               >
-                Terms of Service
+                {t('footer.terms')}
               </motion.a>
             </div>
           </div>

@@ -7,11 +7,13 @@ import { BookingForm } from "./BookingForm";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { useLanguage } from "../contexts/LanguageContext";
 import { STUDIO_CONFIG } from "../config/studio-config";
 import { ArtistPortfolio } from "./ArtistPortfolio";
 
 // Hero Section Component with Background Video
 function HeroSection() {
+  const { t } = useLanguage();
   // Smooth Parallax scroll effect
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 800], [0, -150]);
@@ -94,7 +96,7 @@ function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            {STUDIO_CONFIG.tagline}
+            {t('hero.tagline')}
           </motion.p>
         </motion.div>
       </div>
@@ -116,25 +118,33 @@ function HeroSection() {
 
 // About Section Component
 function AboutSection() {
+  const { t } = useLanguage();
   return (
-    <section id="about" className="py-24 px-6 bg-zinc-900/50">
+    <section id="about" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 bg-zinc-900/50">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          className="grid md:grid-cols-2 gap-12 md:gap-16 items-center py-4"
+          className="grid md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center py-4"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
           <div>
-                         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 md:mb-8 text-white tracking-tight py-1 leading-tight">
-               PROFESSIONAL<br />TATTOO &<br className="sm:hidden" /> PIERCING
-             </h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-black mb-6 md:mb-8 text-white tracking-tight py-1 leading-tight">
+              <div className="space-y-0.5 sm:space-y-1">
+                <div className="block leading-tight">{t('about.title.line1')}</div>
+                <div className="block leading-tight">
+                  {t('about.title.line2')}
+                  <br className="sm:hidden" />
+                  <span className="hidden sm:inline"> </span>
+                  {t('about.title.line3')}
+                </div>
+              </div>
+            </h2>
             <div className="w-24 h-1.5 bg-white mb-8" />
-                         <p className="text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed">
-               Based in Tel Aviv–Yafo, {STUDIO_CONFIG.name} designs professional tattoos 
-               with a personal touch.
-             </p>
+            <p className="text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed">
+              {t('about.description')}
+            </p>
           </div>
           
           <div className="relative bg-gradient-to-br from-black via-zinc-900 to-black rounded-3xl overflow-hidden shadow-2xl border border-white/10">
@@ -260,6 +270,7 @@ function AboutSection() {
 
 // Artists Section Component
 function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string) => void }) {
+  const { t } = useLanguage();
   return (
     <section id="artists" className="py-20 px-6 bg-zinc-900/50">
       <div className="max-w-6xl mx-auto">
@@ -295,7 +306,6 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
             className="absolute inset-0 pointer-events-none"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.1, delay: 0.8 }}
             viewport={{ once: true }}
             animate={{
               opacity: [0, 1, 0, 1, 0],
@@ -314,7 +324,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
 
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-4 text-white tracking-tight relative z-10">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-              {["OUR", "ARTISTS"].map((word, wordIndex) => (
+              {t('artists.title').split(' ').map((word, wordIndex) => (
                 <motion.span
                   key={word}
                   className="inline-block mr-4 relative"
@@ -352,7 +362,6 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                     className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-600/20 blur-sm"
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1.1 }}
-                    transition={{ duration: 1, delay: wordIndex * 0.6 + 0.3 }}
                     viewport={{ once: true }}
                     animate={{
                       opacity: [0.3, 0.6, 0.3],
@@ -631,7 +640,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                          }`}
                         style={artist.id === "groc" ? { fontFamily: "'UnifrakturMaguntia', cursive" } : {}}
                       >
-                        <span className="artist-book-text">Book with</span> {artist.name.split(' ')[0]}
+                        <span className="artist-book-text">{t('artists.book-with')}</span> {artist.name.split(' ')[0]}
                       </Button>
                     </motion.div>
                   </div>
@@ -647,9 +656,10 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
 
 // Contact Section Component
 function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
+  const { t } = useLanguage();
   const handleWhatsAppCall = () => {
     const phoneNumber = STUDIO_CONFIG.phone.replace(/\D/g, '');
-    const message = encodeURIComponent(STUDIO_CONFIG.whatsappMessage);
+    const message = encodeURIComponent(t('studio.whatsapp-message'));
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -664,7 +674,12 @@ function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
           viewport={{ once: true }}
         >
           <h2 className="text-6xl font-black mb-8 text-white">
-            READY TO GET<br />SAGED?
+            {t('contact.title').split(' ').map((word, index) => (
+              <React.Fragment key={index}>
+                {word}
+                {index < t('contact.title').split(' ').length - 1 && <br />}
+              </React.Fragment>
+            ))}
           </h2>
           <div className="w-32 h-1 bg-white mx-auto mb-12" />
           
@@ -680,7 +695,7 @@ function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
                 className="bg-white text-black hover:bg-white/90 text-2xl px-16 py-8 h-auto font-black tracking-wider uppercase transition-all duration-300 transform hover:shadow-2xl hover:shadow-white/20"
               >
                 <Calendar className="mr-4 h-8 w-8" />
-                Start Booking
+                {t('contact.start-booking')}
               </Button>
             </motion.div>
 
@@ -696,7 +711,7 @@ function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
                 className="bg-green-500 text-white hover:bg-green-400 text-2xl px-12 py-8 h-auto font-black tracking-wider uppercase transition-all duration-300 transform hover:shadow-2xl hover:shadow-green-500/30"
               >
                 <MessageCircle className="mr-4 h-8 w-8" />
-                Talk Now
+                {t('contact.talk-now')}
               </Button>
             </motion.div>
           </div>

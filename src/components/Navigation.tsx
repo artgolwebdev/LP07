@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Home, Users, Calendar, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useLanguage } from "../contexts/LanguageContext";
 import { STUDIO_CONFIG } from "../config/studio-config";
 
 interface NavigationProps {
@@ -11,6 +13,7 @@ interface NavigationProps {
 export function Navigation({ onBookingClick }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,9 +32,9 @@ export function Navigation({ onBookingClick }: NavigationProps) {
   };
 
   const menuItems = [
-    { name: "HOME", icon: Home, action: () => scrollToSection('hero') },
-    { name: "ARTISTS", icon: Users, action: () => scrollToSection('artists') },
-    { name: "CONTACT", icon: MessageCircle, action: () => scrollToSection('contact') },
+    { name: t('nav.home'), icon: Home, action: () => scrollToSection('hero') },
+    { name: t('nav.artists'), icon: Users, action: () => scrollToSection('artists') },
+    { name: t('nav.contact'), icon: MessageCircle, action: () => scrollToSection('contact') },
   ];
 
   return (
@@ -58,7 +61,7 @@ export function Navigation({ onBookingClick }: NavigationProps) {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-6">
             {menuItems.map((item, index) => (
               <motion.button
                 key={item.name}
@@ -73,6 +76,16 @@ export function Navigation({ onBookingClick }: NavigationProps) {
                 {item.name}
               </motion.button>
             ))}
+            
+            {/* Language Switcher */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              <LanguageSwitcher />
+            </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -84,7 +97,7 @@ export function Navigation({ onBookingClick }: NavigationProps) {
                 className="bg-white text-black hover:bg-white/90 font-bold tracking-wider uppercase"
               >
                 <Calendar className="h-4 w-4 mr-2" />
-                Book Now
+                {t('nav.book')}
               </Button>
             </motion.div>
           </nav>
@@ -136,14 +149,17 @@ export function Navigation({ onBookingClick }: NavigationProps) {
               {/* Header */}
               <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/20">
                 <h1 className="text-2xl sm:text-3xl font-black text-white tracking-wider glow-text">
-                  SAGE
+                  {STUDIO_CONFIG.name}
                 </h1>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="text-white p-1.5 sm:p-2"
-                >
-                  <X className="h-5 w-5 sm:h-6 sm:w-6" />
-                </button>
+                <div className="flex items-center gap-3">
+                  <LanguageSwitcher />
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="text-white p-1.5 sm:p-2"
+                  >
+                    <X className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </button>
+                </div>
               </div>
 
               {/* Menu Items */}
@@ -181,7 +197,7 @@ export function Navigation({ onBookingClick }: NavigationProps) {
                     className="w-full bg-white text-black hover:bg-white/90 font-black tracking-wider uppercase text-lg sm:text-xl py-4 sm:py-6"
                   >
                     <Calendar className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
-                    Book Your Session
+                    {t('nav.book-session')}
                   </Button>
                 </motion.div>
               </div>
@@ -189,8 +205,8 @@ export function Navigation({ onBookingClick }: NavigationProps) {
               {/* Contact Info */}
               <div className="p-4 sm:p-6 border-t border-white/20">
                 <div className="text-center text-white/60 space-y-1 sm:space-y-2 text-sm sm:text-base">
-                  <p>Eilat Street 22, Tel Aviv-Yaffo</p>
-                  <p>+972 50-123-4567</p>
+                  <p>{t('studio.address')}</p>
+                  <p>{t('studio.phone')}</p>
                 </div>
               </div>
             </div>
