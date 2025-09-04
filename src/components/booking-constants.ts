@@ -73,9 +73,9 @@ export const TIME_SLOTS: TimeSlot[] = [
 
 // Budget Options  
 export const BUDGET_OPTIONS: BudgetOption[] = [
-  { name: "500-1000₪", range: "500-1000₪", icon: DollarSign, description: "Small pieces", tier: "Basic" },
-  { name: "1000-2000₪", range: "1000-2000₪", icon: CreditCard, description: "Medium artwork", tier: "Standard" },
-  { name: "2000-3000₪", range: "2000-3000₪", icon: Banknote, description: "Large designs", tier: "Premium" },
-  { name: "3000₪+", range: "3000₪+", icon: Crown, description: "Full sessions", tier: "Luxury" },
+  { name: "300-500₪", range: "300-500₪", icon: DollarSign, description: "Small pieces", tier: "Basic" },
+  { name: "500-1000₪", range: "500-1000₪", icon: CreditCard, description: "Medium artwork", tier: "Standard" },
+  { name: "1000-2000₪", range: "1000-2000₪", icon: Banknote, description: "Large designs", tier: "Premium" },
+  { name: "2000₪+", range: "2000₪+", icon: Crown, description: "Full sessions", tier: "Luxury" },
   { name: "Need consultation", range: "Need consultation", icon: HelpCircle, description: "Custom quote", tier: "Consultation" }
 ];

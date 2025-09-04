@@ -49,12 +49,24 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const visionTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const timesSectionRef = useRef<HTMLDivElement>(null);
 
   // Scroll to top function with smooth animation
   const scrollToTop = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
         top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Scroll to times section function
+  const scrollToTimesSection = () => {
+    if (timesSectionRef.current && scrollContainerRef.current) {
+      const timesSectionTop = timesSectionRef.current.offsetTop - 100; // Offset for better positioning
+      scrollContainerRef.current.scrollTo({
+        top: timesSectionTop,
         behavior: 'smooth'
       });
     }
@@ -138,9 +150,42 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
 
   const handleSubmit = () => {
     setIsSubmitted(true);
+    
+    // Play submission sound effect
+    const playSubmissionSound = () => {
+      // Create a simple audio context for sound effects
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      // Create a pleasant "sent" sound effect
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      // Create a rising tone that sounds like "sent"
+      oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
+      
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    };
+    
+    // Play sound immediately
+    try {
+      playSubmissionSound();
+    } catch (error) {
+      console.log('Audio not available');
+    }
+    
+    // Enhanced animation sequence
     setTimeout(() => {
       setCurrentStep(10);
-    }, 2000);
+    }, 1500);
   };
 
   const updateFormData = (field: keyof FormData, value: string | File | Date | undefined) => {
@@ -155,6 +200,10 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
         selectedDate: date, 
         date: dateString 
       }));
+      // Scroll to times section after date selection
+      setTimeout(() => {
+        scrollToTimesSection();
+      }, 300);
     }
   };
 
@@ -197,7 +246,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
         {/* Scrollable Form Steps Container */}
         <div 
           ref={scrollContainerRef}
-          className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-white/10 scrollbar-thumb-white/30 hover:scrollbar-thumb-white/50 relative"
+          className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar relative"
           style={{ scrollBehavior: 'smooth' }}
         >
           {/* Top fade effect */}
@@ -205,7 +254,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
           
           
           {/* Form Steps */}
-          <div className="p-6 pb-8 min-h-full">
+          <div className="p-6 pb-6 h-full flex flex-col">
             <AnimatePresence mode="wait">
               
               {/* Step 1: Choose Artist */}
@@ -269,158 +318,124 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
 
               {/* Step 2: Artist Details & Describe Your Vision */}
               {currentStep === 2 && selectedArtist && (
-                <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xl font-bold text-white mb-8">Your Artist & Vision</h3>
+                <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="h-full flex flex-col">
+                  <h3 className="text-xl font-bold text-white mb-6">Your Artist & Vision</h3>
                   
-                  <div className="space-y-8">
-                    {/* Artist Details Section - Styled like "our artists" cards */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
-                    >
-                      <Card className="relative bg-gradient-to-br from-black via-zinc-900 to-black border border-white/20 overflow-hidden rounded-2xl shadow-lg">
-                        {/* Artistic Flowing Border Animation */}
-                        <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                          {/* Top Border Flow */}
-                          <motion.div 
-                            className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent"
-                            initial={{ width: 0, opacity: 0 }}
-                            animate={{ 
-                              width: "100%",
-                              opacity: 1
-                            }}
-                            transition={{ duration: 0.6, ease: "easeOut" }}
-                          />
-                          
-                          {/* Right Border Flow */}
-                          <motion.div 
-                            className="absolute top-0 right-0 w-0.5 bg-gradient-to-b from-transparent via-white to-transparent"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ 
-                              height: "100%",
-                              opacity: 1
-                            }}
-                            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                          />
-                          
-                          {/* Bottom Border Flow */}
-                          <motion.div 
-                            className="absolute bottom-0 right-0 h-0.5 bg-gradient-to-l from-transparent via-white to-transparent"
-                            initial={{ width: 0, opacity: 0 }}
-                            animate={{ 
-                              width: "100%",
-                              opacity: 1
-                            }}
-                            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                          />
-                          
-                          {/* Left Border Flow */}
-                          <motion.div 
-                            className="absolute bottom-0 left-0 w-0.5 bg-gradient-to-t from-transparent via-white to-transparent"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ 
-                              height: "100%",
-                              opacity: 1
-                            }}
-                            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-                          />
-                        </div>
-                        
-                        {/* Corner Glow Effects */}
-                        <motion.div 
-                          className="absolute top-0 left-0 w-3 h-3 rounded-tl-2xl border-l border-t border-white/0"
-                          animate={{ 
-                            borderColor: "rgba(255,255,255,0.8)",
-                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
-                          }}
-                          transition={{ duration: 0.4, delay: 0.1 }}
-                        />
-                        
-                        <motion.div 
-                          className="absolute top-0 right-0 w-3 h-3 rounded-tr-2xl border-r border-t border-white/0"
-                          animate={{ 
-                            borderColor: "rgba(255,255,255,0.8)",
-                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
-                          }}
-                          transition={{ duration: 0.4, delay: 0.3 }}
-                        />
-                        
-                        <motion.div 
-                          className="absolute bottom-0 right-0 w-3 h-3 rounded-br-2xl border-r border-b border-white/0"
-                          animate={{ 
-                            borderColor: "rgba(255,255,255,0.8)",
-                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
-                          }}
-                          transition={{ duration: 0.4, delay: 0.5 }}
-                        />
-                        
-                        <motion.div 
-                          className="absolute bottom-0 left-0 w-3 h-3 rounded-bl-2xl border-l border-b border-white/0"
-                          animate={{ 
-                            borderColor: "rgba(255,255,255,0.8)",
-                            boxShadow: "0 0 15px rgba(255,255,255,0.6)"
-                          }}
-                          transition={{ duration: 0.4, delay: 0.7 }}
-                        />
-                        
-                        {/* Inner Glow Effect */}
-                        <motion.div 
-                          className="absolute inset-0 rounded-2xl border border-white/0"
-                          animate={{ 
-                            borderColor: "rgba(255,255,255,0.3)",
-                            boxShadow: "inset 0 0 20px rgba(255,255,255,0.1)"
-                          }}
-                          transition={{ duration: 0.5, ease: "easeOut" }}
-                        />
-                        
-                        <div className="relative overflow-hidden">
-                          {selectedArtist.image.endsWith('.mp4') ? (
-                            <video
-                              autoPlay
-                              muted
-                              loop
-                              playsInline
-                              className="w-full h-32 object-cover transition-transform duration-700 ease-out"
-                            >
-                              <source src={selectedArtist.image} type="video/mp4" />
-                              {selectedArtist.name}
-                            </video>
-                          ) : (
-                            <ImageWithFallback 
-                              src={selectedArtist.image} 
-                              alt={selectedArtist.name}
-                              className="w-full h-32 object-cover transition-transform duration-700 ease-out"
-                            />
-                          )}
-                          
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-all duration-300" />
-                        </div>
-                        
-                        <div className="pb-4 px-3 md:px-4">
-                          <div className="mb-3">
-                            <h3 className="text-lg md:text-xl font-black text-white mb-2 transition-colors duration-300">
-                              {selectedArtist.name}
-                            </h3>
-                            <p className="text-sm md:text-base text-white/80 transition-colors duration-300">
-                              {selectedArtist.specialties.join(' • ')}
-                            </p>
+                  <div className="flex-1 flex flex-col space-y-6">
+                    {/* Top Row: Artist Details & Reference Image */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Artist Details - Small Box */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        <Card className="relative bg-gradient-to-br from-black via-zinc-900 to-black border border-white/20 overflow-hidden rounded-xl shadow-lg h-full">
+                          <div className="relative overflow-hidden">
+                            {selectedArtist.image.endsWith('.mp4') ? (
+                              <video
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                className="w-full h-24 object-cover transition-transform duration-700 ease-out"
+                              >
+                                <source src={selectedArtist.image} type="video/mp4" />
+                                {selectedArtist.name}
+                              </video>
+                            ) : (
+                              <ImageWithFallback 
+                                src={selectedArtist.image} 
+                                alt={selectedArtist.name}
+                                className="w-full h-24 object-cover transition-transform duration-700 ease-out"
+                              />
+                            )}
+                            
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-all duration-300" />
                           </div>
                           
-                          <div className="flex items-center gap-2 text-green-400 text-sm">
-                            <Check className="h-4 w-4" />
-                            <span>Selected Artist</span>
+                          <div className="p-4">
+                            <div className="mb-2">
+                              <h3 className="text-lg font-black text-white mb-1 transition-colors duration-300">
+                                {selectedArtist.name}
+                              </h3>
+                              <p className="text-sm text-white/80 transition-colors duration-300">
+                                {selectedArtist.specialties.join(' • ')}
+                              </p>
+                            </div>
+                            
+                            <div className="flex items-center gap-2 text-green-400 text-xs">
+                              <Check className="h-3 w-3" />
+                              <span>Selected Artist</span>
+                            </div>
                           </div>
-                        </div>
-                      </Card>
-                    </motion.div>
+                        </Card>
+                      </motion.div>
 
-                    {/* Vision Description Section - Moved below artist info */}
+                      {/* Reference Image Upload - Small Box */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <Card className="border border-white/20 bg-white/5 rounded-xl h-full">
+                          <div className="p-4 h-full flex flex-col">
+                            <Label className="text-white mb-3 block flex items-center text-sm">
+                              <Upload className="h-4 w-4 mr-2" />
+                              Reference Images
+                            </Label>
+                            
+                            <motion.div 
+                              whileHover={{ scale: 1.01 }}
+                              className="border-2 border-dashed border-white/20 p-4 text-center hover:border-white/40 transition-all duration-300 rounded-lg bg-gradient-to-br from-white/5 to-transparent flex-1 flex flex-col justify-center"
+                            >
+                              <motion.div
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.3 }}
+                              >
+                                <Upload className="h-8 w-8 text-white/40 mx-auto mb-2" />
+                                <p className="text-white/60 text-xs mb-3">
+                                  Share inspiration images
+                                </p>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={(e) => e.target.files?.[0] && updateFormData('referenceImage', e.target.files[0])}
+                                  className="hidden"
+                                  id="reference-upload"
+                                />
+                                <Label htmlFor="reference-upload" className="cursor-pointer">
+                                  <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10 hover:border-white text-xs" type="button">
+                                    Browse Files
+                                  </Button>
+                                </Label>
+                                {formData.referenceImage && (
+                                  <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="mt-3 p-2 bg-white/10 rounded-lg"
+                                  >
+                                    <div className="flex items-center justify-center">
+                                      <Check className="h-3 w-3 text-green-400 mr-2" />
+                                      <p className="text-white/80 text-xs">
+                                        {(formData.referenceImage as File).name}
+                                      </p>
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </motion.div>
+                            </motion.div>
+                          </div>
+                        </Card>
+                      </motion.div>
+                    </div>
+
+                    {/* Bottom Section: Vision Description */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                      className="space-y-6"
+                      transition={{ delay: 0.3 }}
                     >
                       <div>
                         <Label className="text-white mb-4 block flex items-center">
@@ -434,54 +449,6 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                           onChange={(e) => updateFormData('description', e.target.value)}
                           className="min-h-40 bg-white/5 border-white/20 text-white placeholder:text-white/40 resize-none focus:border-white/40 focus:bg-white/10 transition-all duration-300"
                         />
-                      </div>
-                      
-                      <div>
-                        <Label className="text-white mb-4 block flex items-center">
-                          <Upload className="h-5 w-5 mr-2" />
-                          Reference Images (Optional)
-                        </Label>
-                        <motion.div 
-                          whileHover={{ scale: 1.01 }}
-                          className="border-2 border-dashed border-white/20 p-8 text-center hover:border-white/40 transition-all duration-300 rounded-lg bg-gradient-to-br from-white/5 to-transparent"
-                        >
-                          <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                          >
-                            <Upload className="h-12 w-12 text-white/40 mx-auto mb-4" />
-                            <p className="text-white/60 mb-4">
-                              Share inspiration images, reference photos, or sketches
-                            </p>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => e.target.files?.[0] && updateFormData('referenceImage', e.target.files[0])}
-                              className="hidden"
-                              id="reference-upload"
-                            />
-                            <Label htmlFor="reference-upload" className="cursor-pointer">
-                              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 hover:border-white" type="button">
-                                Browse Files
-                              </Button>
-                            </Label>
-                            {formData.referenceImage && (
-                              <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="mt-4 p-3 bg-white/10 rounded-lg"
-                              >
-                                <div className="flex items-center justify-center">
-                                  <Check className="h-5 w-5 text-green-400 mr-2" />
-                                  <p className="text-white/80 text-sm">
-                                    {(formData.referenceImage as File).name}
-                                  </p>
-                                </div>
-                              </motion.div>
-                            )}
-                          </motion.div>
-                        </motion.div>
                       </div>
                     </motion.div>
                   </div>
@@ -501,7 +468,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       Selecting placement...
                     </motion.div>
                   )}
-                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {PLACEMENT_OPTIONS.map((option) => {
                       const Icon = option.icon;
                       const isSelected = formData.placement === option.name;
@@ -525,39 +492,34 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                             }, 600);
                           }}
                         >
-                          <Card className={`p-6 h-full border-2 transition-all duration-300 ${
+                          <Card className={`p-4 h-full border-2 transition-all duration-300 ${
                             isSelected
                               ? 'border-white bg-white/10 shadow-lg shadow-white/20' 
                               : 'border-white/20 hover:border-white/40 hover:bg-white/5'
                           }`}>
-                            <div className="flex flex-col items-center text-center space-y-3">
-                              <div className={`p-4 rounded-full transition-all duration-300 ${
+                            <div className="flex flex-col items-center text-center space-y-2">
+                              <div className={`p-3 rounded-full transition-all duration-300 ${
                                 isSelected 
                                   ? 'bg-white text-black' 
                                   : 'bg-white/10 text-white group-hover:bg-white/20'
                               }`}>
-                                <Icon className="h-6 w-6" />
+                                <Icon className="h-5 w-5" />
                               </div>
                               <div>
-                                <h4 className={`font-bold transition-colors ${
+                                <h4 className={`text-sm font-bold transition-colors ${
                                   isSelected ? 'text-white' : 'text-white/90'
                                 }`}>
                                   {option.name}
                                 </h4>
-                                <p className={`text-sm transition-colors ${
-                                  isSelected ? 'text-white/80' : 'text-white/60'
-                                }`}>
-                                  {option.description}
-                                </p>
                               </div>
                               {isSelected && (
                                 <motion.div
                                   initial={{ scale: 0, opacity: 0 }}
                                   animate={{ scale: 1, opacity: 1 }}
                                   transition={{ delay: 0.1 }}
-                                  className="absolute top-3 right-3 w-6 h-6 bg-white rounded-full flex items-center justify-center"
+                                  className="absolute top-2 right-2 w-5 h-5 bg-white rounded-full flex items-center justify-center"
                                 >
-                                  <Check className="h-4 w-4 text-black" />
+                                  <Check className="h-3 w-3 text-black" />
                                 </motion.div>
                               )}
                             </div>
@@ -582,7 +544,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       Selecting size...
                     </motion.div>
                   )}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {SIZE_OPTIONS.map((option) => {
                       const Icon = option.icon;
                       const isSelected = formData.size === option.name;
@@ -606,30 +568,25 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                             }, 600);
                           }}
                         >
-                          <Card className={`p-8 h-full border-2 transition-all duration-300 ${
+                          <Card className={`p-6 h-full border-2 transition-all duration-300 ${
                             isSelected
                               ? 'border-white bg-white/10 shadow-lg shadow-white/20' 
                               : 'border-white/20 hover:border-white/40 hover:bg-white/5'
                           }`}>
-                            <div className="flex flex-col items-center text-center space-y-4">
-                              <div className={`p-6 rounded-full transition-all duration-300 ${
+                            <div className="flex flex-col items-center text-center space-y-3">
+                              <div className={`p-4 rounded-full transition-all duration-300 ${
                                 isSelected 
                                   ? 'bg-white text-black' 
                                   : 'bg-white/10 text-white group-hover:bg-white/20'
                               }`}>
-                                <Icon className="h-8 w-8" />
+                                <Icon className="h-7 w-7" />
                               </div>
                               <div>
-                                <h4 className={`font-bold mb-2 transition-colors ${
+                                <h4 className={`text-base font-bold transition-colors ${
                                   isSelected ? 'text-white' : 'text-white/90'
                                 }`}>
                                   {option.name}
                                 </h4>
-                                <p className={`text-sm transition-colors ${
-                                  isSelected ? 'text-white/80' : 'text-white/60'
-                                }`}>
-                                  {option.description}
-                                </p>
                               </div>
                               {isSelected && (
                                 <motion.div
@@ -654,24 +611,33 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {currentStep === 5 && (
                 <motion.div key="step5" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
                   <h3 className="text-xl font-bold text-white mb-6">Choose Date & Time</h3>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div>
-                      <Label className="text-white mb-4 block flex items-center">
-                        <Calendar className="h-5 w-5 mr-2" />
-                        Select Date
-                      </Label>
-                      <div className="bg-white/5 border border-white/20 rounded-lg p-4">
-                        <DatePicker
-                          selected={formData.selectedDate}
-                          onChange={handleDateSelect}
-                          minDate={new Date()}
-                          inline
-                          className="w-full"
-                        />
-                      </div>
+                  
+                  {/* Calendar Section */}
+                  <div className="mb-8">
+                    <Label className="text-white mb-4 block flex items-center">
+                      <Calendar className="h-5 w-5 mr-2" />
+                      Select Date
+                    </Label>
+                    <div className="bg-white/5 border border-white/20 rounded-lg p-4">
+                      <DatePicker
+                        selected={formData.selectedDate}
+                        onChange={handleDateSelect}
+                        minDate={new Date()}
+                        inline
+                        className="w-full"
+                      />
                     </div>
-                    
-                    <div>
+                  </div>
+                  
+                  {/* Times Section - Only show after date is selected */}
+                  {formData.selectedDate && (
+                    <motion.div
+                      ref={timesSectionRef}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="space-y-4"
+                    >
                       <Label className="text-white mb-4 block flex items-center">
                         <Clock className="h-5 w-5 mr-2" />
                         Available Times
@@ -685,12 +651,10 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                           Selecting time...
                         </motion.div>
                       )}
-                      <div className="space-y-3 max-h-64 overflow-y-auto">
+                      <div className="space-y-3 max-h-64 overflow-y-auto overflow-x-hidden custom-scrollbar">
                         {TIME_SLOTS.map((slot) => (
                           <motion.div
                             key={slot.time}
-                            whileHover={{ scale: slot.available ? 1.02 : 1 }}
-                            whileTap={{ scale: slot.available ? 0.98 : 1 }}
                             className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
                               !slot.available 
                                 ? 'border-white/10 bg-white/5 opacity-50 cursor-not-allowed' 
@@ -736,8 +700,8 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                           </motion.div>
                         ))}
                       </div>
-                    </div>
-                  </div>
+                    </motion.div>
+                  )}
                 </motion.div>
               )}
 
@@ -1165,23 +1129,129 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
 
               {/* Step 10: Success */}
               {currentStep === 10 && (
-                <motion.div key="step10" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}>
-                  <div className="text-center py-12">
+                <motion.div 
+                  key="step10" 
+                  initial={{ opacity: 0, scale: 0.8 }} 
+                  animate={{ opacity: 1, scale: 1 }} 
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                  <div className="text-center py-12 relative">
+                    {/* Animated background particles */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          className="absolute w-2 h-2 bg-green-400 rounded-full"
+                          initial={{ 
+                            x: Math.random() * 400 - 200, 
+                            y: Math.random() * 300 - 150,
+                            opacity: 0,
+                            scale: 0
+                          }}
+                          animate={{ 
+                            opacity: [0, 1, 0],
+                            scale: [0, 1, 0],
+                            y: [Math.random() * 300 - 150, Math.random() * 300 - 150]
+                          }}
+                          transition={{ 
+                            duration: 2,
+                            delay: i * 0.2,
+                            repeat: Infinity,
+                            repeatDelay: 1
+                          }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Main success icon with enhanced animation */}
                     <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.2, type: "spring" }}
-                      className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ 
+                        delay: 0.3, 
+                        type: "spring", 
+                        stiffness: 200,
+                        damping: 15
+                      }}
+                      className="relative mx-auto mb-8"
                     >
-                      <Check className="h-12 w-12 text-white" />
+                      {/* Pulsing ring effect */}
+                      <motion.div
+                        className="absolute inset-0 w-32 h-32 bg-green-500/20 rounded-full mx-auto"
+                        animate={{ 
+                          scale: [1, 1.2, 1],
+                          opacity: [0.5, 0, 0.5]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      <motion.div
+                        className="absolute inset-0 w-28 h-28 bg-green-500/10 rounded-full mx-auto"
+                        animate={{ 
+                          scale: [1, 1.3, 1],
+                          opacity: [0.3, 0, 0.3]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                          delay: 0.5,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      
+                      {/* Main icon */}
+                      <div className="relative w-24 h-24 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/30">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.6, type: "spring", stiffness: 300 }}
+                        >
+                          <Check className="h-12 w-12 text-white" />
+                        </motion.div>
+                      </div>
                     </motion.div>
-                    <h3 className="text-2xl font-bold text-white mb-4">Booking Confirmed!</h3>
-                    <p className="text-white/60 mb-8">
-                      We've received your booking request. You'll receive a confirmation email shortly with all the details.
-                    </p>
-                    <Button onClick={onClose} className="bg-white text-black hover:bg-white/90">
-                      Close
-                    </Button>
+
+                    {/* Success text with staggered animation */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8, duration: 0.6 }}
+                    >
+                      <h3 className="text-3xl font-bold text-white mb-4 bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent">
+                        Booking Confirmed!
+                      </h3>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1, duration: 0.6 }}
+                      className="mb-8"
+                    >
+                      <p className="text-white/70 text-lg leading-relaxed max-w-md mx-auto">
+                        🎉 Your booking has been successfully submitted! 
+                        <br />
+                        We'll contact you within 24 hours to confirm your session details.
+                      </p>
+                    </motion.div>
+
+                    {/* Animated close button */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.2, duration: 0.6 }}
+                    >
+                      <Button 
+                        onClick={onClose} 
+                        className="bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 text-lg font-semibold"
+                      >
+                        Close
+                      </Button>
+                    </motion.div>
                   </div>
                 </motion.div>
               )}
