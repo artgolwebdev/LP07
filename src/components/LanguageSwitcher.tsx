@@ -4,7 +4,7 @@ import { Globe, ChevronDown, Check } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface LanguageOption {
-  code: 'en' | 'ru';
+  code: 'en' | 'ru' | 'fr';
   name: string;
   flag: string;
   iso2: string;
@@ -22,6 +22,12 @@ const languages: LanguageOption[] = [
     name: 'Russian',
     flag: '🇷🇺',
     iso2: 'RU'
+  },
+  {
+    code: 'fr',
+    name: 'French',
+    flag: '🇫🇷',
+    iso2: 'FR'
   }
 ];
 
@@ -46,7 +52,7 @@ export const LanguageSwitcher = memo(function LanguageSwitcher() {
     };
   }, []);
 
-  const handleLanguageChange = (langCode: 'en' | 'ru') => {
+  const handleLanguageChange = (langCode: 'en' | 'ru' | 'fr') => {
     setLanguage(langCode);
     setIsOpen(false);
   };

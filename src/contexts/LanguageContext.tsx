@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-export type Language = 'en' | 'ru';
+export type Language = 'en' | 'ru' | 'fr';
 
 interface LanguageContextType {
   language: Language;
@@ -20,7 +20,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   // Load language from localStorage on mount
   useEffect(() => {
     const savedLanguage = localStorage.getItem('sage-language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ru')) {
+    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ru' || savedLanguage === 'fr')) {
       setLanguage(savedLanguage);
     }
   }, []);
@@ -173,6 +173,60 @@ function getTranslations(language: Language): Record<string, string> {
       'studio.email': 'hello@sagetattoo.co.il',
       'studio.powered-by': 'Powered by Groc&Sunches',
       'studio.whatsapp-message': 'Hi! I want to book a tattoo session at SAGE Tattoo. Can we schedule a consultation?',
+
+      // Placement Options
+      'placement.arm': 'Arm',
+      'placement.arm-desc': 'Upper arm canvas',
+      'placement.leg': 'Leg',
+      'placement.leg-desc': 'Thigh or calf area',
+      'placement.back': 'Back',
+      'placement.back-desc': 'Full back canvas',
+      'placement.chest': 'Chest',
+      'placement.chest-desc': 'Upper chest area',
+      'placement.shoulder': 'Shoulder',
+      'placement.shoulder-desc': 'Shoulder blade',
+      'placement.forearm': 'Forearm',
+      'placement.forearm-desc': 'Lower arm',
+      'placement.wrist': 'Wrist',
+      'placement.wrist-desc': 'Wrist area',
+      'placement.ankle': 'Ankle',
+      'placement.ankle-desc': 'Ankle placement',
+      'placement.neck': 'Neck',
+      'placement.neck-desc': 'Neck area',
+      'placement.other': 'Other',
+      'placement.other-desc': 'Custom location',
+
+      // Size Options
+      'size.small': 'Small (5-10cm)',
+      'size.small-desc': 'Delicate details',
+      'size.medium': 'Medium (10-15cm)',
+      'size.medium-desc': 'Perfect balance',
+      'size.large': 'Large (15-25cm)',
+      'size.large-desc': 'Bold statement',
+      'size.extra-large': 'Extra Large (25cm+)',
+      'size.extra-large-desc': 'Full canvas',
+
+      // Time Periods
+      'time.morning': 'Morning',
+      'time.afternoon': 'Afternoon',
+      'time.evening': 'Evening',
+
+      // Budget Options
+      'budget.basic': 'Basic',
+      'budget.standard': 'Standard',
+      'budget.premium': 'Premium',
+      'budget.luxury': 'Luxury',
+      'budget.consultation': 'Consultation',
+      'budget.small-pieces': 'Small pieces',
+      'budget.medium-artwork': 'Medium artwork',
+      'budget.large-designs': 'Large designs',
+      'budget.full-sessions': 'Full sessions',
+      'budget.custom-quote': 'Custom quote',
+      'budget.need-consultation': 'Need consultation',
+
+      // Availability Status
+      'availability.available': 'Available',
+      'availability.unavailable': 'Unavailable',
     },
     ru: {
       // Navigation
@@ -288,6 +342,229 @@ function getTranslations(language: Language): Record<string, string> {
       'studio.email': 'hello@sagetattoo.co.il',
       'studio.powered-by': 'При поддержке Groc&Sunches',
       'studio.whatsapp-message': 'Привет! Я хочу записаться на тату-сеанс в SAGE Tattoo. Можем ли мы назначить консультацию?',
+
+      // Placement Options
+      'placement.arm': 'Рука',
+      'placement.arm-desc': 'Верхняя часть руки',
+      'placement.leg': 'Нога',
+      'placement.leg-desc': 'Бедро или голень',
+      'placement.back': 'Спина',
+      'placement.back-desc': 'Вся спина',
+      'placement.chest': 'Грудь',
+      'placement.chest-desc': 'Верхняя часть груди',
+      'placement.shoulder': 'Плечо',
+      'placement.shoulder-desc': 'Лопатка',
+      'placement.forearm': 'Предплечье',
+      'placement.forearm-desc': 'Нижняя часть руки',
+      'placement.wrist': 'Запястье',
+      'placement.wrist-desc': 'Область запястья',
+      'placement.ankle': 'Лодыжка',
+      'placement.ankle-desc': 'Область лодыжки',
+      'placement.neck': 'Шея',
+      'placement.neck-desc': 'Область шеи',
+      'placement.other': 'Другое',
+      'placement.other-desc': 'Другое место',
+
+      // Size Options
+      'size.small': 'Маленький (5-10см)',
+      'size.small-desc': 'Тонкие детали',
+      'size.medium': 'Средний (10-15см)',
+      'size.medium-desc': 'Идеальный баланс',
+      'size.large': 'Большой (15-25см)',
+      'size.large-desc': 'Смелое заявление',
+      'size.extra-large': 'Очень большой (25см+)',
+      'size.extra-large-desc': 'Полное полотно',
+
+      // Time Periods
+      'time.morning': 'Утро',
+      'time.afternoon': 'День',
+      'time.evening': 'Вечер',
+
+      // Budget Options
+      'budget.basic': 'Базовый',
+      'budget.standard': 'Стандартный',
+      'budget.premium': 'Премиум',
+      'budget.luxury': 'Люкс',
+      'budget.consultation': 'Консультация',
+      'budget.small-pieces': 'Маленькие работы',
+      'budget.medium-artwork': 'Средние работы',
+      'budget.large-designs': 'Большие дизайны',
+      'budget.full-sessions': 'Полные сеансы',
+      'budget.custom-quote': 'Индивидуальная цена',
+      'budget.need-consultation': 'Нужна консультация',
+
+      // Availability Status
+      'availability.available': 'Доступно',
+      'availability.unavailable': 'Недоступно',
+    },
+    fr: {
+      // Navigation
+      'nav.home': 'ACCUEIL',
+      'nav.artists': 'ARTISTES',
+      'nav.contact': 'CONTACT',
+      'nav.book': 'Réserver',
+      'nav.book-session': 'Réserver votre séance',
+
+      // Hero Section
+      'hero.title': 'SAGE',
+      'hero.tagline': 'Salon de tatouage et galerie',
+      'hero.subtitle': 'Salon de tatouage professionnel',
+
+      // About Section
+      'about.title': 'TATOUAGE ET PIERCING PROFESSIONNELS',
+      'about.title.line1': 'TATOUAGE',
+      'about.title.line2': 'ET PIERCING',
+      'about.title.line3': 'PROFESSIONNELS',
+      'about.description': 'Basé à Tel Aviv–Yafo, SAGE conçoit des tatouages professionnels avec une touche personnelle.',
+
+      // Artists Section
+      'artists.title': 'NOS ARTISTES',
+      'artists.book-with': 'Réserver avec',
+
+      // Contact Section
+      'contact.title': 'PRÊT À ÊTRE SAGED?',
+      'contact.title.line1': 'PRÊT À',
+      'contact.title.line2': 'ÊTRE SAGED?',
+      'contact.start-booking': 'Commencer la réservation',
+      'contact.talk-now': 'Parler maintenant',
+
+      // Footer
+      'footer.studio-hours': 'Heures d\'ouverture',
+      'footer.find-us': 'Nous trouver',
+      'footer.open-maps': 'Ouvrir dans Maps',
+      'footer.navigate-waze': 'Naviguer avec Waze',
+      'footer.made-with': 'Fait avec',
+      'footer.for-enthusiasts': 'pour les passionnés de SAGE',
+      'footer.privacy': 'Politique de confidentialité',
+      'footer.terms': 'Conditions d\'utilisation',
+
+      // Booking Form
+      'booking.title': 'Réserver votre séance',
+      'booking.step': 'Étape',
+      'booking.of': 'de',
+      'booking.choose-artist': 'Choisissez votre artiste',
+      'booking.artist-vision': 'Votre artiste et vision',
+      'booking.reference-images': 'Images de référence',
+      'booking.share-inspiration': 'Partagez des images d\'inspiration',
+      'booking.browse-files': 'Parcourir les fichiers',
+      'booking.describe-vision': 'Décrivez votre vision',
+      'booking.vision-placeholder': 'Partagez votre vision de tatouage...',
+      'booking.choose-placement': 'Choisissez l\'emplacement',
+      'booking.choose-size': 'Choisissez la taille',
+      'booking.choose-datetime': 'Choisissez la date et l\'heure',
+      'booking.select-date': 'Sélectionner la date',
+      'booking.available-times': 'Heures disponibles',
+      'booking.choose-budget': 'Choisissez la gamme de prix',
+      'booking.basic-contact': 'Informations de contact de base',
+      'booking.lets-start': 'Commençons par votre nom et email',
+      'booking.full-name': 'Nom complet',
+      'booking.name-placeholder': 'Votre nom complet',
+      'booking.email': 'Adresse email',
+      'booking.email-placeholder': 'votre.email@example.com',
+      'booking.contact-method': 'Méthode de contact',
+      'booking.choose-preferred': 'Choisissez votre méthode préférée pour rester en contact',
+      'booking.phone': 'Numéro de téléphone',
+      'booking.phone-placeholder': 'Votre numéro de téléphone',
+      'booking.instagram': 'Nom d\'utilisateur Instagram',
+      'booking.instagram-placeholder': '@votrenom',
+      'booking.review': 'Vérifiez votre réservation',
+      'booking.booking-summary': 'Résumé de la réservation',
+      'booking.additional-notes': 'Notes supplémentaires',
+      'booking.notes-placeholder': 'Partagez toute demande spéciale, allergie ou information supplémentaire qui nous aidera à préparer votre séance...',
+      'booking.confirmed': 'Réservation confirmée!',
+      'booking.success-message': 'Votre réservation a été soumise avec succès! Nous vous contacterons dans les 24 heures pour confirmer les détails de votre séance.',
+      'booking.artist': 'Artiste',
+      'booking.placement': 'Emplacement',
+      'booking.size': 'Taille',
+      'booking.budget': 'Budget',
+      'booking.date': 'Date',
+      'booking.time': 'Heure',
+      'booking.name': 'Nom',
+      'booking.phone-field': 'Téléphone',
+      'booking.instagram-field': 'Instagram',
+      'booking.email-field': 'Email',
+      'booking.vision': 'Vision',
+      'booking.not-provided': 'Non fourni',
+      'booking.optional': '(Optionnel)',
+      'booking.back': 'Retour',
+      'booking.next': 'Suivant',
+      'booking.confirm-booking': 'Confirmer la réservation',
+      'booking.submitting': 'Soumission...',
+      'booking.close': 'Fermer',
+      'booking.selected-artist': 'Artiste sélectionné',
+      'booking.selecting-artist': 'Sélection de l\'artiste...',
+      'booking.selecting-placement': 'Sélection de l\'emplacement...',
+      'booking.selecting-size': 'Sélection de la taille...',
+      'booking.selecting-time': 'Sélection de l\'heure...',
+      'booking.selecting-budget': 'Sélection du budget...',
+      'booking.available': 'Disponible',
+      'booking.unavailable': 'Indisponible',
+
+      // Common
+      'common.or': 'OU',
+      'common.privacy-communication': 'Confidentialité et communication',
+      'booking.privacy-text': 'Vos informations de contact sont sécurisées et ne seront utilisées que pour coordonner votre séance de tatouage. Nous vous contacterons dans les 24 heures pour confirmer votre réservation et discuter des détails.',
+
+      // Studio Info
+      'studio.address': 'Rue Eilat 22, Tel Aviv-Yaffo',
+      'studio.phone': '+972 50-123-4567',
+      'studio.email': 'hello@sagetattoo.co.il',
+      'studio.powered-by': 'Propulsé par Groc&Sunches',
+      'studio.whatsapp-message': 'Salut! Je veux réserver une séance de tatouage chez SAGE Tattoo. Pouvons-nous planifier une consultation?',
+
+      // Placement Options
+      'placement.arm': 'Bras',
+      'placement.arm-desc': 'Partie supérieure du bras',
+      'placement.leg': 'Jambe',
+      'placement.leg-desc': 'Cuisse ou mollet',
+      'placement.back': 'Dos',
+      'placement.back-desc': 'Tout le dos',
+      'placement.chest': 'Poitrine',
+      'placement.chest-desc': 'Partie supérieure de la poitrine',
+      'placement.shoulder': 'Épaule',
+      'placement.shoulder-desc': 'Omoplate',
+      'placement.forearm': 'Avant-bras',
+      'placement.forearm-desc': 'Partie inférieure du bras',
+      'placement.wrist': 'Poignet',
+      'placement.wrist-desc': 'Zone du poignet',
+      'placement.ankle': 'Cheville',
+      'placement.ankle-desc': 'Zone de la cheville',
+      'placement.neck': 'Cou',
+      'placement.neck-desc': 'Zone du cou',
+      'placement.other': 'Autre',
+      'placement.other-desc': 'Emplacement personnalisé',
+
+      // Size Options
+      'size.small': 'Petit (5-10cm)',
+      'size.small-desc': 'Détails délicats',
+      'size.medium': 'Moyen (10-15cm)',
+      'size.medium-desc': 'Équilibre parfait',
+      'size.large': 'Grand (15-25cm)',
+      'size.large-desc': 'Déclaration audacieuse',
+      'size.extra-large': 'Très grand (25cm+)',
+      'size.extra-large-desc': 'Toile complète',
+
+      // Time Periods
+      'time.morning': 'Matin',
+      'time.afternoon': 'Après-midi',
+      'time.evening': 'Soir',
+
+      // Budget Options
+      'budget.basic': 'Basique',
+      'budget.standard': 'Standard',
+      'budget.premium': 'Premium',
+      'budget.luxury': 'Luxe',
+      'budget.consultation': 'Consultation',
+      'budget.small-pieces': 'Petites pièces',
+      'budget.medium-artwork': 'Œuvres moyennes',
+      'budget.large-designs': 'Grands designs',
+      'budget.full-sessions': 'Séances complètes',
+      'budget.custom-quote': 'Devis personnalisé',
+      'budget.need-consultation': 'Besoin de consultation',
+
+      // Availability Status
+      'availability.available': 'Disponible',
+      'availability.unavailable': 'Indisponible',
     }
   };
 

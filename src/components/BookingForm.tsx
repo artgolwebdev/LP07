@@ -10,6 +10,7 @@ import { Label } from "./ui/label";
 import { Card } from "./ui/card";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { PLACEMENT_OPTIONS, SIZE_OPTIONS, TIME_SLOTS, BUDGET_OPTIONS, FormData } from "./booking-constants";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface BookingFormProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ interface BookingFormProps {
 
 
 export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: BookingFormProps) {
+  const { t } = useLanguage();
   const [currentStep, setCurrentStep] = useState(preSelectedArtist ? 2 : 1);
   const [formData, setFormData] = useState<FormData>({
     artistId: preSelectedArtist || "",
@@ -225,8 +227,8 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
         {/* Fixed Header */}
         <div ref={headerRef} className="flex-shrink-0 p-6 border-b border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm">
           <div>
-            <h2 className="text-2xl font-bold text-white">Book Your Session</h2>
-            <p className="text-white/60">Step {currentStep} of 10</p>
+            <h2 className="text-2xl font-bold text-white">{t('booking.title')}</h2>
+            <p className="text-white/60">{t('booking.step')} {currentStep} {t('booking.of')} 10</p>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} className="text-white hover:bg-white/10">
             <X className="h-6 w-6" />
@@ -260,7 +262,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {/* Step 1: Choose Artist */}
               {currentStep === 1 && (
                 <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xl font-bold text-white mb-6">Choose Your Artist</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('booking.choose-artist')}</h3>
                   
 
                   
@@ -270,7 +272,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       animate={{ opacity: 1 }}
                       className="text-center mb-4 text-white/60"
                     >
-                      Selecting artist...
+                      {t('booking.selecting-artist')}
                     </motion.div>
                   )}
                   <div className="grid gap-4">
@@ -319,7 +321,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {/* Step 2: Artist Details & Describe Your Vision */}
               {currentStep === 2 && selectedArtist && (
                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="h-full flex flex-col">
-                  <h3 className="text-xl font-bold text-white mb-6">Your Artist & Vision</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('booking.artist-vision')}</h3>
                   
                   <div className="flex-1 flex flex-col space-y-6">
                     {/* Top Row: Artist Details & Reference Image */}
@@ -366,7 +368,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                             
                             <div className="flex items-center gap-2 text-green-400 text-xs">
                               <Check className="h-3 w-3" />
-                              <span>Selected Artist</span>
+                              <span>{t('booking.selected-artist')}</span>
                             </div>
                           </div>
                         </Card>
@@ -382,7 +384,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                           <div className="p-4 h-full flex flex-col">
                             <Label className="text-white mb-3 block flex items-center text-sm">
                               <Upload className="h-4 w-4 mr-2" />
-                              Reference Images
+                              {t('booking.reference-images')}
                             </Label>
                             
                             <motion.div 
@@ -396,7 +398,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                               >
                                 <Upload className="h-8 w-8 text-white/40 mx-auto mb-2" />
                                 <p className="text-white/60 text-xs mb-3">
-                                  Share inspiration images
+                                  {t('booking.share-inspiration')}
                                 </p>
                                 <input
                                   type="file"
@@ -407,7 +409,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                                 />
                                 <Label htmlFor="reference-upload" className="cursor-pointer">
                                   <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10 hover:border-white text-xs" type="button">
-                                    Browse Files
+                                    {t('booking.browse-files')}
                                   </Button>
                                 </Label>
                                 {formData.referenceImage && (
@@ -440,11 +442,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       <div>
                         <Label className="text-white mb-4 block flex items-center">
                           <Zap className="h-5 w-5 mr-2" />
-                          Describe Your Vision
+                          {t('booking.describe-vision')}
                         </Label>
                         <Textarea
                           ref={visionTextareaRef}
-                          placeholder="Share your tattoo vision..."
+                          placeholder={t('booking.vision-placeholder')}
                           value={formData.description}
                           onChange={(e) => updateFormData('description', e.target.value)}
                           className="min-h-40 bg-white/5 border-white/20 text-white placeholder:text-white/40 resize-none focus:border-white/40 focus:bg-white/10 transition-all duration-300"
@@ -458,14 +460,14 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {/* Step 3: Placement */}
               {currentStep === 3 && (
                 <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xl font-bold text-white mb-6">Choose Placement</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('booking.choose-placement')}</h3>
                   {isSelectingPlacement && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className="text-center mb-4 text-white/60"
                     >
-                      Selecting placement...
+                      {t('booking.selecting-placement')}
                     </motion.div>
                   )}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -509,7 +511,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                                 <h4 className={`text-sm font-bold transition-colors ${
                                   isSelected ? 'text-white' : 'text-white/90'
                                 }`}>
-                                  {option.name}
+                                  {t(`placement.${option.name}`)}
                                 </h4>
                               </div>
                               {isSelected && (
@@ -534,14 +536,14 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {/* Step 4: Size */}
               {currentStep === 4 && (
                 <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xl font-bold text-white mb-6">Choose Size</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('booking.choose-size')}</h3>
                   {isSelectingSize && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className="text-center mb-4 text-white/60"
                     >
-                      Selecting size...
+                      {t('booking.selecting-size')}
                     </motion.div>
                   )}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -585,7 +587,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                                 <h4 className={`text-base font-bold transition-colors ${
                                   isSelected ? 'text-white' : 'text-white/90'
                                 }`}>
-                                  {option.name}
+                                  {t(`size.${option.name}`)}
                                 </h4>
                               </div>
                               {isSelected && (
@@ -610,13 +612,13 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {/* Step 5: Date & Time */}
               {currentStep === 5 && (
                 <motion.div key="step5" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xl font-bold text-white mb-6">Choose Date & Time</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('booking.choose-datetime')}</h3>
                   
                   {/* Calendar Section */}
                   <div className="mb-8">
                     <Label className="text-white mb-4 block flex items-center">
                       <Calendar className="h-5 w-5 mr-2" />
-                      Select Date
+                      {t('booking.select-date')}
                     </Label>
                     <div className="bg-white/5 border border-white/20 rounded-lg p-4">
                       <DatePicker
@@ -640,7 +642,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     >
                       <Label className="text-white mb-4 block flex items-center">
                         <Clock className="h-5 w-5 mr-2" />
-                        Available Times
+                        {t('booking.available-times')}
                       </Label>
                       {isSelectingTime && (
                         <motion.div
@@ -679,11 +681,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                             <div className="flex items-center justify-between">
                               <div>
                                 <div className="text-white font-bold">{slot.time}</div>
-                                <div className="text-white/60 text-sm">{slot.period}</div>
+                                <div className="text-white/60 text-sm">{t(`time.${slot.period}`)}</div>
                               </div>
                               <div>
                                 {!slot.available ? (
-                                  <span className="text-white/40 text-sm">Unavailable</span>
+                                  <span className="text-white/40 text-sm">{t('availability.unavailable')}</span>
                                 ) : formData.time === slot.time ? (
                                   <motion.div
                                     initial={{ scale: 0, opacity: 0 }}
@@ -693,7 +695,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                                     <Check className="h-4 w-4 text-black" />
                                   </motion.div>
                                 ) : (
-                                  <span className="text-white/60 text-sm">Available</span>
+                                  <span className="text-white/60 text-sm">{t('availability.available')}</span>
                                 )}
                               </div>
                             </div>
@@ -708,14 +710,14 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {/* Step 6: Budget */}
               {currentStep === 6 && (
                 <motion.div key="step6" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xl font-bold text-white mb-6">Choose Budget Range</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('booking.choose-budget')}</h3>
                   {isSelectingBudget && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       className="text-center mb-4 text-white/60"
                     >
-                      Selecting budget...
+                      {t('booking.selecting-budget')}
                     </motion.div>
                   )}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -759,7 +761,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                                 <div className={`text-xs uppercase tracking-wide mb-1 ${
                                   isSelected ? 'text-white/80' : 'text-white/60'
                                 }`}>
-                                  {option.tier}
+                                  {t(`budget.${option.tier}`)}
                                 </div>
                                 <h4 className={`font-bold mb-2 transition-colors ${
                                   isSelected ? 'text-white' : 'text-white/90'
@@ -769,7 +771,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                                 <p className={`text-sm transition-colors ${
                                   isSelected ? 'text-white/80' : 'text-white/60'
                                 }`}>
-                                  {option.description}
+                                  {t(`budget.${option.description}`)}
                                 </p>
                               </div>
                               {isSelected && (
@@ -808,11 +810,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     className="text-center space-y-4"
                   >
                     <h3 className="text-3xl font-bold text-white glow-text uppercase tracking-wider">
-                      Basic Contact Information
+                      {t('booking.basic-contact')}
                     </h3>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto opacity-60"></div>
                     <p className="text-white/70 text-lg">
-                      Let's start with your name and email
+                      {t('booking.lets-start')}
                     </p>
                   </motion.div>
 
@@ -827,11 +829,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     >
                       <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
                         <User className="h-5 w-5 mr-3" />
-                        Full Name
+                        {t('booking.full-name')}
                       </Label>
                       <div className="relative tattoo-border">
                         <Input
-                          placeholder="Your full name"
+                          placeholder={t('booking.name-placeholder')}
                           value={formData.name}
                           onChange={(e) => updateFormData('name', e.target.value)}
                           className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
@@ -855,12 +857,12 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     >
                       <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
                         <Mail className="h-5 w-5 mr-3" />
-                        Email Address
+                        {t('booking.email')}
                       </Label>
                       <div className="relative tattoo-border">
                         <Input
                           type="email"
-                          placeholder="your.email@example.com"
+                          placeholder={t('booking.email-placeholder')}
                           value={formData.email}
                           onChange={(e) => updateFormData('email', e.target.value)}
                           className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
@@ -904,10 +906,9 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     <div className="flex items-start gap-4">
                       <Shield className="h-6 w-6 text-white/70 mt-1 flex-shrink-0" />
                       <div>
-                        <h6 className="text-white font-bold mb-2 uppercase tracking-wide">Privacy & Communication</h6>
+                        <h6 className="text-white font-bold mb-2 uppercase tracking-wide">{t('common.privacy-communication')}</h6>
                         <p className="text-white/70 text-sm leading-relaxed">
-                          Your contact information is securely protected and will only be used to coordinate your tattoo session. 
-                          We'll reach out within 24 hours to confirm your booking and discuss any details.
+                          {t('booking.privacy-text')}
                         </p>
                       </div>
                     </div>
@@ -932,11 +933,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     className="text-center space-y-4"
                   >
                     <h3 className="text-3xl font-bold text-white glow-text uppercase tracking-wider">
-                      Contact Method
+                      {t('booking.contact-method')}
                     </h3>
                     <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto opacity-60"></div>
                     <p className="text-white/70 text-lg">
-                      Choose your preferred way to stay in touch
+                      {t('booking.choose-preferred')}
                     </p>
                   </motion.div>
 
@@ -951,12 +952,12 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     >
                       <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
                         <Phone className="h-5 w-5 mr-3" />
-                        Phone Number
+                        {t('booking.phone')}
                       </Label>
                       <div className="relative tattoo-border">
                         <Input
                           type="tel"
-                          placeholder="Your phone number"
+                          placeholder={t('booking.phone-placeholder')}
                           value={formData.phone}
                           onChange={(e) => updateFormData('phone', e.target.value)}
                           className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
@@ -980,7 +981,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     >
                       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                       <div className="px-6">
-                        <span className="text-white/40 text-sm uppercase tracking-wider">OR</span>
+                        <span className="text-white/40 text-sm uppercase tracking-wider">{t('common.or')}</span>
                       </div>
                       <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
                     </motion.div>
@@ -994,12 +995,12 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     >
                       <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
                         <MessageCircle className="h-5 w-5 mr-3" />
-                        Instagram Handle
+                        {t('booking.instagram')}
                       </Label>
                       <div className="relative tattoo-border">
                         <Input
                           type="text"
-                          placeholder="@yourusername"
+                          placeholder={t('booking.instagram-placeholder')}
                           value={formData.instagram}
                           onChange={(e) => updateFormData('instagram', e.target.value)}
                           className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
@@ -1027,10 +1028,9 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     <div className="flex items-start gap-4">
                       <Shield className="h-6 w-6 text-white/70 mt-1 flex-shrink-0" />
                       <div>
-                        <h6 className="text-white font-bold mb-2 uppercase tracking-wide">Privacy & Communication</h6>
+                        <h6 className="text-white font-bold mb-2 uppercase tracking-wide">{t('common.privacy-communication')}</h6>
                         <p className="text-white/70 text-sm leading-relaxed">
-                          Your contact information is securely protected and will only be used to coordinate your tattoo session. 
-                          We'll reach out within 24 hours to confirm your booking and discuss any details.
+                          {t('booking.privacy-text')}
                         </p>
                       </div>
                     </div>
@@ -1041,54 +1041,54 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {/* Step 9: Review */}
               {currentStep === 9 && (
                 <motion.div key="step9" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                  <h3 className="text-xl font-bold text-white mb-6">Review Your Booking</h3>
+                  <h3 className="text-xl font-bold text-white mb-6">{t('booking.review')}</h3>
                   <div className="space-y-6">
                     <Card className="p-6 border-white/20 bg-white/5">
-                      <h4 className="text-white font-bold mb-4">Booking Summary</h4>
+                      <h4 className="text-white font-bold mb-4">{t('booking.booking-summary')}</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         <div>
-                          <span className="text-white/60">Artist:</span>
+                          <span className="text-white/60">{t('booking.artist')}:</span>
                           <span className="text-white ml-2">{selectedArtist?.name}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Placement:</span>
-                          <span className="text-white ml-2">{formData.placement}</span>
+                          <span className="text-white/60">{t('booking.placement')}:</span>
+                          <span className="text-white ml-2">{t(`placement.${formData.placement}`)}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Size:</span>
-                          <span className="text-white ml-2">{formData.size}</span>
+                          <span className="text-white/60">{t('booking.size')}:</span>
+                          <span className="text-white ml-2">{t(`size.${formData.size}`)}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Budget:</span>
-                          <span className="text-white ml-2">{formData.budget}</span>
+                          <span className="text-white/60">{t('booking.budget')}:</span>
+                          <span className="text-white ml-2">{formData.budget === 'consultation' ? t('budget.need-consultation') : formData.budget}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Date:</span>
+                          <span className="text-white/60">{t('booking.date')}:</span>
                           <span className="text-white ml-2">{formData.selectedDate?.toLocaleDateString()}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Time:</span>
+                          <span className="text-white/60">{t('booking.time')}:</span>
                           <span className="text-white ml-2">{formData.time}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Name:</span>
+                          <span className="text-white/60">{t('booking.name')}:</span>
                           <span className="text-white ml-2">{formData.name}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Phone:</span>
-                          <span className="text-white ml-2">{formData.phone || 'Not provided'}</span>
+                          <span className="text-white/60">{t('booking.phone-field')}:</span>
+                          <span className="text-white ml-2">{formData.phone || t('booking.not-provided')}</span>
                         </div>
                         <div>
-                          <span className="text-white/60">Instagram:</span>
-                          <span className="text-white ml-2">{formData.instagram || 'Not provided'}</span>
+                          <span className="text-white/60">{t('booking.instagram-field')}:</span>
+                          <span className="text-white ml-2">{formData.instagram || t('booking.not-provided')}</span>
                         </div>
                         <div className="md:col-span-2">
-                          <span className="text-white/60">Email:</span>
+                          <span className="text-white/60">{t('booking.email-field')}:</span>
                           <span className="text-white ml-2">{formData.email}</span>
                         </div>
                         {formData.description && (
                           <div className="md:col-span-2">
-                            <span className="text-white/60">Vision:</span>
+                            <span className="text-white/60">{t('booking.vision')}:</span>
                             <p className="text-white mt-2">{formData.description}</p>
                           </div>
                         )}
@@ -1104,12 +1104,12 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     >
                       <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
                         <MessageCircle className="h-5 w-5 mr-3" />
-                        Additional Notes
-                        <span className="text-white/50 font-normal normal-case text-sm ml-2">(Optional)</span>
+                        {t('booking.additional-notes')}
+                        <span className="text-white/50 font-normal normal-case text-sm ml-2">{t('booking.optional')}</span>
                       </Label>
                       <div className="relative tattoo-border">
                         <Textarea
-                          placeholder="Share any special requests, allergies, or additional information that will help us prepare for your session..."
+                          placeholder={t('booking.notes-placeholder')}
                           value={formData.notes}
                           onChange={(e) => updateFormData('notes', e.target.value)}
                           className="bg-gradient-to-br from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 min-h-32 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 resize-none contact-input-focus relative z-10"
@@ -1222,7 +1222,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       transition={{ delay: 0.8, duration: 0.6 }}
                     >
                       <h3 className="text-3xl font-bold text-white mb-4 bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent">
-                        Booking Confirmed!
+{t('booking.confirmed')}
                       </h3>
                     </motion.div>
 
@@ -1233,9 +1233,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       className="mb-8"
                     >
                       <p className="text-white/70 text-lg leading-relaxed max-w-md mx-auto">
-                        🎉 Your booking has been successfully submitted! 
-                        <br />
-                        We'll contact you within 24 hours to confirm your session details.
+{t('booking.success-message')}
                       </p>
                     </motion.div>
 
@@ -1249,7 +1247,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                         onClick={onClose} 
                         className="bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 text-lg font-semibold"
                       >
-                        Close
+                        {t('booking.close')}
                       </Button>
                     </motion.div>
                   </div>
@@ -1265,14 +1263,14 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {currentStep > 1 && currentStep <= 9 && (
                 <Button variant="ghost" onClick={prevStep} className="text-white hover:bg-white/10">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
+                  {t('booking.back')}
                 </Button>
               )}
               
               <div className="flex items-center space-x-4">
                 {canProceedToNextStep() && currentStep < 9 && (
                   <Button onClick={nextStep} className="bg-white text-black hover:bg-white/90">
-                    Next
+                    {t('booking.next')}
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 )}
@@ -1302,7 +1300,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                           className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
                         />
-                        <span>Submitting...</span>
+                        <span>{t('booking.submitting')}</span>
                       </>
                     ) : (
                       <>
@@ -1313,7 +1311,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                         >
                           <Check className="h-4 w-4" />
                         </motion.div>
-                        <span className="font-semibold">Confirm Booking</span>
+                        <span className="font-semibold">{t('booking.confirm-booking')}</span>
                     
                       </>
                     )}

@@ -38,44 +38,44 @@ export interface TimeSlot {
 
 // Placement Options
 export const PLACEMENT_OPTIONS: BookingOption[] = [
-  { name: "Arm", icon: Hand, description: "Upper arm canvas" },
-  { name: "Leg", icon: Footprints, description: "Thigh or calf area" },
-  { name: "Back", icon: User, description: "Full back canvas" },
-  { name: "Chest", icon: Heart, description: "Upper chest area" },
-  { name: "Shoulder", icon: Zap, description: "Shoulder blade" },
-  { name: "Forearm", icon: Hand, description: "Lower arm" },
-  { name: "Wrist", icon: Watch, description: "Wrist area" },
-  { name: "Ankle", icon: Footprints, description: "Ankle placement" },
-  { name: "Neck", icon: User, description: "Neck area" },
-  { name: "Other", icon: Shuffle, description: "Custom location" }
+  { name: "arm", icon: Hand, description: "arm-desc" },
+  { name: "leg", icon: Footprints, description: "leg-desc" },
+  { name: "back", icon: User, description: "back-desc" },
+  { name: "chest", icon: Heart, description: "chest-desc" },
+  { name: "shoulder", icon: Zap, description: "shoulder-desc" },
+  { name: "forearm", icon: Hand, description: "forearm-desc" },
+  { name: "wrist", icon: Watch, description: "wrist-desc" },
+  { name: "ankle", icon: Footprints, description: "ankle-desc" },
+  { name: "neck", icon: User, description: "neck-desc" },
+  { name: "other", icon: Shuffle, description: "other-desc" }
 ];
 
 // Size Options
 export const SIZE_OPTIONS: BookingOption[] = [
-  { name: "Small (5-10cm)", icon: Circle, description: "Delicate details" },
-  { name: "Medium (10-15cm)", icon: Square, description: "Perfect balance" },
-  { name: "Large (15-25cm)", icon: Hexagon, description: "Bold statement" },
-  { name: "Extra Large (25cm+)", icon: Maximize2, description: "Full canvas" }
+  { name: "small", icon: Circle, description: "small-desc" },
+  { name: "medium", icon: Square, description: "medium-desc" },
+  { name: "large", icon: Hexagon, description: "large-desc" },
+  { name: "extra-large", icon: Maximize2, description: "extra-large-desc" }
 ];
 
 // Time Slots
 export const TIME_SLOTS: TimeSlot[] = [
-  { time: "10:00", period: "Morning", available: true },
-  { time: "11:00", period: "Morning", available: true },
-  { time: "12:00", period: "Afternoon", available: true },
-  { time: "13:00", period: "Afternoon", available: false },
-  { time: "14:00", period: "Afternoon", available: true },
-  { time: "15:00", period: "Afternoon", available: true },
-  { time: "16:00", period: "Afternoon", available: true },
-  { time: "17:00", period: "Evening", available: true },
-  { time: "18:00", period: "Evening", available: true }
+  { time: "10:00", period: "morning", available: true },
+  { time: "11:00", period: "morning", available: true },
+  { time: "12:00", period: "afternoon", available: true },
+  { time: "13:00", period: "afternoon", available: false },
+  { time: "14:00", period: "afternoon", available: true },
+  { time: "15:00", period: "afternoon", available: true },
+  { time: "16:00", period: "afternoon", available: true },
+  { time: "17:00", period: "evening", available: true },
+  { time: "18:00", period: "evening", available: true }
 ];
 
 // Budget Options  
 export const BUDGET_OPTIONS: BudgetOption[] = [
-  { name: "300-500₪", range: "300-500₪", icon: DollarSign, description: "Small pieces", tier: "Basic" },
-  { name: "500-1000₪", range: "500-1000₪", icon: CreditCard, description: "Medium artwork", tier: "Standard" },
-  { name: "1000-2000₪", range: "1000-2000₪", icon: Banknote, description: "Large designs", tier: "Premium" },
-  { name: "2000₪+", range: "2000₪+", icon: Crown, description: "Full sessions", tier: "Luxury" },
-  { name: "Need consultation", range: "Need consultation", icon: HelpCircle, description: "Custom quote", tier: "Consultation" }
+  { name: "300-500₪", range: "300-500₪", icon: DollarSign, description: "small-pieces", tier: "basic" },
+  { name: "500-1000₪", range: "500-1000₪", icon: CreditCard, description: "medium-artwork", tier: "standard" },
+  { name: "1000-2000₪", range: "1000-2000₪", icon: Banknote, description: "large-designs", tier: "premium" },
+  { name: "2000₪+", range: "2000₪+", icon: Crown, description: "full-sessions", tier: "luxury" },
+  { name: "consultation", range: "consultation", icon: HelpCircle, description: "custom-quote", tier: "consultation" }
 ];
