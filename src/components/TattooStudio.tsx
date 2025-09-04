@@ -673,15 +673,132 @@ function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-6xl font-black mb-8 text-white">
-            {t('contact.title').split(' ').map((word, index) => (
-              <React.Fragment key={index}>
-                {word}
-                {index < t('contact.title').split(' ').length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </h2>
-          <div className="w-32 h-1 bg-white mx-auto mb-12" />
+          {/* Enhanced Title with Artistic Animation */}
+          <div className="relative mb-12">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight leading-tight">
+              <div className="space-y-2 sm:space-y-3">
+                {/* First Line */}
+                <motion.div
+                  className="block"
+                  initial={{ opacity: 0, y: 100, rotateX: -90, scale: 0.5 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: 0, 
+                    rotateX: 0, 
+                    scale: 1 
+                  }}
+                  transition={{ 
+                    duration: 1.2, 
+                    delay: 0.2, 
+                    ease: [0.25, 0.1, 0.25, 1],
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  viewport={{ once: true, amount: 0.3 }}
+                >
+                  <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
+                    {t('contact.title.line1')}
+                  </span>
+                </motion.div>
+
+                {/* Second Line */}
+                <motion.div
+                  className="block"
+                  initial={{ opacity: 0, y: 100, rotateX: -90, scale: 0.5 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: 0, 
+                    rotateX: 0, 
+                    scale: 1 
+                  }}
+                  transition={{ 
+                    duration: 1.2, 
+                    delay: 0.6, 
+                    ease: [0.25, 0.1, 0.25, 1],
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                  viewport={{ once: true, amount: 0.3 }}
+                >
+                  <span className="bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent">
+                    {t('contact.title.line2')}
+                  </span>
+                </motion.div>
+              </div>
+            </h2>
+
+            {/* Animated Decorative Elements */}
+            <motion.div
+              className="absolute -top-4 -left-4 w-8 h-8 border-2 border-white/30 rounded-full"
+              initial={{ opacity: 0, scale: 0, rotate: -180 }}
+              whileInView={{ 
+                opacity: 1, 
+                scale: 1, 
+                rotate: 0 
+              }}
+              transition={{ 
+                duration: 1, 
+                delay: 1.2,
+                type: "spring",
+                stiffness: 200
+              }}
+              viewport={{ once: true }}
+            >
+              <motion.div
+                className="w-full h-full"
+                animate={{
+                  rotate: [0, 360],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{
+                  rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                }}
+              />
+            </motion.div>
+            
+            <motion.div
+              className="absolute -bottom-4 -right-4 w-6 h-6 border-2 border-white/30 rounded-full"
+              initial={{ opacity: 0, scale: 0, rotate: 180 }}
+              whileInView={{ 
+                opacity: 1, 
+                scale: 1, 
+                rotate: 0 
+              }}
+              transition={{ 
+                duration: 1, 
+                delay: 1.4,
+                type: "spring",
+                stiffness: 200
+              }}
+              viewport={{ once: true }}
+            >
+              <motion.div
+                className="w-full h-full"
+                animate={{
+                  rotate: [0, -360],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{
+                  rotate: { duration: 6, repeat: Infinity, ease: "linear" },
+                  scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                }}
+              />
+            </motion.div>
+
+            {/* Animated Divider */}
+            <motion.div
+              className="w-32 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto mt-8"
+              initial={{ scaleX: 0, opacity: 0 }}
+              whileInView={{ scaleX: 1, opacity: 1 }}
+              transition={{ 
+                duration: 1.5, 
+                delay: 1.8,
+                ease: "easeOut"
+              }}
+              viewport={{ once: true }}
+            />
+          </div>
           
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
