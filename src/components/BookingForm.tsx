@@ -1278,12 +1278,45 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                 )}
                 
                 {currentStep === 9 && (
-                  <Button onClick={() => {
-                    handleSubmit();
-                    setTimeout(() => scrollToTop(), 100);
-                  }} className="bg-white text-black hover:bg-white/90">
-                    Confirm Booking
-                    <Check className="h-4 w-4 ml-2" />
+                  <Button 
+                    onClick={() => {
+                      handleSubmit();
+                      setTimeout(() => scrollToTop(), 100);
+                    }} 
+                    disabled={isSubmitted}
+                    className={`relative overflow-hidden transition-all duration-300 ${
+                      isSubmitted 
+                        ? 'bg-green-500 text-white cursor-not-allowed' 
+                        : 'bg-white text-black hover:bg-white/90 hover:shadow-lg hover:shadow-white/20'
+                    }`}
+                  >
+                    {isSubmitted ? (
+                      <>
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                          animate={{ x: ['-100%', '100%'] }}
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
+                        />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="mr-2"
+                        >
+                          <Check className="h-4 w-4" />
+                        </motion.div>
+                        <span className="font-semibold">Confirm Booking</span>
+                    
+                      </>
+                    )}
                   </Button>
                 )}
               </div>
