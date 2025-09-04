@@ -184,7 +184,7 @@
 
 /* SUNCHES - Dark industrial style */
 .artist-button-sunches {
-  @extend .artist-button-base;
+  /* Inherits from .artist-button-base */
   background: linear-gradient(135deg, #0a0a0a 0%, #1f1f1f 25%, #0a0a0a 50%, #1f1f1f 75%, #0a0a0a 100%) !important;
   color: #e0e0e0 !important;
   border: 2px solid #333333 !important;
@@ -241,7 +241,7 @@
 
 /* DERK - Neojapanese style */
 .artist-button-derk {
-  @extend .artist-button-base;
+  /* Inherits from .artist-button-base */
   background: linear-gradient(135deg, #8B0000 0%, #DC143C 25%, #8B0000 50%, #DC143C 75%, #8B0000 100%) !important;
   color: #FFD700 !important;
   border: 3px solid #FF4500 !important;
@@ -334,14 +334,11 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
 }
 
-/* GOSHA - Regular button (no custom styling) */
-.artist-button-gosha {
-  /* Regular button styling - inherits default button styles */
-}
+/* GOSHA - Regular button (no custom styling) - inherits default button styles */
 
 /* TACT - Traditional tattoo style */
 .artist-button-tact {
-  @extend .artist-button-base;
+  /* Inherits from .artist-button-base */
   background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #000000 50%, #1a1a1a 75%, #000000 100%) !important;
   color: #FFD700 !important;
   border: 2px solid #FFD700 !important;
@@ -402,7 +399,7 @@
 
 /* DANI - Neo traditional illustrative style */
 .artist-button-dani {
-  @extend .artist-button-base;
+  /* Inherits from .artist-button-base */
   background: linear-gradient(135deg, #2E1B47 0%, #4A2C7A 25%, #2E1B47 50%, #4A2C7A 75%, #2E1B47 100%) !important;
   color: #E6B17A !important;
   border: 3px solid #E6B17A !important;

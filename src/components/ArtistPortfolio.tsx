@@ -49,7 +49,7 @@ export function ArtistPortfolio({ artistId, className = "" }: ArtistPortfolioPro
                   <ImageWithFallback
                     src={image.src}
                     alt={image.alt}
-                    className="w-20 h-16 object-cover group-hover/portfolio:scale-110 transition-transform duration-400"
+                    className="w-40 h-32 object-cover group-hover/portfolio:scale-110 transition-transform duration-400"
                   />
                 </a>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover/portfolio:opacity-100 transition-opacity duration-300 pointer-events-none" />

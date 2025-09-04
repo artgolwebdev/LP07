@@ -20,8 +20,8 @@ const ARTIST_FOLDERS = [
   }
 ];
 
-// Get all artist images for the gallery
-export function getArtistImages(): GalleryImage[] {
+// Get all artist images for the gallery (used internally by getArtistImagesById)
+function getArtistImages(): GalleryImage[] {
   const allImages: GalleryImage[] = [];
   
   ARTIST_FOLDERS.forEach(artist => {
@@ -114,9 +114,3 @@ export function getArtistImagesById(artistId: string): GalleryImage[] {
   return artistImages;
 }
 
-// Get random selection of images
-export function getRandomImages(count: number = 6): GalleryImage[] {
-  const allImages = getArtistImages();
-  const shuffled = [...allImages].sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}

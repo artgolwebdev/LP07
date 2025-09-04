@@ -8,9 +8,7 @@ import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { STUDIO_CONFIG } from "../config/studio-config";
-import { DynamicGallery } from "./DynamicGallery";
 import { ArtistPortfolio } from "./ArtistPortfolio";
-import { HeroGallery } from "./HeroGallery";
 
 // Hero Section Component with Background Video
 function HeroSection() {
@@ -72,7 +70,7 @@ function HeroSection() {
             }}
             whileTap={{ scale: 0.98 }}
             onClick={() => {
-              document.getElementById('gallery')?.scrollIntoView({ 
+              document.getElementById('about')?.scrollIntoView({ 
                 behavior: 'smooth',
                 block: 'start'
               });
@@ -115,27 +113,6 @@ function HeroSection() {
   );
 }
 
-// Gallery Section Component
-function GallerySection() {
-  return (
-    <section id="gallery" className="py-1 pb-8 px-1 bg-gradient-to-b from-black via-zinc-900/30 to-black relative overflow-hidden">
-      <div className="max-w-7xl mx-auto relative z-10">
-        <motion.div
-          className="relative"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          {/* Gallery Container */}
-          <div className="relative bg-gradient-to-br from-zinc-900/50 via-black/30 to-zinc-900/50 rounded-3xl overflow-hidden border border-white/20 shadow-[0_0_50px_rgba(255,255,255,0.1)]">
-            <DynamicGallery className="" />
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
 // About Section Component
 function AboutSection() {
@@ -155,8 +132,8 @@ function AboutSection() {
              </h2>
             <div className="w-24 h-1.5 bg-white mb-8" />
                          <p className="text-xl md:text-2xl lg:text-3xl text-white/80 leading-relaxed">
-               Located in Tel Aviv-Yaffo, {STUDIO_CONFIG.name} combines traditional 
-               tattoo artistry with modern techniques. Each piece tells your unique story.
+               Based in Tel Aviv–Yafo, {STUDIO_CONFIG.name} designs professional tattoos 
+               with a personal touch.
              </p>
           </div>
           
@@ -284,7 +261,7 @@ function AboutSection() {
 // Artists Section Component
 function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string) => void }) {
   return (
-    <section id="artists" className="py-32 px-6 bg-zinc-900/50">
+    <section id="artists" className="py-20 px-6 bg-zinc-900/50">
       <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-20"
@@ -504,7 +481,7 @@ function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
   };
 
   return (
-    <section id="contact" className="py-32 px-6 bg-zinc-900/50">
+    <section id="contact" className="py-20 px-6 bg-zinc-900/50">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -517,10 +494,6 @@ function ContactSection({ onBookingClick }: { onBookingClick: () => void }) {
           </h2>
           <div className="w-32 h-1 bg-white mx-auto mb-12" />
           
-          <p className="text-2xl text-white/80 mb-16 leading-relaxed">
-            Start your tattoo journey today. Book a consultation with our artists 
-            and bring your vision to life.
-          </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <motion.div
@@ -576,12 +549,6 @@ export function TattooStudio() {
 
       {/* Hero Section */}
       <HeroSection />
-
-      {/* Hero Gallery - Featured artwork below hero */}
-      <HeroGallery />
-
-      {/* Gallery Section - Now below hero with bold futuristic design */}
-      <GallerySection />
 
       {/* About Section */}
       <AboutSection />
