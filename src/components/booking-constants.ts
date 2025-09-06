@@ -15,6 +15,7 @@ export interface FormData {
   name: string;
   phone: string;
   instagram: string;
+  telegram: string;
   notes: string;
 }
 

@@ -15,7 +15,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 interface BookingFormProps {
   isOpen: boolean;
   onClose: () => void;
-  artists: Array<{ id: string; name: string; specialties: string[]; image: string }>;
+  artists: Array<{ id: string; name: string; specialties: string[]; image: string; profileImage: string }>;
   preSelectedArtist?: string | null;
 }
 
@@ -37,6 +37,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
     name: "",
     phone: "",
     instagram: "",
+    telegram: "",
     notes: "",
   });
 
@@ -79,9 +80,13 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
     scrollToTop();
   }, [currentStep]);
 
-  // Auto-focus on vision textarea when reaching step 2
+  // Auto-focus on vision textarea when reaching step 2 (desktop only)
   useEffect(() => {
     if (currentStep === 2) {
+      // Check if device is desktop (not mobile/tablet)
+      const isDesktop = window.innerWidth >= 1024 && !('ontouchstart' in window);
+      
+      if (isDesktop) {
       // Longer delay to ensure the component is fully rendered and animations are complete
       const focusTimeout = setTimeout(() => {
         if (visionTextareaRef.current) {
@@ -95,6 +100,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
       }, 800); // Increased delay to account for animations
 
       return () => clearTimeout(focusTimeout);
+      }
     }
   }, [currentStep]);
 
@@ -137,7 +143,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
       case 5: return formData.selectedDate !== undefined && formData.time !== "";
       case 6: return formData.budget !== "";
       case 7: return formData.name !== "" && formData.email !== "";
-      case 8: return formData.phone !== "" || formData.instagram !== "";
+      case 8: return formData.phone !== "" || formData.instagram !== "" || formData.telegram !== "";
       case 9: return true;
       default: return false;
     }
@@ -191,6 +197,28 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
 
   const updateFormData = (field: keyof FormData, value: string | File | Date | undefined) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      artistId: "",
+      description: "",
+      placement: "",
+      size: "",
+      date: "",
+      time: "",
+      selectedDate: undefined,
+      budget: "",
+      email: "",
+      name: "",
+      phone: "",
+      instagram: "",
+      telegram: "",
+      notes: "",
+    });
+    setCurrentStep(1);
+    setIsSubmitted(false);
+    scrollToTop();
   };
 
   const handleDateSelect = (date: Date | null) => {
@@ -255,7 +283,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
           
           
           {/* Form Steps */}
-          <div className="p-6 pb-6 h-full flex flex-col">
+          <div className="p-6 pb-8 h-full flex flex-col">
             <AnimatePresence mode="wait">
               
               {/* Step 1: Choose Artist */}
@@ -294,7 +322,9 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                         }}
                       >
                         <div className="flex items-center gap-4">
-                          <ImageWithFallback src={artist.image} alt={artist.name} className="w-16 h-16 object-cover rounded" />
+                          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20">
+                            <ImageWithFallback src={artist.profileImage} alt={`${artist.name} profile`} className="w-full h-full object-cover" />
+                          </div>
                           <div className="flex-1">
                             <h4 className="font-bold text-white">{artist.name}</h4>
                             <p className="text-white/60">{artist.specialties.join(', ')}</p>
@@ -352,17 +382,29 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                               />
                             )}
                             
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-all duration-300" />
+                            {/* Optimized Artist Video Overlay System */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/80 md:from-black/90 via-black/40 sm:via-black/45 md:via-black/50 via-black/15 sm:via-black/20 md:via-black/25 to-black/15 transition-all duration-300" />
+                            {/* Seamless edge coverage */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/25" />
                           </div>
                           
                           <div className="p-4">
-                            <div className="mb-2">
+                            <div className="flex items-center gap-3 mb-3">
+                              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20">
+                                <ImageWithFallback 
+                                  src={selectedArtist.profileImage} 
+                                  alt={`${selectedArtist.name} profile`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div>
                               <h3 className="text-lg font-black text-white mb-1 transition-colors duration-300">
                                 {selectedArtist.name}
                               </h3>
                               <p className="text-sm text-white/80 transition-colors duration-300">
                                 {selectedArtist.specialties.join(' • ')}
                               </p>
+                              </div>
                             </div>
                             
                             <div className="flex items-center gap-2 text-green-400 text-xs">
@@ -808,10 +850,6 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     transition={{ delay: 0.1 }}
                     className="text-center space-y-4"
                   >
-                    <h3 className="text-3xl font-bold text-white glow-text uppercase tracking-wider">
-                      {t('booking.basic-contact')}
-                    </h3>
-                    <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto opacity-60"></div>
                     <p className="text-white/70 text-lg">
                       {t('booking.lets-start')}
                     </p>
@@ -876,23 +914,6 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       </div>
                     </motion.div>
 
-                    {/* Artistic Separator */}
-                    <motion.div
-                      initial={{ opacity: 0, scaleX: 0 }}
-                      animate={{ opacity: 1, scaleX: 1 }}
-                      transition={{ delay: 0.35, duration: 0.8 }}
-                      className="flex items-center justify-center py-4"
-                    >
-                      <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                      <div className="px-6">
-                        <div className="w-3 h-3 rotate-45 bg-white/20 border border-white/40"></div>
-                      </div>
-                      <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-                    </motion.div>
-
-
-
-
                   </div>
 
                   {/* Contact Info Card */}
@@ -931,10 +952,6 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                     transition={{ delay: 0.1 }}
                     className="text-center space-y-4"
                   >
-                    <h3 className="text-3xl font-bold text-white glow-text uppercase tracking-wider">
-                      {t('booking.contact-method')}
-                    </h3>
-                    <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white to-transparent mx-auto opacity-60"></div>
                     <p className="text-white/70 text-lg">
                       {t('booking.choose-preferred')}
                     </p>
@@ -1014,6 +1031,48 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       </div>
                     </motion.div>
 
+                    {/* Artistic Separator */}
+                    <motion.div
+                      initial={{ opacity: 0, scaleX: 0 }}
+                      animate={{ opacity: 1, scaleX: 1 }}
+                      transition={{ delay: 0.5, duration: 0.8 }}
+                      className="flex items-center justify-center py-4"
+                    >
+                      <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                      <div className="px-6">
+                        <span className="text-white/40 text-sm uppercase tracking-wider">{t('common.or')}</span>
+                      </div>
+                      <div className="w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+                    </motion.div>
+
+                    {/* Telegram Option */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="space-y-4"
+                    >
+                      <Label className="text-white/90 text-base font-bold uppercase tracking-wide flex items-center">
+                        <MessageCircle className="h-5 w-5 mr-3" />
+                        {t('booking.telegram')}
+                      </Label>
+                      <div className="relative tattoo-border">
+                        <Input
+                          type="text"
+                          placeholder={t('booking.telegram-placeholder')}
+                          value={formData.telegram}
+                          onChange={(e) => updateFormData('telegram', e.target.value)}
+                          className="bg-gradient-to-r from-white/5 to-white/10 border-white/30 text-white placeholder:text-white/50 h-14 text-lg font-medium focus:border-white/60 focus:bg-white/10 transition-all duration-300 contact-input-focus relative z-10"
+                        />
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: formData.telegram ? 1 : 0 }}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none z-20"
+                        >
+                          <Check className="h-5 w-5 text-green-400" />
+                        </motion.div>
+                      </div>
+                    </motion.div>
 
                   </div>
 
@@ -1081,6 +1140,10 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                           <span className="text-white/60">{t('booking.instagram-field')}:</span>
                           <span className="text-white ml-2">{formData.instagram || t('booking.not-provided')}</span>
                         </div>
+                        <div>
+                          <span className="text-white/60">{t('booking.telegram-field')}:</span>
+                          <span className="text-white ml-2">{formData.telegram || t('booking.not-provided')}</span>
+                        </div>
                         <div className="md:col-span-2">
                           <span className="text-white/60">{t('booking.email-field')}:</span>
                           <span className="text-white ml-2">{formData.email}</span>
@@ -1136,28 +1199,56 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                   transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                   <div className="text-center py-12 relative">
-                    {/* Animated background particles */}
+                    {/* Enhanced animated background particles */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                      {[...Array(6)].map((_, i) => (
+                      {[...Array(12)].map((_, i) => (
                         <motion.div
                           key={i}
-                          className="absolute w-2 h-2 bg-green-400 rounded-full"
+                          className="absolute w-1 h-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full"
                           initial={{ 
-                            x: Math.random() * 400 - 200, 
-                            y: Math.random() * 300 - 150,
+                            x: Math.random() * 600 - 300, 
+                            y: Math.random() * 400 - 200,
+                            opacity: 0,
+                            scale: 0
+                          }}
+                          animate={{ 
+                            opacity: [0, 0.8, 0],
+                            scale: [0, 1.5, 0],
+                            y: [Math.random() * 400 - 200, Math.random() * 400 - 200],
+                            x: [Math.random() * 600 - 300, Math.random() * 600 - 300]
+                          }}
+                          transition={{ 
+                            duration: 3,
+                            delay: i * 0.15,
+                            repeat: Infinity,
+                            repeatDelay: 0.5,
+                            ease: "easeInOut"
+                          }}
+                        />
+                      ))}
+                      
+                      {/* Floating sparkles */}
+                      {[...Array(8)].map((_, i) => (
+                        <motion.div
+                          key={`sparkle-${i}`}
+                          className="absolute w-1 h-1 bg-white rounded-full"
+                          initial={{ 
+                            x: Math.random() * 500 - 250, 
+                            y: Math.random() * 350 - 175,
                             opacity: 0,
                             scale: 0
                           }}
                           animate={{ 
                             opacity: [0, 1, 0],
-                            scale: [0, 1, 0],
-                            y: [Math.random() * 300 - 150, Math.random() * 300 - 150]
+                            scale: [0, 2, 0],
+                            rotate: [0, 360]
                           }}
                           transition={{ 
-                            duration: 2,
-                            delay: i * 0.2,
+                            duration: 2.5,
+                            delay: i * 0.3,
                             repeat: Infinity,
-                            repeatDelay: 1
+                            repeatDelay: 1.5,
+                            ease: "easeInOut"
                           }}
                         />
                       ))}
@@ -1175,79 +1266,170 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       }}
                       className="relative mx-auto mb-8"
                     >
-                      {/* Pulsing ring effect */}
+                      {/* Responsive pulsing ring effects */}
                       <motion.div
-                        className="absolute inset-0 w-32 h-32 bg-green-500/20 rounded-full mx-auto"
+                        className="absolute inset-0 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 bg-gradient-to-r from-green-500/30 to-emerald-400/30 rounded-full mx-auto"
                         animate={{ 
-                          scale: [1, 1.2, 1],
-                          opacity: [0.5, 0, 0.5]
+                          scale: [1, 1.3, 1],
+                          opacity: [0.6, 0, 0.6]
                         }}
                         transition={{ 
-                          duration: 2,
+                          duration: 2.5,
                           repeat: Infinity,
                           ease: "easeInOut"
                         }}
                       />
                       <motion.div
-                        className="absolute inset-0 w-28 h-28 bg-green-500/10 rounded-full mx-auto"
+                        className="absolute inset-0 w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 bg-gradient-to-r from-green-500/20 to-emerald-400/20 rounded-full mx-auto"
                         animate={{ 
-                          scale: [1, 1.3, 1],
+                          scale: [1, 1.25, 1],
+                          opacity: [0.4, 0, 0.4]
+                        }}
+                        transition={{ 
+                          duration: 2.5,
+                          delay: 0.3,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      <motion.div
+                        className="absolute inset-0 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-gradient-to-r from-green-500/15 to-emerald-400/15 rounded-full mx-auto"
+                        animate={{ 
+                          scale: [1, 1.2, 1],
                           opacity: [0.3, 0, 0.3]
                         }}
                         transition={{ 
-                          duration: 2,
-                          delay: 0.5,
+                          duration: 2.5,
+                          delay: 0.6,
                           repeat: Infinity,
                           ease: "easeInOut"
                         }}
                       />
                       
-                      {/* Main icon */}
-                      <div className="relative w-24 h-24 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/30">
+                      {/* Main icon with responsive enhanced styling */}
                         <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ delay: 0.6, type: "spring", stiffness: 300 }}
+                        className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-to-br from-green-500 via-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40 border-4 border-white/20"
+                        animate={{ 
+                          boxShadow: [
+                            "0 0 0 0 rgba(34, 197, 94, 0.4)",
+                            "0 0 0 15px rgba(34, 197, 94, 0)",
+                            "0 0 0 0 rgba(34, 197, 94, 0)"
+                          ]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeOut"
+                        }}
+                      >
+                        <motion.div
+                          initial={{ scale: 0, rotate: -90 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ delay: 0.6, type: "spring", stiffness: 300, damping: 20 }}
                         >
-                          <Check className="h-12 w-12 text-white" />
+                          <Check className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-white drop-shadow-lg" />
                         </motion.div>
-                      </div>
+                      </motion.div>
                     </motion.div>
 
-                    {/* Success text with staggered animation */}
+                    {/* Success text with enhanced staggered animation */}
                     <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.8, duration: 0.6 }}
+                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
                     >
-                      <h3 className="text-3xl font-bold text-white mb-4 bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent">
-{t('booking.confirmed')}
-                      </h3>
+                      <motion.h3 
+                        className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 bg-gradient-to-r from-green-400 via-emerald-300 to-green-400 bg-clip-text text-transparent"
+                        animate={{ 
+                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                        }}
+                        transition={{ 
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        style={{ backgroundSize: "200% 200%" }}
+                      >
+                        {t('booking.confirmed')}
+                      </motion.h3>
                     </motion.div>
 
                     <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1, duration: 0.6 }}
+                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
                       className="mb-8"
                     >
-                      <p className="text-white/70 text-lg leading-relaxed max-w-md mx-auto">
-{t('booking.success-message')}
-                      </p>
+                      <motion.p 
+                        className="text-white/80 text-base sm:text-lg leading-relaxed max-w-sm sm:max-w-md md:max-w-lg mx-auto px-4"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.2, duration: 0.6 }}
+                      >
+                        {t('booking.success-message')}
+                      </motion.p>
                     </motion.div>
 
-                    {/* Animated close button */}
+                    {/* Enhanced animated action buttons */}
                     <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2, duration: 0.6 }}
+                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
+                      className="flex flex-col sm:flex-row gap-4 justify-center items-center"
                     >
-                      <Button 
-                        onClick={onClose} 
-                        className="bg-gradient-to-r from-white to-gray-100 text-black hover:from-gray-100 hover:to-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-3 text-lg font-semibold"
+                      {/* Book Again Button */}
+                      <motion.div
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
                       >
-                        {t('booking.close')}
-                      </Button>
+                        <Button 
+                          onClick={resetForm} 
+                          className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 text-black hover:from-yellow-500 hover:via-orange-500 hover:to-red-500 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-full border-2 border-yellow-300/60 hover:border-yellow-200/80 relative overflow-hidden"
+                        >
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                            animate={{ 
+                              x: ["-100%", "100%"]
+                            }}
+                            transition={{ 
+                              duration: 3,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                          />
+                          <span className="relative z-10 text-black font-bold tracking-wide drop-shadow-md">
+                            {t('booking.book-again')}
+                          </span>
+                        </Button>
+                      </motion.div>
+
+                      {/* Close Button */}
+                      <motion.div
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      >
+                        <Button 
+                          onClick={onClose} 
+                          className="bg-gradient-to-r from-white via-gray-50 to-white text-black hover:from-gray-100 hover:via-white hover:to-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 text-base sm:text-lg font-bold rounded-full border-2 border-white/20 hover:border-white/40"
+                        >
+                          <motion.span
+                            animate={{ 
+                              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                            }}
+                            transition={{ 
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: "easeInOut"
+                            }}
+                            style={{ backgroundSize: "200% 200%" }}
+                            className="bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent"
+                          >
+                            {t('booking.close')}
+                          </motion.span>
+                        </Button>
+                      </motion.div>
                     </motion.div>
                   </div>
                 </motion.div>

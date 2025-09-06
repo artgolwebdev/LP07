@@ -11,23 +11,29 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { STUDIO_CONFIG } from "../config/studio-config";
 import { ArtistPortfolio } from "./ArtistPortfolio";
 
-// Hero Section Component with Background Video
+// Hero Section Component with Enhanced Parallax Effects
 function HeroSection() {
   const { t } = useLanguage();
-  // Smooth Parallax scroll effect
+  // Minimal Parallax effects for better performance
   const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 800], [0, -150]);
-  const heroScale = useTransform(scrollY, [0, 800], [1, 1.05]);
-  const textY = useTransform(scrollY, [0, 400], [0, 80]);
-  const textOpacity = useTransform(scrollY, [0, 400], [1, 0.2]);
-  const titleScale = useTransform(scrollY, [0, 200], [1, 0.95]);
+  
+  // Background video parallax (minimal for performance)
+  const heroY = useTransform(scrollY, [0, 600], [0, -100]);
+  
+  // Text content parallax (minimal)
+  const textOpacity = useTransform(scrollY, [0, 300], [1, 0.3]);
+  
+  // Scroll indicator parallax (minimal)
+  const indicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Background Video */}
+      {/* Background Video with Minimal Parallax */}
       <motion.div 
-        className="absolute inset-0 z-0"
-        style={{ y: heroY, scale: heroScale }}
+        className="absolute inset-0 z-0 will-change-transform"
+        style={{ 
+          y: heroY
+        }}
       >
         <video
           autoPlay
@@ -40,16 +46,21 @@ function HeroSection() {
           SAGE Tattoo Studio Background
         </video>
         
-        {/* Dark overlay for better text readability */}
+        {/* Static Dark overlay */}
         <div className="absolute inset-0 bg-black/40" />
+        
+        {/* Additional gradient overlay for depth */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60" />
       </motion.div>
 
       {/* Hero Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
-        {/* Main Title and Subtitle Section */}
+        {/* Main Title and Subtitle Section with Minimal Parallax */}
         <motion.div
-          className="text-center mb-8 sm:mb-12 md:mb-16"
-          style={{ y: textY, opacity: textOpacity, scale: titleScale }}
+          className="text-center mb-8 sm:mb-12 md:mb-16 will-change-transform"
+          style={{ 
+            opacity: textOpacity
+          }}
         >
           {/* Main Title */}
           <motion.h1 
@@ -101,13 +112,16 @@ function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Minimal Scroll Indicator */}
       <motion.div
-        className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-10 will-change-transform"
+        style={{
+          opacity: indicatorOpacity
+        }}
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       >
-        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center">
+        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/50 rounded-full flex justify-center backdrop-blur-sm bg-white/5">
           <div className="w-0.5 h-2 sm:h-3 bg-white/50 rounded-full mt-1.5 sm:mt-2" />
         </div>
       </motion.div>
@@ -322,7 +336,7 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent transform -skew-x-12" />
           </motion.div>
 
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 text-white tracking-tight relative z-10">
+          <h2 className="py-6 sm:py-8 md:py-10 text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 text-white tracking-tight relative z-10">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
               {t('artists.title').split(' ').map((word, wordIndex) => (
                 <motion.span
@@ -486,17 +500,30 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
                       />
                     )}
                     
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/90 group-hover:via-black/50 transition-all duration-300" />
+                    {/* Optimized Artist Video Overlay System */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 sm:from-black/80 md:from-black/90 via-black/40 sm:via-black/45 md:via-black/50 via-black/15 sm:via-black/20 md:via-black/25 to-black/15 group-hover:from-black/85 sm:group-hover:from-black/90 md:group-hover:from-black/95 group-hover:via-black/55 sm:group-hover:via-black/60 md:group-hover:via-black/65 group-hover:via-black/25 sm:group-hover:via-black/30 md:group-hover:via-black/35 transition-all duration-300" />
+                    {/* Seamless edge coverage */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/25" />
                   </div>
                   
                   <div className="pb-4 px-3 md:px-4">
-                    <div className="mb-3">
-                      <h3 className="text-lg md:text-xl font-black text-white mb-2 group-hover:text-white/90 transition-colors duration-300">
+                    {/* Artist Profile Picture */}
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white/20 group-hover:border-white/40 transition-all duration-300">
+                        <ImageWithFallback 
+                          src={artist.profileImage} 
+                          alt={`${artist.name} profile`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-lg md:text-xl font-black text-white mb-1 group-hover:text-white/90 transition-colors duration-300">
                         {artist.name}
                       </h3>
                       <p className="text-sm md:text-base text-white/80 group-hover:text-white/90 transition-colors duration-300">
                         {artist.specialties.join(' • ')}
                       </p>
+                      </div>
                     </div>
                     
                     <ArtistPortfolio 

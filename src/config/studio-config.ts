@@ -18,6 +18,7 @@ export const STUDIO_CONFIG: {
     id: string;
     name: string;
     image: string;
+    profileImage: string;
     specialties: string[];
   }>;
   navigation: Array<{ name: string; section: string }>;
@@ -60,43 +61,50 @@ export const STUDIO_CONFIG: {
       id: "groc",
       name: "GROC 08",
       image: "assets/artists/groc/LAFLARE.mp4",
+      profileImage: "assets/artists/groc/profile/profile-groc.jpg",
       specialties: ["Lettering", "Calligraphy"]
     },
     {
       id: "sunches", 
       name: "SUNCHES",
       specialties: ["Black & Grey"],
-      image: "assets/artists/sunches/sunches.jpg"
+      image: "assets/artists/sunches/sunches.jpg",
+      profileImage: "assets/artists/sunches/sunches.jpg" // Using existing image as profile
     },
     {
       id: "derk",
       name: "DERK",
       specialties: ["NeoJapanese", "Color Illustration"],
-      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+      image: "assets/artists/groc/LAFLARE.mp4", // Placeholder - using GROC video for now
+      profileImage: "assets/artists/groc/profile/profile-groc.jpg" // Placeholder - using GROC profile for now
     },
     {
       id: "jenya",
       name: "JENYA NINTENDO",
       specialties: ["Japanese & Floral", "Color"],
-      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+      image: "assets/artists/groc/LAFLARE.mp4", // Placeholder - using GROC video for now
+      profileImage: "assets/artists/groc/profile/profile-groc.jpg" // Placeholder - using GROC profile for now
     },
     {
       id: "gosha",
       name: "GOSHA IMAS",
       specialties: ["Traditional", "Bold"],
-      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+      image: "assets/artists/groc/LAFLARE.mp4", // Placeholder - using GROC video for now
+      profileImage: "assets/artists/groc/profile/profile-groc.jpg" // Placeholder - using GROC profile for now
     },
     {
       id: "tactink",
       name: "TACT INK",
       specialties: ["Traditional"],
-      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+      image: "assets/artists/groc/LAFLARE.mp4", // Placeholder - using GROC video for now
+      profileImage: "assets/artists/groc/profile/profile-groc.jpg" // Placeholder - using GROC profile for now
     },
     {
       id: "danilitt",
       name: "DANI LITT",
       specialties: ["Neo Traditional", "Illustrative"],
-      image: "assets/artists/groc/LAFLARE.mp4" // Placeholder - using GROC video for now
+      image: "assets/artists/groc/LAFLARE.mp4", // Placeholder - using GROC video for now
+      profileImage: "assets/artists/groc/profile/profile-groc.jpg" // Placeholder - using GROC profile for now
     }
   ],
   
