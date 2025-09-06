@@ -17,9 +17,6 @@ function HeroSection() {
   // Minimal Parallax effects for better performance
   const { scrollY } = useScroll();
   
-  // Background video parallax (minimal for performance)
-  const heroY = useTransform(scrollY, [0, 600], [0, -100]);
-  
   // Text content parallax (minimal)
   const textOpacity = useTransform(scrollY, [0, 300], [1, 0.3]);
   
@@ -28,13 +25,8 @@ function HeroSection() {
 
   return (
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Background Video with Minimal Parallax */}
-      <motion.div 
-        className="absolute inset-0 z-0 will-change-transform"
-        style={{ 
-          y: heroY
-        }}
-      >
+      {/* Background Video - Static */}
+      <div className="absolute inset-0 z-0">
         <video
           autoPlay
           muted
@@ -51,7 +43,7 @@ function HeroSection() {
         
         {/* Additional gradient overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60" />
-      </motion.div>
+      </div>
 
       {/* Hero Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6">
