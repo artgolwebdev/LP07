@@ -272,9 +272,9 @@ function AboutSection() {
 function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string) => void }) {
   const { t } = useLanguage();
   return (
-    <section id="artists" className="py-20 px-6 bg-zinc-900/50">
+    <section id="artists" className="py-16 sm:py-20 px-4 sm:px-6 bg-zinc-900/50">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-20 relative">
+        <div className="text-center mb-16 sm:mb-20 relative">
           {/* Futuristic Background Grid */}
           <motion.div
             className="absolute inset-0 opacity-20"
@@ -322,12 +322,12 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent transform -skew-x-12" />
           </motion.div>
 
-          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-4 text-white tracking-tight relative z-10">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 text-white tracking-tight relative z-10">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
               {t('artists.title').split(' ').map((word, wordIndex) => (
                 <motion.span
                   key={word}
-                  className="inline-block mr-4"
+                  className="inline-block mr-2 sm:mr-3 md:mr-4"
                   initial={{ 
                     opacity: 0, 
                     y: 20
