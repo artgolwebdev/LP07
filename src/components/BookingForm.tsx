@@ -1193,81 +1193,11 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {currentStep === 10 && (
                 <div key="step10" className="w-full flex flex-col justify-center items-center">
                   <div className="text-center py-12 w-full max-w-2xl mx-auto">
-                    {/* Animated success icon with vibes */}
+                    {/* Static success icon - no animations to prevent layout shifts */}
                     <div className="relative mx-auto mb-8">
-                      {/* Pulsing ring effects */}
-                      <motion.div
-                        className="absolute inset-0 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 bg-gradient-to-r from-green-500/30 to-emerald-400/30 rounded-full mx-auto"
-                        animate={{ 
-                          scale: [1, 1.3, 1],
-                          opacity: [0.6, 0, 0.6]
-                        }}
-                        transition={{ 
-                          duration: 2.5,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      <motion.div
-                        className="absolute inset-0 w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 bg-gradient-to-r from-green-500/20 to-emerald-400/20 rounded-full mx-auto"
-                        animate={{ 
-                          scale: [1, 1.25, 1],
-                          opacity: [0.4, 0, 0.4]
-                        }}
-                        transition={{ 
-                          duration: 2.5,
-                          delay: 0.3,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      <motion.div
-                        className="absolute inset-0 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-gradient-to-r from-green-500/15 to-emerald-400/15 rounded-full mx-auto"
-                        animate={{ 
-                          scale: [1, 1.2, 1],
-                          opacity: [0.3, 0, 0.3]
-                        }}
-                        transition={{ 
-                          duration: 2.5,
-                          delay: 0.6,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      
-                      {/* Main icon with enhanced animation */}
-                      <motion.div
-                        className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-to-br from-green-500 via-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40 border-4 border-white/20"
-                        initial={{ scale: 0, rotate: -180 }}
-                        animate={{ 
-                          scale: 1, 
-                          rotate: 0,
-                          boxShadow: [
-                            "0 0 0 0 rgba(34, 197, 94, 0.4)",
-                            "0 0 0 15px rgba(34, 197, 94, 0)",
-                            "0 0 0 0 rgba(34, 197, 94, 0)"
-                          ]
-                        }}
-                        transition={{ 
-                          delay: 0.3, 
-                          type: "spring", 
-                          stiffness: 200,
-                          damping: 15,
-                          boxShadow: {
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeOut"
-                          }
-                        }}
-                      >
-                        <motion.div
-                          initial={{ scale: 0, rotate: -90 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          transition={{ delay: 0.6, type: "spring", stiffness: 300, damping: 20 }}
-                        >
-                          <Check className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-white drop-shadow-lg" />
-                        </motion.div>
-                      </motion.div>
+                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-to-br from-green-500 via-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40 border-4 border-white/20">
+                        <Check className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-white drop-shadow-lg" />
+                      </div>
                     </div>
 
 
