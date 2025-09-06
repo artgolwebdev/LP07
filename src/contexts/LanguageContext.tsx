@@ -24,13 +24,11 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   useEffect(() => {
     const savedLanguage = localStorage.getItem('sage-language') as Language;
     if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'ru' || savedLanguage === 'fr' || savedLanguage === 'he')) {
-      console.log('🌍 Using saved language:', savedLanguage);
       setLanguage(savedLanguage);
     } else {
       // No saved language found, detect browser language
       const browserLanguage = detectBrowserLanguage();
       const browserLang = navigator.language || (navigator as any).userLanguage;
-      console.log('🌍 Browser language detected:', browserLang, '→ mapped to:', browserLanguage);
       setLanguage(browserLanguage);
     }
   }, []);

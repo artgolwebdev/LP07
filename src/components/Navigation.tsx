@@ -19,7 +19,8 @@ export function Navigation({ onBookingClick }: NavigationProps) {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -51,10 +52,15 @@ export function Navigation({ onBookingClick }: NavigationProps) {
         <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex items-center justify-between">
           {/* Logo */}
           <motion.div
-            className="cursor-pointer"
+            className="cursor-pointer flex items-center gap-2 sm:gap-3"
             whileHover={{ scale: 1.05 }}
             onClick={() => scrollToSection('hero')}
           >
+            <img 
+              src="/LP07/logo.png" 
+              alt="SAGE Logo" 
+              className="h-10 w-10 sm:h-12 sm:w-12 md:h-20 md:w-20 object-contain logo-spin"
+            />
             <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-wider glow-text">
               {STUDIO_CONFIG.name}
             </h1>
@@ -148,9 +154,16 @@ export function Navigation({ onBookingClick }: NavigationProps) {
             <div className="flex flex-col h-full">
               {/* Header */}
               <div className="flex items-center justify-between p-4 sm:p-6 border-b border-white/20">
-                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-wider glow-text">
-                  {STUDIO_CONFIG.name}
-                </h1>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <img 
+                    src="/LP07/logo.png" 
+                    alt="SAGE Logo" 
+                    className="h-10 w-10 sm:h-12 sm:w-12 object-contain logo-spin"
+                  />
+                  <h1 className="text-2xl sm:text-3xl font-black text-white tracking-wider glow-text">
+                    {STUDIO_CONFIG.name}
+                  </h1>
+                </div>
                 <div className="flex items-center gap-3">
                   <LanguageSwitcher />
                   <button

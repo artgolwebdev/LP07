@@ -181,7 +181,6 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
     try {
       playSubmissionSound();
     } catch (error) {
-      console.log('Audio not available');
     }
     
     // Enhanced animation sequence

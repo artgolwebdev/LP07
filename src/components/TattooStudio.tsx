@@ -216,8 +216,8 @@ function AboutSection() {
                   playsInline
                   className="w-full h-full object-cover rounded-xl border border-white/30 shadow-xl"
                 >
-                  <source src="assets/sections/studio/party-video-2.mp4" type="video/mp4" />
-                  Party Video 2
+                  <source src="assets/arnament.mp4" type="video/mp4" />
+                  Arnament Video
                 </video>
                 <div className="absolute inset-0 rounded-xl border border-white/30 shadow-[0_0_25px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_40px_rgba(255,255,255,0.35)] transition-all duration-500" />
               </motion.div>
@@ -327,133 +327,23 @@ function ArtistsSection({ onArtistSelect }: { onArtistSelect: (artistId: string)
               {t('artists.title').split(' ').map((word, wordIndex) => (
                 <motion.span
                   key={word}
-                  className="inline-block mr-4 relative"
+                  className="inline-block mr-4"
                   initial={{ 
                     opacity: 0, 
-                    y: 200,
-                    rotateX: -90,
-                    scale: 0.1,
-                    filter: "blur(20px)"
+                    y: 20
                   }}
                   whileInView={{ 
                     opacity: 1, 
-                    y: 0,
-                    rotateX: 0,
-                    scale: 1,
-                    filter: "blur(0px)"
+                    y: 0
                   }}
                   transition={{
-                    duration: 1.5,
-                    delay: wordIndex * 0.6,
-                    ease: [0.25, 0.1, 0.25, 1],
-                    times: [0, 0.3, 0.7, 1]
+                    duration: 0.6,
+                    delay: wordIndex * 0.1,
+                    ease: "easeOut"
                   }}
                   viewport={{ once: true, amount: 0.3 }}
-                  whileHover={{
-                    scale: 1.05,
-                    rotateX: 5,
-                    textShadow: "0 0 30px #00ffff, 0 0 60px #0080ff, 0 0 90px #8000ff",
-                    filter: "drop-shadow(0 0 20px #00ffff)",
-                    transition: { duration: 0.3, ease: "easeOut" }
-                  }}
                 >
-                  {/* Holographic Effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-600/20 blur-sm"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1.1 }}
-                    viewport={{ once: true }}
-                    animate={{
-                      opacity: [0.3, 0.6, 0.3],
-                      scale: [1.1, 1.2, 1.1]
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  {word.split("").map((letter, letterIndex) => (
-                    <motion.span
-                      key={`${word}-${letterIndex}`}
-                      className="inline-block relative"
-                      initial={{ 
-                        opacity: 0, 
-                        y: 150,
-                        rotateZ: -180,
-                        scale: 0.1,
-                        skewY: 45,
-                        x: Math.random() * 200 - 100,
-                        filter: "blur(15px) brightness(0)"
-                      }}
-                      whileInView={{ 
-                        opacity: 1, 
-                        y: 0,
-                        rotateZ: 0,
-                        scale: 1,
-                        skewY: 0,
-                        x: 0,
-                        filter: "blur(0px) brightness(1)"
-                      }}
-                      transition={{
-                        duration: 1.2,
-                        delay: wordIndex * 0.6 + letterIndex * 0.1,
-                        ease: [0.25, 0.1, 0.25, 1],
-                        times: [0, 0.2, 0.8, 1]
-                      }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      whileHover={{
-                        scale: 1.2,
-                        rotateZ: 10,
-                        skewY: 5,
-                        y: -5,
-                        color: "#00ffff",
-                        textShadow: "0 0 20px #00ffff, 0 0 40px #0080ff, 0 0 60px #8000ff",
-                        filter: "drop-shadow(0 0 15px #00ffff) brightness(1.5)",
-                        transition: { 
-                          duration: 0.2, 
-                          ease: "easeOut",
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 10
-                        }
-                      }}
-                      whileTap={{
-                        scale: 0.95,
-                        rotateZ: -3,
-                        transition: { duration: 0.1 }
-                      }}
-                      style={{ 
-                        display: "inline-block",
-                        transformOrigin: "center center",
-                        fontFamily: "inherit"
-                      }}
-                    >
-                      {/* Matrix-style Digital Rain Effect */}
-                      <motion.div
-                        className="absolute inset-0 overflow-hidden"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: wordIndex * 0.6 + letterIndex * 0.1 + 0.5 }}
-                        viewport={{ once: true }}
-                      >
-                        <motion.div
-                          className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent"
-                          initial={{ y: "-100%" }}
-                          whileInView={{ y: "100%" }}
-                          transition={{ 
-                            duration: 0.8, 
-                            delay: wordIndex * 0.6 + letterIndex * 0.1 + 0.5,
-                            ease: "easeInOut"
-                          }}
-                          viewport={{ once: true }}
-                        />
-                      </motion.div>
-                      
-                      {letter}
-                    </motion.span>
-                  ))}
+                  {word}
                 </motion.span>
               ))}
             </span>

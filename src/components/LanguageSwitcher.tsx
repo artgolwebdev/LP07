@@ -48,7 +48,6 @@ export const LanguageSwitcher = memo(function LanguageSwitcher() {
     if (process.env.NODE_ENV === 'development') {
       const browserInfo = getBrowserLanguageInfo();
       if (browserInfo) {
-        console.log('🌍 Browser Language Info:', browserInfo);
       }
     }
   }, []);
