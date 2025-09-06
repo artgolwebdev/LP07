@@ -22,7 +22,7 @@ interface BookingFormProps {
 
 
 export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: BookingFormProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentStep, setCurrentStep] = useState(preSelectedArtist ? 2 : 1);
   const [formData, setFormData] = useState<FormData>({
     artistId: preSelectedArtist || "",
@@ -253,13 +253,27 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
       >
         {/* Fixed Header */}
         <div ref={headerRef} className="flex-shrink-0 p-6 border-b border-white/20 flex items-center justify-between bg-black/95 backdrop-blur-sm booking-form-header">
-          <div>
-            <h2 className="text-2xl font-bold text-white">{t('booking.title')}</h2>
-            <p className="text-white/60">{t('booking.step')} {currentStep} {t('booking.of')} 10</p>
-          </div>
-          <Button variant="ghost" size="icon" onClick={onClose} className="text-white hover:bg-white/10">
-            <X className="h-6 w-6" />
-          </Button>
+          {language === 'he' ? (
+            <>
+              <Button variant="ghost" size="icon" onClick={onClose} className="text-white hover:bg-white/10">
+                <X className="h-6 w-6" />
+              </Button>
+              <div className="text-right">
+                <h2 className="text-2xl font-bold text-white">{t('booking.title')}</h2>
+                <p className="text-white/60">{t('booking.step')} {currentStep} {t('booking.of')} 10</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="text-left">
+                <h2 className="text-2xl font-bold text-white">{t('booking.title')}</h2>
+                <p className="text-white/60">{t('booking.step')} {currentStep} {t('booking.of')} 10</p>
+              </div>
+              <Button variant="ghost" size="icon" onClick={onClose} className="text-white hover:bg-white/10">
+                <X className="h-6 w-6" />
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Fixed Progress Bar */}
@@ -1193,28 +1207,136 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
               {currentStep === 10 && (
                 <div key="step10" className="w-full flex flex-col justify-center items-center">
                   <div className="text-center py-12 w-full max-w-2xl mx-auto">
-                    {/* Static success icon - no animations to prevent layout shifts */}
-                    <div className="relative mx-auto mb-8">
-                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-to-br from-green-500 via-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40 border-4 border-white/20">
-                        <Check className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-white drop-shadow-lg" />
-                      </div>
+                    {/* Animated success icon */}
+                    <div className="relative mx-auto mb-8 w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 flex items-center justify-center" style={{ contain: 'layout style paint' }}>
+                      {/* Pulsing rings */}
+                <motion.div 
+                        className="absolute w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 bg-gradient-to-r from-green-500/20 to-emerald-400/20 rounded-full"
+                          animate={{ 
+                          scale: [1, 1.2, 1],
+                          opacity: [0.3, 0, 0.3]
+                          }}
+                          transition={{ 
+                          duration: 2.5,
+                            repeat: Infinity,
+                          ease: "easeInOut"
+                          }}
+                        style={{ willChange: 'transform, opacity' }}
+                        />
+                    <motion.div
+                        className="absolute w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 bg-gradient-to-r from-green-500/15 to-emerald-400/15 rounded-full"
+                        animate={{ 
+                          scale: [1, 1.15, 1],
+                          opacity: [0.25, 0, 0.25]
+                        }}
+                      transition={{ 
+                          duration: 2.5,
+                          delay: 0.4,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        style={{ willChange: 'transform, opacity' }}
+                      />
+                      <motion.div
+                        className="absolute w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-gradient-to-r from-green-500/10 to-emerald-400/10 rounded-full"
+                        animate={{ 
+                          scale: [1, 1.1, 1],
+                          opacity: [0.2, 0, 0.2]
+                        }}
+                        transition={{ 
+                          duration: 2.5,
+                          delay: 0.8,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        style={{ willChange: 'transform, opacity' }}
+                      />
+                      
+                      {/* Floating sparkles */}
+                      {[...Array(6)].map((_, i) => {
+                        const angle = (i * 60) * (Math.PI / 180);
+                        const radius = 60;
+                        const x = Math.cos(angle) * radius;
+                        const y = Math.sin(angle) * radius;
+                        return (
+                      <motion.div
+                            key={i}
+                            className="absolute w-1 h-1 bg-white rounded-full"
+                            style={{
+                              left: '50%',
+                              top: '50%',
+                              transform: `translate(${x}px, ${y}px)`,
+                              willChange: 'transform, opacity'
+                            }}
+                        animate={{ 
+                              scale: [0, 1, 0],
+                              opacity: [0, 0.8, 0],
+                              rotate: [0, 180, 360]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                              delay: i * 0.2,
+                          repeat: Infinity,
+                              repeatDelay: 1,
+                          ease: "easeInOut"
+                        }}
+                      />
+                        );
+                      })}
+                      
+                      {/* Main icon */}
+                        <motion.div
+                        className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-to-br from-green-500 via-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/40 border-4 border-white/20"
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ 
+                          scale: 1, 
+                          rotate: 0,
+                          boxShadow: [
+                            "0 0 0 0 rgba(34, 197, 94, 0.4)",
+                            "0 0 0 20px rgba(34, 197, 94, 0)",
+                            "0 0 0 0 rgba(34, 197, 94, 0)"
+                          ]
+                        }}
+                        transition={{ 
+                          delay: 0.3, 
+                          type: "spring", 
+                          stiffness: 200,
+                          damping: 15,
+                          boxShadow: {
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeOut"
+                          }
+                        }}
+                        style={{ willChange: 'transform, box-shadow' }}
+                      >
+                    <motion.div
+                          initial={{ scale: 0, rotate: -90 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ delay: 0.6, type: "spring", stiffness: 300, damping: 20 }}
+                          style={{ willChange: 'transform' }}
+                        >
+                          <Check className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-white drop-shadow-lg" />
+                    </motion.div>
+                      </motion.div>
                     </div>
 
 
                     <div className="mb-8">
                       <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-sm sm:max-w-md md:max-w-lg mx-auto px-4">
-                        {t('booking.success-message')}
+{t('booking.success-message')}
                       </p>
                     </div>
 
-                    {/* Simple action buttons */}
+                    {/* Action buttons */}
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                       {/* Book Again Button */}
                       <Button 
                         onClick={resetForm} 
-                        className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-black hover:from-emerald-700 hover:via-teal-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-full border-2 border-emerald-500/60 hover:border-emerald-400/80"
+                        className="bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 text-gray-800 hover:from-gray-600 hover:via-gray-700 hover:to-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 text-sm sm:text-base md:text-lg font-bold rounded-full border-2 border-gray-400/60 hover:border-gray-300/80 relative overflow-hidden group"
                       >
-                        {t('booking.book-again')}
+                        <span className="relative z-10">{t('booking.book-again')}</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-200/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                       </Button>
 
                       {/* Close Button */}
@@ -1224,7 +1346,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
                       >
                         {t('booking.close')}
                       </Button>
-                    </div>
+                  </div>
                   </div>
                 </div>
               )}
