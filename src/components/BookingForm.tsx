@@ -283,7 +283,7 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
           
           
           {/* Form Steps */}
-          <div className="p-6 pb-8 h-full flex flex-col">
+          <div className="p-6 pb-8 min-h-full flex flex-col">
             <AnimatePresence mode="wait">
               
               {/* Step 1: Choose Artist */}
@@ -1191,248 +1191,48 @@ export function BookingForm({ isOpen, onClose, artists, preSelectedArtist }: Boo
 
               {/* Step 10: Success */}
               {currentStep === 10 && (
-                <motion.div 
-                  key="step10" 
-                  initial={{ opacity: 0, scale: 0.8 }} 
-                  animate={{ opacity: 1, scale: 1 }} 
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                >
-                  <div className="text-center py-12 relative">
-                    {/* Enhanced animated background particles */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                      {[...Array(12)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute w-1 h-1 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full"
-                          initial={{ 
-                            x: Math.random() * 600 - 300, 
-                            y: Math.random() * 400 - 200,
-                            opacity: 0,
-                            scale: 0
-                          }}
-                          animate={{ 
-                            opacity: [0, 0.8, 0],
-                            scale: [0, 1.5, 0],
-                            y: [Math.random() * 400 - 200, Math.random() * 400 - 200],
-                            x: [Math.random() * 600 - 300, Math.random() * 600 - 300]
-                          }}
-                          transition={{ 
-                            duration: 3,
-                            delay: i * 0.15,
-                            repeat: Infinity,
-                            repeatDelay: 0.5,
-                            ease: "easeInOut"
-                          }}
-                        />
-                      ))}
-                      
-                      {/* Floating sparkles */}
-                      {[...Array(8)].map((_, i) => (
-                        <motion.div
-                          key={`sparkle-${i}`}
-                          className="absolute w-1 h-1 bg-white rounded-full"
-                          initial={{ 
-                            x: Math.random() * 500 - 250, 
-                            y: Math.random() * 350 - 175,
-                            opacity: 0,
-                            scale: 0
-                          }}
-                          animate={{ 
-                            opacity: [0, 1, 0],
-                            scale: [0, 2, 0],
-                            rotate: [0, 360]
-                          }}
-                          transition={{ 
-                            duration: 2.5,
-                            delay: i * 0.3,
-                            repeat: Infinity,
-                            repeatDelay: 1.5,
-                            ease: "easeInOut"
-                          }}
-                        />
-                      ))}
+                <div key="step10" className="w-full flex flex-col justify-center items-center">
+                  <div className="text-center py-12 w-full max-w-2xl mx-auto">
+                    {/* Simple success icon */}
+                    <div className="relative mx-auto mb-8">
+                      <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-to-br from-green-500 via-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40 border-4 border-white/20">
+                        <Check className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-white drop-shadow-lg" />
+                      </div>
                     </div>
 
-                    {/* Main success icon with enhanced animation */}
-                    <motion.div
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ 
-                        delay: 0.3, 
-                        type: "spring", 
-                        stiffness: 200,
-                        damping: 15
-                      }}
-                      className="relative mx-auto mb-8"
-                    >
-                      {/* Responsive pulsing ring effects */}
-                      <motion.div
-                        className="absolute inset-0 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 bg-gradient-to-r from-green-500/30 to-emerald-400/30 rounded-full mx-auto"
-                        animate={{ 
-                          scale: [1, 1.3, 1],
-                          opacity: [0.6, 0, 0.6]
-                        }}
-                        transition={{ 
-                          duration: 2.5,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      <motion.div
-                        className="absolute inset-0 w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 bg-gradient-to-r from-green-500/20 to-emerald-400/20 rounded-full mx-auto"
-                        animate={{ 
-                          scale: [1, 1.25, 1],
-                          opacity: [0.4, 0, 0.4]
-                        }}
-                        transition={{ 
-                          duration: 2.5,
-                          delay: 0.3,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      <motion.div
-                        className="absolute inset-0 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-gradient-to-r from-green-500/15 to-emerald-400/15 rounded-full mx-auto"
-                        animate={{ 
-                          scale: [1, 1.2, 1],
-                          opacity: [0.3, 0, 0.3]
-                        }}
-                        transition={{ 
-                          duration: 2.5,
-                          delay: 0.6,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                      
-                      {/* Main icon with responsive enhanced styling */}
-                        <motion.div
-                        className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 bg-gradient-to-br from-green-500 via-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl shadow-green-500/40 border-4 border-white/20"
-                        animate={{ 
-                          boxShadow: [
-                            "0 0 0 0 rgba(34, 197, 94, 0.4)",
-                            "0 0 0 15px rgba(34, 197, 94, 0)",
-                            "0 0 0 0 rgba(34, 197, 94, 0)"
-                          ]
-                        }}
-                        transition={{ 
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeOut"
-                        }}
-                      >
-                        <motion.div
-                          initial={{ scale: 0, rotate: -90 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          transition={{ delay: 0.6, type: "spring", stiffness: 300, damping: 20 }}
-                        >
-                          <Check className="h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 text-white drop-shadow-lg" />
-                        </motion.div>
-                      </motion.div>
-                    </motion.div>
-
-                    {/* Success text with enhanced staggered animation */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
-                    >
-                      <motion.h3 
-                        className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 bg-gradient-to-r from-green-400 via-emerald-300 to-green-400 bg-clip-text text-transparent"
-                        animate={{ 
-                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-                        }}
-                        transition={{ 
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                        style={{ backgroundSize: "200% 200%" }}
-                      >
+                    {/* Success text */}
+                    <div>
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
                         {t('booking.confirmed')}
-                      </motion.h3>
-                    </motion.div>
+                      </h3>
+                    </div>
 
-                    <motion.div
-                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-                      className="mb-8"
-                    >
-                      <motion.p 
-                        className="text-white/80 text-base sm:text-lg leading-relaxed max-w-sm sm:max-w-md md:max-w-lg mx-auto px-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1.2, duration: 0.6 }}
-                      >
+                    <div className="mb-8">
+                      <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-sm sm:max-w-md md:max-w-lg mx-auto px-4">
                         {t('booking.success-message')}
-                      </motion.p>
-                    </motion.div>
+                      </p>
+                    </div>
 
-                    {/* Enhanced animated action buttons */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ delay: 1.4, duration: 0.8, ease: "easeOut" }}
-                      className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-                    >
+                    {/* Simple action buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                       {/* Book Again Button */}
-                      <motion.div
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      <Button 
+                        onClick={resetForm} 
+                        className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white hover:from-emerald-700 hover:via-teal-700 hover:to-cyan-700 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-full border-2 border-emerald-500/60 hover:border-emerald-400/80"
                       >
-                        <Button 
-                          onClick={resetForm} 
-                          className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 text-black hover:from-yellow-500 hover:via-orange-500 hover:to-red-500 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3.5 md:px-10 md:py-4 text-sm sm:text-base md:text-lg font-semibold rounded-full border-2 border-yellow-300/60 hover:border-yellow-200/80 relative overflow-hidden"
-                        >
-                          <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                            animate={{ 
-                              x: ["-100%", "100%"]
-                            }}
-                            transition={{ 
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }}
-                          />
-                          <span className="relative z-10 text-black font-bold tracking-wide drop-shadow-md">
-                            {t('booking.book-again')}
-                          </span>
-                        </Button>
-                      </motion.div>
+                        {t('booking.book-again')}
+                      </Button>
 
                       {/* Close Button */}
-                      <motion.div
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                      <Button 
+                        onClick={onClose} 
+                        className="bg-gradient-to-r from-white via-gray-50 to-white text-black hover:from-gray-100 hover:via-white hover:to-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 text-base sm:text-lg font-bold rounded-full border-2 border-white/20 hover:border-white/40"
                       >
-                        <Button 
-                          onClick={onClose} 
-                          className="bg-gradient-to-r from-white via-gray-50 to-white text-black hover:from-gray-100 hover:via-white hover:to-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 text-base sm:text-lg font-bold rounded-full border-2 border-white/20 hover:border-white/40"
-                        >
-                          <motion.span
-                            animate={{ 
-                              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-                            }}
-                            transition={{ 
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: "easeInOut"
-                            }}
-                            style={{ backgroundSize: "200% 200%" }}
-                            className="bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent"
-                          >
-                            {t('booking.close')}
-                          </motion.span>
-                        </Button>
-                      </motion.div>
-                    </motion.div>
+                        {t('booking.close')}
+                      </Button>
+                    </div>
                   </div>
-                </motion.div>
+                </div>
               )}
             </AnimatePresence>
           </div>
